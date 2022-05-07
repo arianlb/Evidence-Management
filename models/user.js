@@ -18,6 +18,14 @@ const UserSchema = Schema({
         type: String,
         required: true,
         emun: ['ADMIN_ROLE', 'USER_ROLE']
+    },
+    evaluation: {
+        type: Schema.Types.ObjectId,
+        ref: 'Evaluation'
+    },
+    plan: {
+        type: Schema.Types.ObjectId,
+        ref: 'Plan'
     }
 });
 
