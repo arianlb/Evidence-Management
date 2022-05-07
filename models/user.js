@@ -17,7 +17,7 @@ const UserSchema = Schema({
     role: {
         type: String,
         required: true,
-        emun: ['ADMIN_ROLE', 'USER_ROLE']
+        emun: ['ROLE_ADMIN', 'ROLE_USER']
     },
     evaluation: {
         type: Schema.Types.ObjectId,
