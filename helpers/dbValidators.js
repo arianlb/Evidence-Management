@@ -1,3 +1,4 @@
+const Area = require('../models/area');
 const Role = require('../models/role');
 const User = require('../models/user');
 
@@ -29,9 +30,25 @@ const userExistsById = async( id ) => {
     }
 }
 
+const areaNameExists = async(name = '') => {
+    const exists = await Area.findOne({name});
+    if(exists){
+        throw new Error(`El nombre del area ${name} ya existe en la BD`);
+    }
+}
+
+const areaExistsById = async( id ) => {
+    const exists = await Area.findById(id);
+    if(!exists){
+        throw new Error(`El id ${id} no exite en la BD`);
+    }
+}
+
 module.exports = { 
     isRoleValid,
     usernameExists,
     existsRole,
-    userExistsById
+    userExistsById,
+    areaNameExists,
+    areaExistsById,
 }

@@ -18,7 +18,7 @@ const areaPost = async(req, res = response) => {
     const area = new Area({ name });
 
     await area.save();
-    res.json(area);
+    res.status(201).json(area);
 }
 
 const areaPut = async(req, res = response) => {
@@ -30,10 +30,33 @@ const areaPut = async(req, res = response) => {
     res.json({ msg: 'Area actualizada' });
 }
 
+const addObjectives = async(req, res = response) => {
+    const { id } = req.params;
+    const area = await Area.findById(id);
+    if(!area) {
+        return res.status(404).json({
+            msg: `El id ${id} no exite en la BD`
+        })
+    }
+    
+    const { objectives } = req.body;
+    if(!objectives) {
+        return res.status(400).json({
+            msg: 'No se recibió los objetivos para adicionar'
+        })
+    }
+
+    area.objectives.concat(objectives);
+    area.save();
+
+
+    res.json({ msg: 'Objetivos añadidos' });
+}
+
 const areaDelete = async(req, res = response) => {
     const { id } = req.params;
     const areaD = await Area.findByIdAndDelete(id);
     res.json({ areaD });
 }
 
-module.exports = { areaGet, areaPost, areaPut, areaDelete }
+module.exports = { areaGet, areaPost, areaPut, areaDelete, addObjectives }
