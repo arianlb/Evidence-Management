@@ -46,9 +46,8 @@ const addObjectives = async(req, res = response) => {
         })
     }
 
-    area.objectives.concat(objectives);
+    area.objectives = area.objectives.concat(objectives);
     area.save();
-
 
     res.json({ msg: 'Objetivos añadidos' });
 }
