@@ -19,8 +19,8 @@ const evidenceGet = async(req = request, res = response) => {
 
 const evidencePost = async(req = request, res = response) => {
 
-    const { name } = req.body;
-    const evidence = new Evidence({ name });
+    const { description } = req.body;
+    const evidence = new Evidence({ description });
 
     await evidence.save();
 
@@ -29,9 +29,9 @@ const evidencePost = async(req = request, res = response) => {
 
 const evidencePut = async(req = request, res = response) => {
     const { id } = req.params;
-    const { name } = req.body;
+    const { description } = req.body;
 
-    await Evidence.findByIdAndUpdate(id, name);
+    await Evidence.findByIdAndUpdate(id, {description});
     
     res.json({
         msg: 'Evidencia actualizada',

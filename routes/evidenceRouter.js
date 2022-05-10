@@ -13,7 +13,7 @@ const router = Router();
 router.get('/', evidenceGet);
 
 router.post('/', [
-    check('name', 'El nombre es obligatorio').notEmpty(),
+    check('description', 'La descripcion es obligatoria').notEmpty(),
     validate
 ], evidencePost);
 

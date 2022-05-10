@@ -31,7 +31,7 @@ const indicatorPut = async(req = request, res = response) => {
     const { id } = req.params;
     const { name } = req.body;
 
-    await Indicator.findByIdAndUpdate(id, name);
+    await Indicator.findByIdAndUpdate(id, {name});
     
     res.json({
         msg: 'Indicador actualizado',

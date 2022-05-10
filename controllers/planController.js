@@ -31,7 +31,7 @@ const planPut = async(req = request, res = response) => {
     const { id } = req.params;
     const { name } = req.body;
 
-    await Plan.findByIdAndUpdate(id, name);
+    await Plan.findByIdAndUpdate(id, {name});
     
     res.json({
         msg: 'Plan actualizado',

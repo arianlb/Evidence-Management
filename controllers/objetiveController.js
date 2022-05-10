@@ -27,7 +27,7 @@ const objectivePut = async(req = request, res = response) => {
     const { id } = req.params;
     const { name } = req.body;
 
-    await Objective.findByIdAndUpdate(id, name);
+    await Objective.findByIdAndUpdate(id, {name});
 
     res.json({ msg: 'Objetivo Estratégico actualizado' });
 }

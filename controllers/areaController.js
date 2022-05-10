@@ -25,7 +25,7 @@ const areaPut = async(req, res = response) => {
     const { id } = req.params;
     const { name } = req.body;
 
-    await Area.findByIdAndUpdate(id, name);
+    await Area.findByIdAndUpdate(id, {name});
 
     res.json({ msg: 'Area actualizada' });
 }

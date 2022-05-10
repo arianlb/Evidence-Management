@@ -18,7 +18,7 @@ router.post('/', [
 ], indicatorPost);
 
 router.put('/:id', [
-    heck('id', 'No es un ID valido').isMongoId(),
+    check('id', 'No es un ID valido').isMongoId(),
     validate
 ], indicatorPut);
 

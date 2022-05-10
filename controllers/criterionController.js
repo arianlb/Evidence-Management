@@ -31,7 +31,7 @@ const criterionPut = async(req = request, res = response) => {
     const { id } = req.params;
     const { name } = req.body;
 
-    await Criterion.findByIdAndUpdate(id, name);
+    await Criterion.findByIdAndUpdate(id, {name});
     
     res.json({
         msg: 'Criterio de medida actualizado',

@@ -31,7 +31,7 @@ const evaluationPut = async(req = request, res = response) => {
     const { id } = req.params;
     const { name } = req.body;
 
-    await Evaluation.findByIdAndUpdate(id, name);
+    await Evaluation.findByIdAndUpdate(id, {name});
     
     res.json({
         msg: 'Evaluación actualizada',
