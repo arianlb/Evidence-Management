@@ -18,6 +18,7 @@ router.post('/', [
     check('username').custom(usernameExists),
     check('password', 'La contraseña es obligatoria').notEmpty(),
     check('role').custom(isRoleValid),
+    check('faculty', 'La facultad es obligatoria').notEmpty(),
     validate
 ], userPost);
 
@@ -29,8 +30,8 @@ router.put('/:id', [
 ], userPut);
 
 router.delete('/:id', [
-    validateToken,
-    hasAnyRole('USER_ROLE', 'SUPER_ROLE'),
+    /*validateToken,
+    hasAnyRole('USER_ROLE', 'SUPER_ROLE'),*/
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(userExistsById),
     validate
