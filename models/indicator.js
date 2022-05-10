@@ -5,6 +5,13 @@ const IndicatorSchema = Schema({
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
+    state: {
+        type: Boolean,
+        default: false
+    },
+    observation: {
+        type: String
+    },
     criterion: {
         type: Schema.Types.ObjectId,
         ref: 'Criterion'

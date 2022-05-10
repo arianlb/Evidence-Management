@@ -19,6 +19,16 @@ const UserSchema = Schema({
         required: true,
         emun: ['ROLE_ADMIN', 'ROLE_USER']
     },
+    faculty: {
+        type: String,
+        required: [true, 'La facultad del usuario es obligatorio'],
+    },
+    department: {
+        type: String
+    },
+    category: {
+        type: String
+    },
     evaluation: {
         type: Schema.Types.ObjectId,
         ref: 'Evaluation'
