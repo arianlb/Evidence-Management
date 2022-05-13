@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 
 const Indicator = require('../models/indicator');
+const User = require('../models/user');
 
 const indicatorGet = async(req = request, res = response) => {
     
@@ -19,10 +20,21 @@ const indicatorGet = async(req = request, res = response) => {
 
 const indicatorPost = async(req = request, res = response) => {
 
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return res.status(404).json({
+            msg: 'No existe el Usuario en la base de datos'
+        })
+    }
+
     const { name } = req.body;
     const indicator = new Indicator({ name });
+    user.indicators.push(indicator);
 
-    await indicator.save();
+    await Promise.all([
+        indicator.save(),
+        user.save()
+    ]);
 
     res.json(indicator);
 }
@@ -37,6 +49,30 @@ const indicatorPut = async(req = request, res = response) => {
         msg: 'Indicador actualizado',
     });
 }
+
+//Por definir
+/*const assignCriterion = async(req = request, res = response) => {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    await Indicator.findByIdAndUpdate(id, {name});
+    
+    res.json({
+        msg: 'Indicador actualizado',
+    });
+}*/
+
+//Por definir
+/*const addEvidence = async(req = request, res = response) => {
+    const { id } = req.params;
+    const { name } = req.body;
+
+    await Indicator.findByIdAndUpdate(id, {name});
+    
+    res.json({
+        msg: 'Indicador actualizado',
+    });
+}*/
 
 const indicatorDelete = async(req = request, res = response) => {
     const { id } = req.params;

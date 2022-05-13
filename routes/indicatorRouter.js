@@ -12,7 +12,8 @@ const router = Router();
 
 router.get('/', indicatorGet);
 
-router.post('/', [
+router.post('/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
     check('name', 'El nombre es obligatorio').notEmpty(),
     validate
 ], indicatorPost);

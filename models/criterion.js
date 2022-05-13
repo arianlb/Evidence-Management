@@ -5,10 +5,6 @@ const CriterionSchema = Schema({
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
-    concluded: {
-        type: Number,
-        default: 0
-    },
     status: {
         type: String,
         default: 'No Cumplido'
@@ -17,6 +13,10 @@ const CriterionSchema = Schema({
         type: Number,
         default: 5,
         min: 1
+    },
+    concluded: {
+        type: Number,
+        default: 0
     }
 });
 

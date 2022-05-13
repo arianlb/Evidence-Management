@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 
 const Evaluation = require('../models/evaluation');
+const User = require('../models/user');
 
 const evaluationGet = async(req = request, res = response) => {
     
@@ -22,7 +23,10 @@ const evaluationPost = async(req = request, res = response) => {
     const { name } = req.body;
     const evaluation = new Evaluation({ name });
 
-    await evaluation.save();
+    await Promise.all([
+        evaluation.save(),
+        User.findByIdAndUpdate(req.params.id, {evaluation})
+    ])
 
     res.json(evaluation);
 }
