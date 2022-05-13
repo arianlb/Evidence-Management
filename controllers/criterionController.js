@@ -19,8 +19,8 @@ const criterionGet = async(req = request, res = response) => {
 
 const criterionPost = async(req = request, res = response) => {
 
-    const { name } = req.body;
-    const criterion = new Criterion({ name });
+    const { name, todo } = req.body;
+    const criterion = new Criterion({ name, todo });
 
     await criterion.save();
 
@@ -29,14 +29,26 @@ const criterionPost = async(req = request, res = response) => {
 
 const criterionPut = async(req = request, res = response) => {
     const { id } = req.params;
-    const { name } = req.body;
+    const { _id, concluded, status, ...rest } = req.body;
 
-    await Criterion.findByIdAndUpdate(id, {name});
+    await Criterion.findByIdAndUpdate(id, rest);
     
     res.json({
         msg: 'Criterio de medida actualizado',
     });
 }
+
+//Por definir
+/*const changeStatus = async(req = request, res = response) => {
+    const { id } = req.params;
+    const { status } = req.body;
+
+    await Criterion.findByIdAndUpdate(id, {status});
+    
+    res.json({
+        msg: 'Criterio de medida actualizado',
+    });
+}*/
 
 const criterionDelete = async(req = request, res = response) => {
     const { id } = req.params;
