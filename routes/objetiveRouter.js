@@ -3,7 +3,8 @@ const { check } = require('express-validator');
 
 const { validate } = require('../middlewares/validateFields');
 const { existsRole } = require('../helpers/dbValidators');
-const { objectiveGet, 
+const { addCriterions,
+        objectiveGet, 
         objectivePost, 
         objectivePut, 
         objectiveDelete } = require('../controllers/objetiveController');
@@ -21,6 +22,11 @@ router.put('/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     validate
 ], objectivePut);
+
+router.put('/add/criterions/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
+    validate
+], addCriterions);
 
 router.delete('/:id', [
     check('id', 'No es un ID valido').isMongoId(),
