@@ -33,10 +33,10 @@ const UserSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Evaluation'
     },
-    plan: {
+    indicators: [{
         type: Schema.Types.ObjectId,
-        ref: 'Plan'
-    }
+        ref: 'Indicator'
+    }]
 });
 
 UserSchema.methods.toJSON = function(){

@@ -32,7 +32,6 @@ class Server{
         this.app.use('/api/indicators', require('../routes/indicatorRouter'));
         this.app.use('/api/login', require('../routes/loginRouter'));
         this.app.use('/api/objectives', require('../routes/objetiveRouter'));
-        this.app.use('/api/plans', require('../routes/planRouter'));
         this.app.use('/api/roles', require('../routes/roleRouter'));
         this.app.use('/api/users', require('../routes/userRouter'));
     }
