@@ -3,7 +3,12 @@ const { check } = require('express-validator');
 
 const { validate } = require('../middlewares/validateFields');
 const { areaNameExists, areaExistsById } = require('../helpers/dbValidators');
-const { areaGet, areaPost, areaPut, areaDelete, addObjectives } = require('../controllers/areaController');
+const { areaGet,
+        areaPost,
+        areaPut,
+        areaDelete,
+        addObjectives,
+        addUsers } = require('../controllers/areaController');
 
 const router = Router();
 
@@ -25,6 +30,11 @@ router.put('/add/objectives/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     validate
 ], addObjectives);
+
+router.put('/add/users/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
+    validate
+], addUsers);
 
 router.delete('/:id', [
     check('id', 'No es un ID valido').isMongoId(),

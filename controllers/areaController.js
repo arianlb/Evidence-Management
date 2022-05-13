@@ -52,10 +52,32 @@ const addObjectives = async(req, res = response) => {
     res.json({ msg: 'Objetivos añadidos' });
 }
 
+const addUsers = async(req, res = response) => {
+    const { id } = req.params;
+    const area = await Area.findById(id);
+    if(!area) {
+        return res.status(404).json({
+            msg: `El id ${id} no exite en la BD`
+        })
+    }
+    
+    const { users } = req.body;
+    if(!users) {
+        return res.status(400).json({
+            msg: 'No se recibió los usuarios para adicionar'
+        })
+    }
+
+    area.users = area.users.concat(users);
+    area.save();
+
+    res.json({ msg: 'Usuarios añadidos' });
+}
+
 const areaDelete = async(req, res = response) => {
     const { id } = req.params;
     const areaD = await Area.findByIdAndDelete(id);
     res.json({ areaD });
 }
 
-module.exports = { areaGet, areaPost, areaPut, areaDelete, addObjectives }
+module.exports = { areaGet, areaPost, areaPut, areaDelete, addObjectives, addUsers }
