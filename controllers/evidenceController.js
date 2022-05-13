@@ -1,5 +1,6 @@
 const { request, response} = require('express');
 
+const { updateCriterion } = require('../helpers/modifyCriterion');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
 
@@ -29,8 +30,20 @@ const evidencePost = async(req = request, res = response) => {
 
     const { description } = req.body;
     const evidence = new Evidence({ description });
+    indicator.evidences.push(evidence);
+    
+    if(!indicator.status){
+        indicator.status = true;
+        //TODO: investigar una mejor forma
+        if(indicator.criterion){
+            updateCriterion(indicator.criterion, 1);
+        }
+    }
 
-    await evidence.save();
+    await Promise.all([
+        evidence.save(),
+        indicator.save()
+    ]);
 
     res.json(evidence);
 }

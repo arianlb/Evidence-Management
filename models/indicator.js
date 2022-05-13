@@ -5,7 +5,7 @@ const IndicatorSchema = Schema({
         type: String,
         required: [true, 'El nombre es obligatorio']
     },
-    state: {
+    status: {
         type: Boolean,
         default: false
     },
