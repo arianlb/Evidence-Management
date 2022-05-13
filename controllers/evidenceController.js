@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 
 const Evidence = require('../models/evidence');
+const Indicator = require('../models/indicator');
 
 const evidenceGet = async(req = request, res = response) => {
     
@@ -18,6 +19,13 @@ const evidenceGet = async(req = request, res = response) => {
 }
 
 const evidencePost = async(req = request, res = response) => {
+    
+    const indicator = await Indicator.findById(req.params.id);
+    if(!indicator) {
+        return res.status(404).json({
+            msg: 'El Indicador no existe en la BD'
+        })
+    }
 
     const { description } = req.body;
     const evidence = new Evidence({ description });

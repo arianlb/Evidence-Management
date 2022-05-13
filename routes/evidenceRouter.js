@@ -12,7 +12,8 @@ const router = Router();
 
 router.get('/', evidenceGet);
 
-router.post('/', [
+router.post('/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
     check('description', 'La descripcion es obligatoria').notEmpty(),
     validate
 ], evidencePost);
