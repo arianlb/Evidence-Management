@@ -1,0 +1,945 @@
+{
+	"info": {
+		"_postman_id": "ec327871-e0a7-4400-9b45-298e83fb4d12",
+		"name": "NodeExpress",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Crear Usuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pepe\",\r\n    \"username\": \"pepito\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"ROLE_ADMIN\",\r\n    \"faculty\": \"Facultad 4\",\r\n    \"department\": \"Informática\",\r\n    \"category\": \"Profesor Auxiliar\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Usuario",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Pepe\",\r\n    \"username\": \"lolo\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"ADMIN_ROLE\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/6238b96b7ee323cc65ac7fce",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"6238b96b7ee323cc65ac7fce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Usuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users?begin=0&amount=5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							],
+							"query": [
+								{
+									"key": "begin",
+									"value": "0"
+								},
+								{
+									"key": "amount",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MjM4Yjk2YjdlZTMyM2NjNjVhYzdmY2UiLCJyb2xlIjoiQURNSU5fUk9MRSIsImlhdCI6MTY0ODQ5NjEzOSwiZXhwIjoxNjQ4NTEwNTM5fQ.BTU7rPZJWEVjJlkgVb6BCIJJmTHWLZeONj1Pd-GCliE",
+								"type": "default",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/users/6239382e6511ee37258d90c1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"6239382e6511ee37258d90c1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Areas",
+			"item": [
+				{
+					"name": "Crear Area",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Formacion de Algo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/areas",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Areas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/areas?begin=0&amount=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas"
+							],
+							"query": [
+								{
+									"key": "begin",
+									"value": "0"
+								},
+								{
+									"key": "amount",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir Objetivos a un Area",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\"objectives\": [\r\n        {\r\n            \"_id\": \"627853c91e07e4197631b305\",\r\n            \"name\": \"Segundo Objetivo\",\r\n            \"criterions\": [],\r\n            \"__v\": 0\r\n        },\r\n        {\r\n            \"_id\": \"627853d31e07e4197631b307\",\r\n            \"name\": \"Tercer Objetivo\",\r\n            \"criterions\": [],\r\n            \"__v\": 0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/areas/add/objectives/627852cf1e07e4197631b2ff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"add",
+								"objectives",
+								"627852cf1e07e4197631b2ff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Area",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Otro nombre\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/areas/627852cf1e07e4197631b2ff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"627852cf1e07e4197631b2ff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Area",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/areas/627852cf1e07e4197631b2ff",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"627852cf1e07e4197631b2ff"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir Usuarios a un Area",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"users\": [\r\n        {\r\n            \"indicators\": [],\r\n            \"_id\": \"627ab6d1c8c8ecf325046adf\",\r\n            \"name\": \"Pepe\",\r\n            \"username\": \"pepito\",\r\n            \"role\": \"ROLE_ADMIN\",\r\n            \"faculty\": \"Facultad 4\",\r\n            \"department\": \"Informática\",\r\n            \"category\": \"Profesor Auxiliar\"\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/areas/add/users/627e7511c5dd6c58d914360e",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"add",
+								"users",
+								"627e7511c5dd6c58d914360e"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Objetivos",
+			"item": [
+				{
+					"name": "Crear Objetivo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Primer Objetivo\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/objectives",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"objectives"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Objetivos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/objectives?begin=0&amount=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"objectives"
+							],
+							"query": [
+								{
+									"key": "begin",
+									"value": "0"
+								},
+								{
+									"key": "amount",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Objetivo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Otro nombre\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/objectives/627acb4af2872c8aa9622245",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"objectives",
+								"627acb4af2872c8aa9622245"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Objetivo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/objectives/627acb4af2872c8aa9622245",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"objectives",
+								"627acb4af2872c8aa9622245"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Añadir Criterios a un Objetivo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"criterions\": [\r\n        {\r\n            \"_id\": \"627e9b255796c8a3847353c3\",\r\n            \"name\": \"Primer Criterio\",\r\n            \"status\": \"No Cumplido\",\r\n            \"todo\": 7,\r\n            \"concluded\": 0,\r\n            \"__v\": 0\r\n        },\r\n        {\r\n            \"_id\": \"627e9b545796c8a3847353c5\",\r\n            \"name\": \"Segundo Criterio\",\r\n            \"status\": \"No Cumplido\",\r\n            \"todo\": 3,\r\n            \"concluded\": 0,\r\n            \"__v\": 0\r\n        }\r\n    ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/objectives/add/criterions/627acb4af2872c8aa9622245",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"objectives",
+								"add",
+								"criterions",
+								"627acb4af2872c8aa9622245"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Criterios",
+			"item": [
+				{
+					"name": "Crear Criterio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Primer Criterio\",\r\n    \"todo\": 7\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/criterions",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"criterions"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Criterios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/criterions?begin=0&amount=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"criterions"
+							],
+							"query": [
+								{
+									"key": "begin",
+									"value": "0"
+								},
+								{
+									"key": "amount",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Criterio",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Otro nombre\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/criterions/627acf2635aaed69c2410780",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"criterions",
+								"627acf2635aaed69c2410780"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Criterio",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/criterions/627ace2d35aaed69c2410778",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"criterions",
+								"627ace2d35aaed69c2410778"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Indicadores",
+			"item": [
+				{
+					"name": "Crear Indicador",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Primer Indicador\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/indicators/627ee04146022fcd79fd1c75",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators",
+								"627ee04146022fcd79fd1c75"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Indicadores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/indicators?begin=0&amount=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators"
+							],
+							"query": [
+								{
+									"key": "begin",
+									"value": "0"
+								},
+								{
+									"key": "amount",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Indicador",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Otro Indicador\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/indicators/627ad158f72f80556b5dbe0f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators",
+								"627ad158f72f80556b5dbe0f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Indicador",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/indicators/627ad158f72f80556b5dbe0f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators",
+								"627ad158f72f80556b5dbe0f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evidencias",
+			"item": [
+				{
+					"name": "Crear Evidencia",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Primer Evidencia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/evidences/627ee06b46022fcd79fd1c78",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evidences",
+								"627ee06b46022fcd79fd1c78"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Evidencias",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/evidences?begin=0&amount=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evidences"
+							],
+							"query": [
+								{
+									"key": "begin",
+									"value": "0"
+								},
+								{
+									"key": "amount",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Evidencia",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Otra Evidencia\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/evidences/627ad288f72f80556b5dbe19",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evidences",
+								"627ad288f72f80556b5dbe19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Evidencia",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/evidences/627ad288f72f80556b5dbe19",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evidences",
+								"627ad288f72f80556b5dbe19"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Subir archivo a una evidencia",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": "/C:/Users/AriaN/Pictures/perfil.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{url}}/api/evidences/upload/627fe17b1f635c11d52a49dc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evidences",
+								"upload",
+								"627fe17b1f635c11d52a49dc"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener el archivo de la evidencia",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/evidences/file/627fe17b1f635c11d52a49dc",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evidences",
+								"file",
+								"627fe17b1f635c11d52a49dc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evaluaciones",
+			"item": [
+				{
+					"name": "Crear Evaluacion",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Primera Evaluacion\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/evaluations/627ee04146022fcd79fd1c75",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"627ee04146022fcd79fd1c75"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Evaluaciones",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/evaluations?begin=0&amount=5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evaluations"
+							],
+							"query": [
+								{
+									"key": "begin",
+									"value": "0"
+								},
+								{
+									"key": "amount",
+									"value": "5"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Evaluacion",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Otra Evaluacion\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/evaluations/627ad446f72f80556b5dbe2f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"627ad446f72f80556b5dbe2f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Evaluacion",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/evaluations/627ad446f72f80556b5dbe2f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"627ad446f72f80556b5dbe2f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"lolo\",\r\n    \"password\": \"1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
