@@ -4,6 +4,9 @@ const EvidenceSchema = Schema({
     description: {
         type: String,
         required: [true, 'El nombre es obligatorio']
+    },
+    file: {
+        type: String
     }
 });
 

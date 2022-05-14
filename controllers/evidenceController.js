@@ -1,6 +1,9 @@
+const path = require('path');
+const fs = require('fs');
 const { request, response} = require('express');
 
 const { updateCriterion } = require('../helpers/modifyCriterion');
+const { upload } = require('../helpers/uploadFile');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
 
@@ -17,6 +20,29 @@ const evidenceGet = async(req = request, res = response) => {
         total,
         evidence
     });
+}
+
+const evidenceGetFile = async(req = request, res = response) => {
+    
+    const evidence = await Evidence.findById(req.params.id);
+    if(!evidence){
+        return res.status(404).json({msg: 'La evidencia no existe en la BD'});
+    }
+
+    try{
+
+        if(evidence.file){
+            const pathFile = path.join( __dirname, '../uploads/evidences/', evidence.file);
+            if(fs.existsSync(pathFile)){
+                return res.sendFile(pathFile);
+            }
+        }
+        
+        res.status(404).json({msg: 'La evidencia no tiene archivo'});
+
+    } catch(msg){
+        res.status(400).json({msg});
+    }
 }
 
 const evidencePost = async(req = request, res = response) => {
@@ -65,4 +91,30 @@ const evidenceDelete = async(req = request, res = response) => {
     res.json(evidence);
 }
 
-module.exports = { evidenceGet, evidencePost, evidencePut, evidenceDelete}
+const evidenceUpload = async (req = request, res = response) => {
+
+    const evidence = await Evidence.findById(req.params.id);
+    if(!evidence){
+        return res.status(404).json({msg: 'La evidencia no existe en la BD'});
+    }
+
+    try{
+
+        if(evidence.file){
+            const pathFile = path.join( __dirname, '../uploads/evidences/', evidence.file);
+            if(fs.existsSync(pathFile)){
+                fs.unlinkSync(pathFile);
+            }
+        }
+
+        const name = await upload(req.files.file);
+        evidence.file = name;
+        await evidence.save();
+        res.json(evidence);
+
+    } catch(msg){
+        res.status(400).json({msg});
+    }
+}
+
+module.exports = { evidenceGet, evidenceGetFile, evidencePost, evidencePut, evidenceDelete, evidenceUpload}
