@@ -1,6 +1,7 @@
 const { response } = require('express');
 
 const Area = require('../models/area');
+const Objective = require('../models/objective');
 
 const areaGet = async(req, res = response) => {
     const { begin = 0, amount = 5 } = req.query;
@@ -15,7 +16,13 @@ const areaGet = async(req, res = response) => {
 
 const areaPost = async(req, res = response) => {
     const { name } = req.body;
-    const area = new Area({ name });
+
+    let objectives;
+    if(req.body.objectives){
+        objectives = await Objective.create(req.body.objectives);
+    }
+    
+    const area = new Area({ name, objectives });
 
     await area.save();
     res.status(201).json(area);
