@@ -8,7 +8,7 @@ const areaGet = async(req, res = response) => {
 
     const [ total, areas ] = await Promise.all([
         Area.countDocuments(),
-        Area.find().skip(Number(begin)).limit(Number(amount))
+        Area.find().populate('objectives','name').skip(Number(begin)).limit(Number(amount))
     ]);
 
     res.json({ total, areas });
