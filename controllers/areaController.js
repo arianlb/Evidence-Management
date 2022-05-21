@@ -17,9 +17,12 @@ const areaGet = async(req, res = response) => {
 const areaPost = async(req, res = response) => {
     const { name } = req.body;
 
-    let objectives;
-    if(req.body.objectives){
-        objectives = await Objective.create(req.body.objectives);
+    //TODO: optimize!!
+    let objectives = [];
+    const targetNames = req.body.objectives;
+    if(targetNames){
+        targetNames.forEach( name => objectives.push({name}));
+        objectives = await Objective.create(objectives);
     }
     
     const area = new Area({ name, objectives });
