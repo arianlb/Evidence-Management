@@ -8,10 +8,18 @@ const areaGet = async(req, res = response) => {
 
     const [ total, areas ] = await Promise.all([
         Area.countDocuments(),
-        Area.find().populate('objectives','name').skip(Number(begin)).limit(Number(amount))
+        Area.find().populate('objectives').skip(Number(begin)).limit(Number(amount))
     ]);
 
     res.json({ total, areas });
+}
+
+const areaById = async(req, res = response) => {
+    const area = await Area.findById(req.params.id).populate({
+        path: 'objectives',
+        populate: {path: 'criterions'}
+    });
+    res.json(area);
 }
 
 const areaPost = async(req, res = response) => {
@@ -90,4 +98,4 @@ const areaDelete = async(req, res = response) => {
     res.json({ areaD });
 }
 
-module.exports = { areaGet, areaPost, areaPut, areaDelete, addObjectives, addUsers }
+module.exports = { areaGet, areaPost, areaPut, areaDelete, addObjectives, addUsers, areaById }

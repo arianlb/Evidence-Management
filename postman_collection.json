@@ -137,7 +137,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Formacion de Algo\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Test10\",\r\n    \"objectives\": [\"algo\", \"ahi\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -287,6 +287,25 @@
 								"add",
 								"users",
 								"627e7511c5dd6c58d914360e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Area por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/areas/62896589a237a75d6ef4b68f",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"62896589a237a75d6ef4b68f"
 							]
 						}
 					},

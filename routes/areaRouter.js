@@ -5,6 +5,7 @@ const { validate } = require('../middlewares/validateFields');
 const { areaNameExists, areaExistsById } = require('../helpers/dbValidators');
 const { areaGet,
         areaPost,
+        areaById,
         areaPut,
         areaDelete,
         addObjectives,
@@ -13,6 +14,12 @@ const { areaGet,
 const router = Router();
 
 router.get('/', areaGet);
+
+router.get('/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(areaExistsById),
+    validate
+], areaById);
 
 router.post('/', [
     check('name', 'El nombre es obligatorio').notEmpty(),
