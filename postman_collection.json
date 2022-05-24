@@ -313,7 +313,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Primer Objetivo\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Objetivo de test1\",\r\n    \"criterions\": [\"cri1\", \"cri2\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -321,13 +321,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/objectives",
+							"raw": "{{url}}/api/objectives/62833910c5da666e0a907b29",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"objectives"
+								"objectives",
+								"62833910c5da666e0a907b29"
 							]
 						}
 					},

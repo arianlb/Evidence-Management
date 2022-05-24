@@ -1,5 +1,7 @@
 const { request, response } = require('express');
 
+const Area = require('../models/area');
+const Criterion = require('../models/criterion');
 const Objective = require('../models/objective');
 
 const objectiveGet = async(req = request, res = response) => {
@@ -17,9 +19,28 @@ const objectiveGet = async(req = request, res = response) => {
 }
 
 const objectivePost = async(req = request, res = response) => {
+    
+    const area = await Area.findById(req.params.id);
+    if (!area) {
+        res.status(404).json({msg: 'El area no existe en la BD'});
+    }
+
+    let criterions = [];
+    const criterionNames = req.body.criterions;
+    if(criterionNames){
+        criterionNames.forEach( name => criterions.push({name}));
+        criterions = await Criterion.create(criterions);
+    }
+    
     const { name } = req.body;
-    const objective = new Objective({ name });
-    await objective.save();
+    const objective = new Objective({ name, criterions });
+    area.objectives.push(objective);
+    
+    await Promise.all([
+        objective.save(),
+        area.save()
+    ])
+    
     res.status(201).json(objective);
 }
 
