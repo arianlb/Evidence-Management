@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 
 const Criterion = require('../models/criterion');
+const Objective = require('../models/objective');
 
 const criterionGet = async(req = request, res = response) => {
     
@@ -19,12 +20,21 @@ const criterionGet = async(req = request, res = response) => {
 
 const criterionPost = async(req = request, res = response) => {
 
+    const objective = await Objective.findById(req.params.id);
+    if(!objective){
+        return res.status(404).json({msg: 'El objetivo no existe en la BD'});
+    }
+
     const { name, todo } = req.body;
     const criterion = new Criterion({ name, todo });
+    objective.criterions.push(criterion);
 
-    await criterion.save();
+    await Promise.all([
+        criterion.save(),
+        objective.save()
+    ]);
 
-    res.json(criterion);
+    res.status(201).json(criterion);
 }
 
 const criterionPut = async(req = request, res = response) => {
