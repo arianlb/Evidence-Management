@@ -163,23 +163,13 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/areas?begin=0&amount=5",
+							"raw": "{{url}}/api/areas",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"areas"
-							],
-							"query": [
-								{
-									"key": "begin",
-									"value": "0"
-								},
-								{
-									"key": "amount",
-									"value": "5"
-								}
 							]
 						}
 					},
@@ -460,7 +450,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Primer Criterio\",\r\n    \"todo\": 7\r\n}",
+							"raw": "{\r\n    \"name\": \"de prueba\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -468,13 +458,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/criterions",
+							"raw": "{{url}}/api/criterions/62882dc2a9c692f7f9cf7e29",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
-								"criterions"
+								"criterions",
+								"62882dc2a9c692f7f9cf7e29"
 							]
 						}
 					},
