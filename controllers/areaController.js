@@ -3,7 +3,7 @@ const { response } = require('express');
 const Area = require('../models/area');
 const Objective = require('../models/objective');
 
-const areaGet = async(req, res = response) => {
+/*const areaGet = async(req, res = response) => {
     const { begin = 0, amount = 5 } = req.query;
 
     const [ total, areas ] = await Promise.all([
@@ -12,6 +12,19 @@ const areaGet = async(req, res = response) => {
     ]);
 
     res.json({ total, areas });
+}*/
+
+const areaGet = async(req, res = response) => {
+    const areas = [];
+    const areaData = await Area.find().populate('objectives', 'name');
+    
+    for(let a of areaData){
+        const area = { _id: a._id, name: a.name, objectives: [] };
+        a.objectives.forEach( ({name}) => { area.objectives.push(name); });
+        areas.push(area);
+    }
+
+    res.json( areas );
 }
 
 const areaById = async(req, res = response) => {
