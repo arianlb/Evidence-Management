@@ -654,6 +654,25 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Obtener Indicador por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/indicators/627ee06b46022fcd79fd1c78",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators",
+								"627ee06b46022fcd79fd1c78"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
