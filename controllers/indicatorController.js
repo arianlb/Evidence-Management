@@ -18,6 +18,14 @@ const indicatorGet = async(req = request, res = response) => {
     });
 }
 
+const indicatorById = async(req = request, res = response) => {
+    const indicator = await Indicator.findById(req.params.id).populate(['criterion', 'evidences']);
+    if(!indicator) {
+        res.status(404).json({msg: 'Indicator no existe en la BD'});
+    }
+    res.json(indicator);
+}
+
 const indicatorPost = async(req = request, res = response) => {
 
     const user = await User.findById(req.params.id);
@@ -80,4 +88,4 @@ const indicatorDelete = async(req = request, res = response) => {
     res.json(indicator);
 }
 
-module.exports = { indicatorGet, indicatorPost, indicatorPut, indicatorDelete}
+module.exports = { indicatorById, indicatorGet, indicatorPost, indicatorPut, indicatorDelete}
