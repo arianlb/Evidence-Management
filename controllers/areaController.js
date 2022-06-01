@@ -49,7 +49,8 @@ const areaPost = async(req, res = response) => {
     const area = new Area({ name, objectives });
 
     await area.save();
-    res.status(201).json(area);
+    const responseArea = { _id: area._id, name: area.name, objectives: targetNames};
+    res.status(201).json(responseArea);
 }
 
 const areaPut = async(req, res = response) => {
