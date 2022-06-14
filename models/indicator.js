@@ -12,6 +12,14 @@ const IndicatorSchema = Schema({
     observation: {
         type: String
     },
+    category: {
+        type: String,
+        required: [true, 'La categoria es obligatorio']
+    },
+    model: {
+        type: Boolean,
+        default: true
+    },
     criterion: {
         type: Schema.Types.ObjectId,
         ref: 'Criterion'

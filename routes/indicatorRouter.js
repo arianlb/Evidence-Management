@@ -21,6 +21,7 @@ router.get('/:id',[
 router.post('/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     check('name', 'El nombre es obligatorio').notEmpty(),
+    check('category', 'La categoria es obligatorio').notEmpty(),
     validate
 ], indicatorPost);
 

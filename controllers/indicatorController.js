@@ -35,8 +35,8 @@ const indicatorPost = async(req = request, res = response) => {
         })
     }
 
-    const { name } = req.body;
-    const indicator = new Indicator({ name });
+    const { name, category } = req.body;
+    const indicator = new Indicator({ name, category });
     user.indicators.push(indicator);
 
     await Promise.all([

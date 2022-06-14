@@ -1,5 +1,6 @@
 const { response } = require('express');
 
+const { indicatorByCriterion } = require('../helpers/areaResponse');
 const Area = require('../models/area');
 const Objective = require('../models/objective');
 
@@ -32,7 +33,9 @@ const areaById = async(req, res = response) => {
         path: 'objectives',
         populate: {path: 'criterions'}
     });
-    res.json(area);
+    const objectives = await indicatorByCriterion(area);
+    const { _id, name } = area;
+    res.json({ _id, name, objectives });
 }
 
 const areaPost = async(req, res = response) => {
