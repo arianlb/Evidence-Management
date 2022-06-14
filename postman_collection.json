@@ -559,7 +559,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Primer Indicador\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Indicador numero 1\",\r\n    \"category\": \"TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -669,6 +669,54 @@
 								"api",
 								"indicators",
 								"627ee06b46022fcd79fd1c78"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Indicadores ordenados por categoria",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/indicators/category",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators",
+								"category"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Indicador con Criterio",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Indicador con Criterio\",\r\n    \"category\": \"TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/indicators/criterion/627e9b545796c8a3847353c5",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators",
+								"criterion",
+								"627e9b545796c8a3847353c5"
 							]
 						}
 					},

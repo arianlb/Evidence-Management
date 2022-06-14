@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 
 const { indicatorsByCategory } = require('../helpers/indicatorResponse');
+const Criterion = require('../models/criterion');
 const Indicator = require('../models/indicator');
 const User = require('../models/user');
 
@@ -42,13 +43,29 @@ const indicatorPost = async(req = request, res = response) => {
     }
 
     const { name, category } = req.body;
-    const indicator = new Indicator({ name, category });
+    const indicator = new Indicator({ name, category, model: false });
     user.indicators.push(indicator);
 
     await Promise.all([
         indicator.save(),
         user.save()
     ]);
+
+    res.json(indicator);
+}
+
+const indicatorPostByCriterion = async(req = request, res = response) => {
+
+    const criterion = await Criterion.findById(req.params.id);
+    if(!criterion){
+        return res.status(404).json({
+            msg: 'No existe el Criterio de medida en la base de datos'
+        })
+    }
+
+    const { name, category } = req.body;
+    const indicator = new Indicator({ name, category, criterion });
+    await indicator.save();
 
     res.json(indicator);
 }
@@ -98,5 +115,6 @@ module.exports = {  indicatorByCategory,
                     indicatorById,
                     indicatorGet,
                     indicatorPost,
+                    indicatorPostByCriterion,
                     indicatorPut,
                     indicatorDelete}
