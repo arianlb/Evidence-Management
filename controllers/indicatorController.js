@@ -1,5 +1,6 @@
 const { request, response} = require('express');
 
+const { indicatorsByCategory } = require('../helpers/indicatorResponse');
 const Indicator = require('../models/indicator');
 const User = require('../models/user');
 
@@ -16,6 +17,11 @@ const indicatorGet = async(req = request, res = response) => {
         total,
         indicator
     });
+}
+
+const indicatorByCategory = async(req = request, res = response) => {
+    const indicators = await indicatorsByCategory(req.body.categories);
+    res.json(indicators);
 }
 
 const indicatorById = async(req = request, res = response) => {
@@ -88,4 +94,9 @@ const indicatorDelete = async(req = request, res = response) => {
     res.json(indicator);
 }
 
-module.exports = { indicatorById, indicatorGet, indicatorPost, indicatorPut, indicatorDelete}
+module.exports = {  indicatorByCategory,
+                    indicatorById,
+                    indicatorGet,
+                    indicatorPost,
+                    indicatorPut,
+                    indicatorDelete}

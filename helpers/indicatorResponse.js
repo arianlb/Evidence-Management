@@ -1,3 +1,4 @@
+const indicator = require('../models/indicator');
 const Indicator = require('../models/indicator');
 
 const indicatorByCriterion = async (area) => {
@@ -28,4 +29,20 @@ const indicatorByCriterion = async (area) => {
     return objectives;
 }
 
-module.exports = {indicatorByCriterion}
+const indicatorsByCategory = async(categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO',
+'TRABAJO POLÍTICO-IDEOLÓGICO', 'TRABAJO METODOLÓGICO', 'TRABAJO DE INVESTIGACIÓN E INNOVACIÓN',
+'SUPERACIÓN']) => {
+
+    let indicators;
+    let indicatorsResponse = [];
+    for(let i = 0; i < categories.length; i++) {
+        indicators = await Indicator.find({category: categories[i]});
+        indicatorsResponse.push({category: categories[i], indicators});
+    }
+
+    //indicators = await Indicator.find().sort({field: 'asc', category: 'desc'});
+    //indicators.sort({field: 'asc', category: 'desc'});
+    return indicatorsResponse;
+}
+
+module.exports = { indicatorsByCategory, indicatorByCriterion }

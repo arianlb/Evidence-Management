@@ -1,6 +1,6 @@
 const { response } = require('express');
 
-const { indicatorByCriterion } = require('../helpers/areaResponse');
+const { indicatorByCriterion } = require('../helpers/indicatorResponse');
 const Area = require('../models/area');
 const Objective = require('../models/objective');
 
