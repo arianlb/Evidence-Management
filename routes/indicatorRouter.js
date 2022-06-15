@@ -3,9 +3,10 @@ const { check } = require('express-validator');
 
 const { validate } = require('../middlewares/validateFields');
 const { indicatorsRequest } = require('../middlewares/validateIndicators');
-//const { criterionExistsById } = require('../helpers/dbValidators');
+const { userExistsById } = require('../helpers/dbValidators');
 const { indicatorByCategory,
         indicatorById,
+        indicatorsByUser,
         indicatorGet,
         indicatorPost,
         indicatorPostByCriterion,
@@ -22,6 +23,12 @@ router.get('/:id',[
     check('id', 'No es un ID valido').isMongoId(),
     validate
 ], indicatorById);
+
+router.get('/user/:id',[
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(userExistsById),
+    validate
+], indicatorsByUser);
 
 router.post('/:id', [
     check('id', 'No es un ID valido').isMongoId(),

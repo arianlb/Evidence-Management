@@ -1,5 +1,5 @@
-const indicator = require('../models/indicator');
 const Indicator = require('../models/indicator');
+const User = require('../models/user');
 
 const indicatorByCriterion = async (area) => {
     const indicators = await Indicator.find( {model: true} );
@@ -31,17 +31,37 @@ const indicatorByCriterion = async (area) => {
 
 const indicatorsByCategory = async(categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO',
 'TRABAJO POLÍTICO-IDEOLÓGICO', 'TRABAJO METODOLÓGICO', 'TRABAJO DE INVESTIGACIÓN E INNOVACIÓN',
-'SUPERACIÓN']) => {
+'SUPERACIÓN'], userId) => {
 
     let indicators;
     let indicatorsResponse = [];
+
+    if(userId) {
+        const user = await User.findById(userId).populate('indicators');
+
+        for(let i = 0; i < categories.length; i++) {
+            indicators = [];
+            indicatorsResponse.push({category: categories[i], indicators});
+        }
+
+        user.indicators.forEach(element => {
+            for(let i = 0; i < categories.length; i++) {
+                if(element.category === categories[i]){
+                    indicatorsResponse[i].indicators.push(element);
+                    break;
+                }
+            }
+        });
+
+        return indicatorsResponse;
+    }
+    
     for(let i = 0; i < categories.length; i++) {
-        indicators = await Indicator.find({category: categories[i]});
+        indicators = await Indicator.find({category: categories[i], model: true});
         indicatorsResponse.push({category: categories[i], indicators});
     }
 
     //indicators = await Indicator.find().sort({field: 'asc', category: 'desc'});
-    //indicators.sort({field: 'asc', category: 'desc'});
     return indicatorsResponse;
 }
 

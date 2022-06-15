@@ -25,6 +25,11 @@ const indicatorByCategory = async(req = request, res = response) => {
     res.json(indicators);
 }
 
+const indicatorsByUser = async(req = request, res = response) => {
+    const indicators = await indicatorsByCategory(req.body.categories, req.params.id);
+    res.json(indicators);
+}
+
 const indicatorById = async(req = request, res = response) => {
     const indicator = await Indicator.findById(req.params.id).populate(['criterion', 'evidences']);
     if(!indicator) {
@@ -93,6 +98,7 @@ const indicatorDelete = async(req = request, res = response) => {
 
 module.exports = {  indicatorByCategory,
                     indicatorById,
+                    indicatorsByUser,
                     indicatorGet,
                     indicatorPost,
                     indicatorPostByCriterion,
