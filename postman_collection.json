@@ -553,13 +553,13 @@
 			"name": "Indicadores",
 			"item": [
 				{
-					"name": "Crear Indicador",
+					"name": "Crear Indicador a un Usuario",
 					"request": {
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Indicador numero 1\",\r\n    \"category\": \"TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO\"\r\n}",
+							"raw": "{\r\n    \"indicators\": [\r\n        {\r\n            \"_id\": \"62a803df7ac0a54e052bbaa9\",\r\n            \"name\": \"Indicador numero 3\",\r\n            \"status\": false,\r\n            \"category\": \"TRABAJO METODOLÓGICO\",\r\n            \"model\": true,\r\n            \"evidences\": [],\r\n            \"__v\": 0\r\n        },\r\n        {\r\n            \"_id\": \"62a803ef7ac0a54e052bbaad\",\r\n            \"name\": \"Indicador numero 5\",\r\n            \"status\": false,\r\n            \"category\": \"SUPERACIÓN\",\r\n            \"model\": true,\r\n            \"evidences\": [],\r\n            \"__v\": 0\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -567,14 +567,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/indicators/627ee04146022fcd79fd1c75",
+							"raw": "{{url}}/api/indicators/62a90b780aa60e9e9e585ea8",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"indicators",
-								"627ee04146022fcd79fd1c75"
+								"62a90b780aa60e9e9e585ea8"
 							]
 						}
 					},

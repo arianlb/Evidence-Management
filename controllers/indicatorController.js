@@ -42,16 +42,20 @@ const indicatorPost = async(req = request, res = response) => {
         })
     }
 
-    const { name, category } = req.body;
-    const indicator = new Indicator({ name, category, model: false });
-    user.indicators.push(indicator);
+    let indicators = [];
+    const indicatorsModels = req.body.indicators;
+    indicatorsModels.forEach(indicator => indicators.push({
+        name: indicator.name,
+        category: indicator.category,
+        criterion: indicator.criterion,
+        model: false
+    }));
+    
+    indicators = await Indicator.create(indicators);
+    user.indicators = user.indicators.concat(indicators);
+    await user.save();
 
-    await Promise.all([
-        indicator.save(),
-        user.save()
-    ]);
-
-    res.json(indicator);
+    res.json(indicators);
 }
 
 const indicatorPostByCriterion = async(req = request, res = response) => {
@@ -80,30 +84,6 @@ const indicatorPut = async(req = request, res = response) => {
         msg: 'Indicador actualizado',
     });
 }
-
-//Por definir
-/*const assignCriterion = async(req = request, res = response) => {
-    const { id } = req.params;
-    const { name } = req.body;
-
-    await Indicator.findByIdAndUpdate(id, {name});
-    
-    res.json({
-        msg: 'Indicador actualizado',
-    });
-}*/
-
-//Por definir
-/*const addEvidence = async(req = request, res = response) => {
-    const { id } = req.params;
-    const { name } = req.body;
-
-    await Indicator.findByIdAndUpdate(id, {name});
-    
-    res.json({
-        msg: 'Indicador actualizado',
-    });
-}*/
 
 const indicatorDelete = async(req = request, res = response) => {
     const { id } = req.params;

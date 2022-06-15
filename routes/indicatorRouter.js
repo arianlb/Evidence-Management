@@ -2,6 +2,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 const { validate } = require('../middlewares/validateFields');
+const { indicatorsRequest } = require('../middlewares/validateIndicators');
 //const { criterionExistsById } = require('../helpers/dbValidators');
 const { indicatorByCategory,
         indicatorById,
@@ -24,8 +25,7 @@ router.get('/:id',[
 
 router.post('/:id', [
     check('id', 'No es un ID valido').isMongoId(),
-    check('name', 'El nombre es obligatorio').notEmpty(),
-    check('category', 'La categoria es obligatorio').notEmpty(),
+    indicatorsRequest,
     validate
 ], indicatorPost);
 
