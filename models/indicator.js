@@ -30,4 +30,9 @@ const IndicatorSchema = Schema({
     }]
 });
 
+IndicatorSchema.methods.toJSON = function(){
+    const { __v, model, ...indicator } = this.toObject();
+    return indicator;
+}
+
 module.exports = model('Indicator', IndicatorSchema);
