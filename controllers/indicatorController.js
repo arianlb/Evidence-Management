@@ -48,7 +48,7 @@ const indicatorPost = async(req = request, res = response) => {
     }
 
     let indicators = [];
-    const indicatorsModels = req.body.indicators;
+    const indicatorsModels = await Indicator.find({_id: {$in: req.body.indicators}});
     indicatorsModels.forEach(indicator => indicators.push({
         name: indicator.name,
         category: indicator.category,

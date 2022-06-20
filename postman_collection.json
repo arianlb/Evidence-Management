@@ -559,7 +559,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"indicators\": [\r\n        {\r\n            \"_id\": \"62a803df7ac0a54e052bbaa9\",\r\n            \"name\": \"Indicador numero 3\",\r\n            \"status\": false,\r\n            \"category\": \"TRABAJO METODOLÓGICO\",\r\n            \"model\": true,\r\n            \"evidences\": [],\r\n            \"__v\": 0\r\n        },\r\n        {\r\n            \"_id\": \"62a803ef7ac0a54e052bbaad\",\r\n            \"name\": \"Indicador numero 5\",\r\n            \"status\": false,\r\n            \"category\": \"SUPERACIÓN\",\r\n            \"model\": true,\r\n            \"evidences\": [],\r\n            \"__v\": 0\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"indicators\": [\r\n        {\r\n            \"_id\": \"62a803df7ac0a54e052bbaa9\"\r\n        },\r\n        {\r\n            \"_id\": \"62a804167ac0a54e052bbab5\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
