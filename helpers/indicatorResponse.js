@@ -39,19 +39,22 @@ const indicatorsByCategory = async(categories = ['TRABAJO DOCENTE-EDUCATIVO EN P
     if(userId) {
         const user = await User.findById(userId).populate('indicators');
 
-        for(let i = 0; i < categories.length; i++) {
-            indicators = [];
-            indicatorsResponse.push({category: categories[i], indicators});
-        }
-
-        user.indicators.forEach(element => {
+        if(user.indicators.length > 0) {
+            
             for(let i = 0; i < categories.length; i++) {
-                if(element.category === categories[i]){
-                    indicatorsResponse[i].indicators.push(element);
-                    break;
-                }
+                indicators = [];
+                indicatorsResponse.push({category: categories[i], indicators});
             }
-        });
+    
+            user.indicators.forEach(element => {
+                for(let i = 0; i < categories.length; i++) {
+                    if(element.category === categories[i]){
+                        indicatorsResponse[i].indicators.push(element);
+                        break;
+                    }
+                }
+            });
+        }
 
         return indicatorsResponse;
     }

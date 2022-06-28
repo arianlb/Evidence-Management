@@ -27,7 +27,8 @@ const indicatorByCategory = async(req = request, res = response) => {
 
 const indicatorsByUser = async(req = request, res = response) => {
     const indicators = await indicatorsByCategory(req.body.categories, req.params.id);
-    res.json(indicators);
+    const has = indicators.length > 0;
+    res.json({ has, indicators });
 }
 
 const indicatorById = async(req = request, res = response) => {
