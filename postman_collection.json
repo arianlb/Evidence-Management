@@ -837,14 +837,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/evidences/627ad288f72f80556b5dbe19",
+							"raw": "{{url}}/api/evidences/62bb7136beaa51a5b891608a/indicator/62bb6f56beaa51a5b8916062",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"evidences",
-								"627ad288f72f80556b5dbe19"
+								"62bb7136beaa51a5b891608a",
+								"indicator",
+								"62bb6f56beaa51a5b8916062"
 							]
 						}
 					},

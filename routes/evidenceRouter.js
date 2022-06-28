@@ -3,7 +3,7 @@ const { check } = require('express-validator');
 
 const { validate } = require('../middlewares/validateFields');
 const { validateUpload } = require('../middlewares/validateFile');
-//const { existsRole } = require('../helpers/dbValidators');
+const { evidenceExistsById, indicatorExistsById } = require('../helpers/dbValidators');
 const { evidenceGet,
         evidenceGetFile,
         evidencePost,
@@ -37,8 +37,11 @@ router.put('/:id', [
     validate
 ], evidencePut);
 
-router.delete('/:id', [
+router.delete('/:id/indicator/:idIndicator', [
     check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(evidenceExistsById),
+    check('idIndicator', 'No es un ID valido').isMongoId(),
+    check('idIndicator').custom(indicatorExistsById),
     validate
 ], evidenceDelete);
 

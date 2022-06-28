@@ -1,7 +1,9 @@
 const Area = require('../models/area');
+const Criterion = require('../models/criterion');
+const Evidence = require('../models/evidence');
+const Indicator = require('../models/indicator');
 const Role = require('../models/role');
 const User = require('../models/user');
-const Criterion = require('../models/criterion');
 
 const isRoleValid = async(role = '') => {
     const roleExists = await Role.findOne({role});
@@ -52,11 +54,27 @@ const criterionExistsById = async( id ) => {
     }
 }
 
+const evidenceExistsById = async( id ) => {
+    const exists = await Evidence.findById(id);
+    if(!exists){
+        throw new Error(`El id ${id} no exite en la BD`);
+    }
+}
+
+const indicatorExistsById = async( id ) => {
+    const exists = await Indicator.findById(id);
+    if(!exists){
+        throw new Error(`El id ${id} no exite en la BD`);
+    }
+}
+
 module.exports = { 
     areaExistsById,
     areaNameExists,
     criterionExistsById,
+    evidenceExistsById,
     existsRole,
+    indicatorExistsById,
     isRoleValid,
     userExistsById,
     usernameExists,

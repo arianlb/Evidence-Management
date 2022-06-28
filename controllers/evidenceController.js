@@ -3,6 +3,7 @@ const fs = require('fs');
 const { request, response} = require('express');
 
 const { updateCriterion } = require('../helpers/modifyCriterion');
+const { deleteEvidence } = require('../helpers/removeEvidence');
 const { upload } = require('../helpers/uploadFile');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
@@ -86,9 +87,12 @@ const evidencePut = async(req = request, res = response) => {
 }
 
 const evidenceDelete = async(req = request, res = response) => {
-    const { id } = req.params;
-    const evidence = await Evidence.findByIdAndDelete(id);
-    res.json(evidence);
+    try {
+        await deleteEvidence(req.params.id, req.params.idIndicator);
+        res.json({msg: 'Evidencia eliminada'});
+    } catch (msg) {
+        res.status(400).json({msg});
+    }
 }
 
 const evidenceUpload = async (req = request, res = response) => {
