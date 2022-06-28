@@ -43,9 +43,24 @@ const evaluationPut = async(req = request, res = response) => {
 }
 
 const evaluationDelete = async(req = request, res = response) => {
-    const { id } = req.params;
-    const evaluation = await Evaluation.findByIdAndDelete(id);
-    res.json(evaluation);
+
+    const user = await User.findById(req.params.id);
+    if(!user){
+        return res.status(404).json({
+            msg: 'No existe el Usuario en la base de datos'
+        })
+    }
+
+    if(user.evaluation){
+        const id = user.evaluation;
+        user.evaluation = undefined;
+        await Promise.all([
+            Evaluation.findByIdAndDelete(id),
+            user.save()
+        ]);
+    }
+    
+    res.json({ msg: 'Evaluación eliminada'});
 }
 
 module.exports = { evaluationGet, evaluationPost, evaluationPut, evaluationDelete}
