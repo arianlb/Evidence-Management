@@ -5,7 +5,6 @@ const { updateCriterion } = require('./modifyCriterion');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
 const User = require('../models/user');
-const evidence = require('../models/evidence');
 
 const deleteEvidence = async(id, idIndicator) => {
     const [evidence, indicator] = await Promise.all([
@@ -59,7 +58,7 @@ const deleteIndicator = async(id, idUser) => {
         const evidences = indicator.evidences;
         //evidences.forEach( async(evidence) => await deleteEvidence(evidence, indicator._id));
         //No se puede hacer con un forEach porque se hace de modo asincronico y no respeta el await
-        for(let evidence of evidences) {
+        for(evidence of evidences) {
             await deleteEvidence(evidence, indicator._id);
         }
     }
