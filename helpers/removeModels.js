@@ -59,8 +59,8 @@ const deleteIndicator = async(id, idUser) => {
         const evidences = indicator.evidences;
         //evidences.forEach( async(evidence) => await deleteEvidence(evidence, indicator._id));
         //No se puede hacer con un forEach porque se hace de modo asincronico y no respeta el await
-        for(let i = 0; i < evidences.length; i++) {
-            await deleteEvidence(evidences[i], indicator._id);
+        for(let evidence of evidences) {
+            await deleteEvidence(evidence, indicator._id);
         }
     }
 

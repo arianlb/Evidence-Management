@@ -97,7 +97,7 @@ const indicatorDelete = async(req = request, res = response) => {
         await deleteIndicator(req.params.id, req.params.idUser);
         res.json({msg: 'Indicador eliminado'});
     } catch (msg) {
-        res.status(400).json({msg});
+        res.status(400).json({msg: 'Error eliminando el indicador'});
     }
 }
 
