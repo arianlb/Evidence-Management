@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 
 const { indicatorsByCategory } = require('../helpers/indicatorResponse');
+const { deleteIndicator } = require('../helpers/removeModels');
 const Criterion = require('../models/criterion');
 const Indicator = require('../models/indicator');
 const User = require('../models/user');
@@ -34,7 +35,7 @@ const indicatorsByUser = async(req = request, res = response) => {
 const indicatorById = async(req = request, res = response) => {
     const indicator = await Indicator.findById(req.params.id).populate(['criterion', 'evidences']);
     if(!indicator) {
-        res.status(404).json({msg: 'Indicator no existe en la BD'});
+        return res.status(404).json({msg: 'Indicator no existe en la BD'});
     }
     res.json(indicator);
 }
@@ -92,8 +93,16 @@ const indicatorPut = async(req = request, res = response) => {
 }
 
 const indicatorDelete = async(req = request, res = response) => {
-    const { id } = req.params;
-    const indicator = await Indicator.findByIdAndDelete(id);
+    try {
+        await deleteIndicator(req.params.id, req.params.idUser);
+        res.json({msg: 'Indicador eliminado'});
+    } catch (msg) {
+        res.status(400).json({msg});
+    }
+}
+
+const indicatorModelDelete = async(req = request, res = response) => {
+    const indicator = await Indicator.findByIdAndDelete(req.params.id);
     res.json(indicator);
 }
 
@@ -104,4 +113,5 @@ module.exports = {  indicatorByCategory,
                     indicatorPost,
                     indicatorPostByCriterion,
                     indicatorPut,
-                    indicatorDelete}
+                    indicatorDelete,
+                    indicatorModelDelete}

@@ -3,7 +3,7 @@ const fs = require('fs');
 const { request, response} = require('express');
 
 const { updateCriterion } = require('../helpers/modifyCriterion');
-const { deleteEvidence } = require('../helpers/removeEvidence');
+const { deleteEvidence } = require('../helpers/removeModels');
 const { upload } = require('../helpers/uploadFile');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');

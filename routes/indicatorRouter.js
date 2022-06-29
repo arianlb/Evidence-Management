@@ -3,7 +3,7 @@ const { check } = require('express-validator');
 
 const { validate } = require('../middlewares/validateFields');
 const { indicatorsRequest } = require('../middlewares/validateIndicators');
-const { userExistsById } = require('../helpers/dbValidators');
+const { userExistsById, indicatorExistsById } = require('../helpers/dbValidators');
 const { indicatorByCategory,
         indicatorById,
         indicatorsByUser,
@@ -11,7 +11,8 @@ const { indicatorByCategory,
         indicatorPost,
         indicatorPostByCriterion,
         indicatorPut,
-        indicatorDelete } = require('../controllers/indicatorController');
+        indicatorDelete,
+        indicatorModelDelete } = require('../controllers/indicatorController');
 
 const router = Router();
 
@@ -48,9 +49,17 @@ router.put('/:id', [
     validate
 ], indicatorPut);
 
+router.delete('/:id/user/:idUser', [
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(indicatorExistsById),
+    check('idUser', 'No es un ID valido').isMongoId(),
+    check('idUser').custom(userExistsById),
+    validate
+], indicatorDelete);
+
 router.delete('/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     validate
-], indicatorDelete);
+], indicatorModelDelete);
 
 module.exports = router;

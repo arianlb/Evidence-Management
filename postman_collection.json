@@ -741,6 +741,27 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Eliminar Indicador de un Usuario",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/indicators/62bb6f56beaa51a5b8916062/user/62ba6511f14f56b9dd4d1c30",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators",
+								"62bb6f56beaa51a5b8916062",
+								"user",
+								"62ba6511f14f56b9dd4d1c30"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
