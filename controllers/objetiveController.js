@@ -1,5 +1,6 @@
 const { request, response } = require('express');
 
+const { deleteObjective } = require('../helpers/removeModels');
 const Area = require('../models/area');
 const Criterion = require('../models/criterion');
 const Objective = require('../models/objective');
@@ -76,9 +77,12 @@ const addCriterions = async(req, res = response) => {
 }
 
 const objectiveDelete = async(req = request, res = response) => {
-    const { id } = req.params;
-    const objectiveD = await Objective.findByIdAndDelete(id);
-    res.json({ objectiveD });
+    try {
+        await deleteObjective(req.params.id, req.params.idArea);
+        res.json({msg: 'Objetivo eliminado'});
+    } catch (msg) {
+        res.status(400).json({msg: 'Error al eliminar el objetivo'});
+    }
 }
 
 module.exports = { addCriterions, objectiveGet, objectivePost, objectivePut, objectiveDelete }

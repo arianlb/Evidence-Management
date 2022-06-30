@@ -2,6 +2,7 @@ const path = require('path');
 const fs = require('fs');
 
 const { updateCriterion } = require('./modifyCriterion');
+const Area = require('../models/area');
 const Criterion = require('../models/criterion');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
@@ -89,8 +90,6 @@ const deleteCriterion = async(id, idObjective) => {
         Indicator.find({model: false, criterion: criterion._id})
     ]);
 
-    console.log(indicatorModel);
-
     for(indicator of indicators) {
         indicator.criterion = undefined;
         await indicator.save();
@@ -102,4 +101,30 @@ const deleteCriterion = async(id, idObjective) => {
     ]);
 }
 
-module.exports = { deleteCriterion, deleteEvidence, deleteIndicator }
+const deleteObjective = async(id, idArea) => {
+    const [objective, area] = await Promise.all([
+        Objective.findById(id),
+        Area.findById(idArea)
+    ]);
+
+    for(let i = 0; i < area.objectives.length; i++) {
+        if(area.objectives[i].equals(objective._id)) {
+            area.objectives.splice(i, 1);
+            break;
+        }
+    }
+
+    if(objective.criterions) {
+        const criterions = objective.criterions;
+        for(criterion of criterions) {
+            await deleteCriterion(criterion, objective._id);
+        }
+    }
+
+    await Promise.all([
+        Objective.findByIdAndDelete(objective._id),
+        area.save()
+    ]);
+}
+
+module.exports = { deleteCriterion, deleteEvidence, deleteIndicator, deleteObjective }

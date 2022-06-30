@@ -396,14 +396,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/objectives/627acb4af2872c8aa9622245",
+							"raw": "{{url}}/api/objectives/6296bd46f21f8661e8b87bda/area/6296bd46f21f8661e8b87bdd",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"objectives",
-								"627acb4af2872c8aa9622245"
+								"6296bd46f21f8661e8b87bda",
+								"area",
+								"6296bd46f21f8661e8b87bdd"
 							]
 						}
 					},
