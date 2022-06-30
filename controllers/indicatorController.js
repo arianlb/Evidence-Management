@@ -46,11 +46,35 @@ const indicatorPost = async(req = request, res = response) => {
     if(!user){
         return res.status(404).json({
             msg: 'No existe el Usuario en la base de datos'
-        })
+        });
     }
 
     let indicators = [];
-    const indicatorsModels = await Indicator.find({_id: {$in: req.body.indicators}});
+    let indicatorsModels = await Indicator.find({_id: {$in: req.body.indicators}});
+
+    if(user.indicators) {
+        for(let i = 0; i < indicatorsModels.length; i++) {
+            for(let j = 0; j < user.indicators.length; j++) {
+                if(indicatorsModels[i].name === user.indicators[j].name &&
+                indicatorsModels[i].category === user.indicators[j].category) {
+
+                    if(user.indicators[j].criterion) {
+                        return res.status(400).json({
+                            msg: `El usuario ya tiene el inddicador ${user.indicators[j].name} 
+                                de la categoria ${user.indicators[j].category}`
+                        });
+                    }
+                    else {
+                        user.indicators[j].criterion = indicatorsModels[i].criterion;
+                        indicatorsModels.splice(i--, 1);
+                        break;
+                    }
+                }
+                    
+            }
+        }
+    }
+
     indicatorsModels.forEach(indicator => indicators.push({
         name: indicator.name,
         category: indicator.category,
