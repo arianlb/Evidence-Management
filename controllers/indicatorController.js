@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 
 const { indicatorsByCategory } = require('../helpers/indicatorResponse');
+const { updateCriterion } = require('../helpers/modifyCriterion');
 const { deleteIndicator } = require('../helpers/removeModels');
 const Criterion = require('../models/criterion');
 const Indicator = require('../models/indicator');
@@ -42,7 +43,7 @@ const indicatorById = async(req = request, res = response) => {
 
 const indicatorPost = async(req = request, res = response) => {
 
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).populate('indicators');
     if(!user){
         return res.status(404).json({
             msg: 'No existe el Usuario en la base de datos'
@@ -60,13 +61,17 @@ const indicatorPost = async(req = request, res = response) => {
 
                     if(user.indicators[j].criterion) {
                         return res.status(400).json({
-                            msg: `El usuario ya tiene el inddicador ${user.indicators[j].name} 
+                            msg: `El usuario ya tiene el indicador ${user.indicators[j].name} 
                                 de la categoria ${user.indicators[j].category}`
                         });
                     }
                     else {
                         user.indicators[j].criterion = indicatorsModels[i].criterion;
                         indicatorsModels.splice(i--, 1);
+                        await user.indicators[j].save();
+                        if (user.indicators[j].status) {
+                            await updateCriterion(user.indicators[j].criterion, 1);
+                        }
                         break;
                     }
                 }
