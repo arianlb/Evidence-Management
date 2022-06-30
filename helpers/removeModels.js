@@ -8,6 +8,7 @@ const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
 const Objective = require('../models/objective');
 const User = require('../models/user');
+const area = require('../models/area');
 
 const deleteEvidence = async(id, idIndicator) => {
     const [evidence, indicator] = await Promise.all([
@@ -140,4 +141,21 @@ const deleteArea = async(id) => {
     await Area.findByIdAndDelete(area._id);
 }
 
-module.exports = { deleteArea, deleteCriterion, deleteEvidence, deleteIndicator, deleteObjective }
+const deleteUser = async(id) => {
+    const [ user, areas ] = await Promise.all([
+        User.findByIdAndUpdate(id, {status: false}),
+        Area.find()
+    ]);
+
+    for(area of areas) {
+        for(let i = 0; i < area.users.length; i++) {
+            if(area.users[i].equals(user._id)) {
+                area.users.splice(i, 1);
+                await area.save();
+                break;
+            }
+        }
+    }
+}
+
+module.exports = { deleteArea, deleteCriterion, deleteEvidence, deleteIndicator, deleteObjective, deleteUser }

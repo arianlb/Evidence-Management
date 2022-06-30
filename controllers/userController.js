@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 const bcryptjs = require('bcryptjs');
 
+const { deleteUser } = require('../helpers/removeModels');
 const User = require('../models/user');
 
 const userGet = async(req = request, res = response) => {
@@ -9,7 +10,7 @@ const userGet = async(req = request, res = response) => {
 
     const [ total, users ] = await Promise.all([
         User.countDocuments(),
-        User.find().skip(Number(begin)).limit(Number(amount))
+        User.find({status: true}).skip(Number(begin)).limit(Number(amount))
     ]);
 
     res.json({
@@ -48,10 +49,12 @@ const userPut = async(req = request, res = response) => {
 }
 
 const userDelete = async(req = request, res = response) => {
-    const { id } = req.params;
-    const user = await User.findByIdAndDelete(id);
-    const authrole = req.authrole;
-    res.json({user, authrole});
+    try {
+        await deleteUser(req.params.id);
+        res.json({msg: 'Usuario desactivado'});
+    } catch (error) {
+        res.status(400).json({msg: 'Error desactivando al usuario'});
+    }
 }
 
 module.exports = {userGet, userPost, userPut, userDelete}

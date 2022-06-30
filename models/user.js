@@ -36,7 +36,11 @@ const UserSchema = Schema({
     indicators: [{
         type: Schema.Types.ObjectId,
         ref: 'Indicator'
-    }]
+    }],
+    status: {
+        type: Boolean,
+        default: true
+    }
 });
 
 UserSchema.methods.toJSON = function(){
