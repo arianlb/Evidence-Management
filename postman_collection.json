@@ -534,14 +534,16 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/criterions/627ace2d35aaed69c2410778",
+							"raw": "{{url}}/api/criterions/62bcfcdb531744b5b1cd2f89/objective/6296bd46f21f8661e8b87bda",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"criterions",
-								"627ace2d35aaed69c2410778"
+								"62bcfcdb531744b5b1cd2f89",
+								"objective",
+								"6296bd46f21f8661e8b87bda"
 							]
 						}
 					},

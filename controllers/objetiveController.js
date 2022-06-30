@@ -70,7 +70,7 @@ const addCriterions = async(req, res = response) => {
     }
 
     objective.criterions = objective.criterions.concat(criterions);
-    objective.save();
+    await objective.save();
 
     res.json({ msg: 'Criterios de Medidas añadidos' });
 }

@@ -2,11 +2,12 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 
 const { validate } = require('../middlewares/validateFields');
-//const { existsRole } = require('../helpers/dbValidators');
+const { criterionExistsById, objectiveExistsById } = require('../helpers/dbValidators');
 const { criterionGet,
         criterionPost,
         criterionPut,
         criterionDelete } = require('../controllers/criterionController');
+const objective = require('../models/objective');
 
 const router = Router();
 
@@ -23,8 +24,11 @@ router.put('/:id', [
     validate
 ], criterionPut);
 
-router.delete('/:id', [
+router.delete('/:id/objective/:idObjective', [
     check('id', 'No es un ID valido').isMongoId(),
+    check('idObjective', 'No es un ID valido').isMongoId(),
+    check('id').custom(criterionExistsById),
+    check('idObjective').custom(objectiveExistsById),
     validate
 ], criterionDelete);
 

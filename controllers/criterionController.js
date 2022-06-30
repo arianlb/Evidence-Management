@@ -1,5 +1,6 @@
 const { request, response} = require('express');
 
+const { deleteCriterion } = require('../helpers/removeModels');
 const Criterion = require('../models/criterion');
 const Objective = require('../models/objective');
 
@@ -61,9 +62,12 @@ const criterionPut = async(req = request, res = response) => {
 }*/
 
 const criterionDelete = async(req = request, res = response) => {
-    const { id } = req.params;
-    const criterion = await Criterion.findByIdAndDelete(id);
-    res.json(criterion);
+    try {
+        await deleteCriterion(req.params.id, req.params.idObjective);
+        res.json({msg: 'Criterio de medida eliminado'});
+    } catch (msg) {
+        res.status(400).json({msg: 'Error eliminando el criterio de medida'});
+    }
 }
 
 module.exports = { criterionGet, criterionPost, criterionPut, criterionDelete}

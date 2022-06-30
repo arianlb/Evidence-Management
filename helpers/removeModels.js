@@ -2,8 +2,10 @@ const path = require('path');
 const fs = require('fs');
 
 const { updateCriterion } = require('./modifyCriterion');
+const Criterion = require('../models/criterion');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
+const Objective = require('../models/objective');
 const User = require('../models/user');
 
 const deleteEvidence = async(id, idIndicator) => {
@@ -69,4 +71,35 @@ const deleteIndicator = async(id, idUser) => {
     ]);
 }
 
-module.exports = { deleteEvidence, deleteIndicator }
+const deleteCriterion = async(id, idObjective) => {
+    const [ criterion, objective ] = await Promise.all([
+        Criterion.findById(id),
+        Objective.findById(idObjective)
+    ]);
+
+    for(let i = 0; i < objective.criterions.length; i++) {
+        if(objective.criterions[i].equals(criterion._id)) {
+            objective.criterions.splice(i, 1);
+            break;
+        }
+    }
+
+    const [ indicatorModel, indicators ] = await Promise.all([
+        Indicator.findOneAndDelete( {model: true, criterion: criterion._id} ),
+        Indicator.find({model: false, criterion: criterion._id})
+    ]);
+
+    console.log(indicatorModel);
+
+    for(indicator of indicators) {
+        indicator.criterion = undefined;
+        await indicator.save();
+    }
+
+    await Promise.all([
+        Criterion.findByIdAndDelete(criterion._id),
+        objective.save()
+    ]);
+}
+
+module.exports = { deleteCriterion, deleteEvidence, deleteIndicator }
