@@ -127,4 +127,17 @@ const deleteObjective = async(id, idArea) => {
     ]);
 }
 
-module.exports = { deleteCriterion, deleteEvidence, deleteIndicator, deleteObjective }
+const deleteArea = async(id) => {
+    const area = await Area.findById(id);
+
+    if(area.objectives) {
+        const objectives = area.objectives;
+        for(objective of objectives) {
+            await deleteObjective(objective, area._id);
+        }
+    }
+
+    await Area.findByIdAndDelete(area._id);
+}
+
+module.exports = { deleteArea, deleteCriterion, deleteEvidence, deleteIndicator, deleteObjective }

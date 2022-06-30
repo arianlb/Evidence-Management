@@ -1,6 +1,7 @@
 const { response } = require('express');
 
 const { indicatorByCriterion } = require('../helpers/indicatorResponse');
+const { deleteArea } = require('../helpers/removeModels');
 const Area = require('../models/area');
 const Objective = require('../models/objective');
 
@@ -110,9 +111,12 @@ const addUsers = async(req, res = response) => {
 }
 
 const areaDelete = async(req, res = response) => {
-    const { id } = req.params;
-    const areaD = await Area.findByIdAndDelete(id);
-    res.json({ areaD });
+    try {
+        await deleteArea(req.params.id);
+        res.json({ msg: 'Area eliminada'});
+    } catch (error) {
+        res.status(400).json({ msg: 'Error eliminando el area'});
+    }
 }
 
 module.exports = { areaGet, areaPost, areaPut, areaDelete, addObjectives, addUsers, areaById }
