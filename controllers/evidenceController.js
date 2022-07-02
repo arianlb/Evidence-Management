@@ -10,27 +10,31 @@ const Indicator = require('../models/indicator');
 
 const evidenceGet = async(req = request, res = response) => {
     
-    const { begin = 0, amount = 5} = req.query;
-
-    const [ total, evidence ] = await Promise.all([
-        Evidence.countDocuments(),
-        Evidence.find().skip(Number(begin)).limit(Number(amount))
-    ]);
-
-    res.json({
-        total,
-        evidence
-    });
+    try {
+        const { begin = 0, amount = 5} = req.query;
+    
+        const [ total, evidence ] = await Promise.all([
+            Evidence.countDocuments(),
+            Evidence.find().skip(Number(begin)).limit(Number(amount))
+        ]);
+    
+        res.json({
+            total,
+            evidence
+        });
+        
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
 }
 
 const evidenceGetFile = async(req = request, res = response) => {
     
-    const evidence = await Evidence.findById(req.params.id);
-    if(!evidence){
-        return res.status(404).json({msg: 'La evidencia no existe en la BD'});
-    }
-
     try{
+        const evidence = await Evidence.findById(req.params.id);
+        if(!evidence){
+            return res.status(404).json({msg: 'La evidencia no existe en la BD'});
+        }
 
         if(evidence.file){
             const pathFile = path.join( __dirname, '../uploads/evidences/', evidence.file);
@@ -41,68 +45,77 @@ const evidenceGetFile = async(req = request, res = response) => {
         
         res.status(404).json({msg: 'La evidencia no tiene archivo'});
 
-    } catch(msg){
-        res.status(400).json({msg});
+    } catch(error){
+        res.status(500).json({msg: error.message});
     }
 }
 
 const evidencePost = async(req = request, res = response) => {
     
-    const indicator = await Indicator.findById(req.params.id);
-    if(!indicator) {
-        return res.status(404).json({
-            msg: 'El Indicador no existe en la BD'
-        })
-    }
-
-    const { description } = req.body;
-    const evidence = new Evidence({ description });
-    indicator.evidences.push(evidence);
-    
-    if(!indicator.status){
-        indicator.status = true;
-        //TODO: investigar una mejor forma
-        if(indicator.criterion){
-            updateCriterion(indicator.criterion, 1);
+    try {
+        const indicator = await Indicator.findById(req.params.id);
+        if(!indicator) {
+            return res.status(404).json({
+                msg: 'El Indicador no existe en la BD'
+            })
         }
+    
+        const { description } = req.body;
+        const evidence = new Evidence({ description });
+        indicator.evidences.push(evidence);
+        
+        if(!indicator.status){
+            indicator.status = true;
+            //TODO: investigar una mejor forma
+            if(indicator.criterion){
+                updateCriterion(indicator.criterion, 1);
+            }
+        }
+    
+        await Promise.all([
+            evidence.save(),
+            indicator.save()
+        ]);
+    
+        res.json(evidence);
+        
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
     }
-
-    await Promise.all([
-        evidence.save(),
-        indicator.save()
-    ]);
-
-    res.json(evidence);
 }
 
 const evidencePut = async(req = request, res = response) => {
-    const { id } = req.params;
-    const { description } = req.body;
-
-    await Evidence.findByIdAndUpdate(id, {description});
+    try {
+        const { id } = req.params;
+        const { description } = req.body;
     
-    res.json({
-        msg: 'Evidencia actualizada',
-    });
+        await Evidence.findByIdAndUpdate(id, {description});
+        
+        res.json({
+            msg: 'Evidencia actualizada',
+        });
+        
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+    }
 }
 
 const evidenceDelete = async(req = request, res = response) => {
     try {
         await deleteEvidence(req.params.id, req.params.idIndicator);
         res.json({msg: 'Evidencia eliminada'});
-    } catch (msg) {
-        res.status(400).json({msg});
+    } catch (error) {
+        res.status(500).json({msg: error.message});
     }
 }
 
 const evidenceUpload = async (req = request, res = response) => {
 
-    const evidence = await Evidence.findById(req.params.id);
-    if(!evidence){
-        return res.status(404).json({msg: 'La evidencia no existe en la BD'});
-    }
-
     try{
+        const evidence = await Evidence.findById(req.params.id);
+        if(!evidence){
+            return res.status(404).json({msg: 'La evidencia no existe en la BD'});
+        }
 
         if(evidence.file){
             const pathFile = path.join( __dirname, '../uploads/evidences/', evidence.file);
@@ -116,8 +129,8 @@ const evidenceUpload = async (req = request, res = response) => {
         await evidence.save();
         res.json(evidence);
 
-    } catch(msg){
-        res.status(400).json({msg});
+    } catch(error){
+        res.status(400).json({msg: error.message});
     }
 }
 
