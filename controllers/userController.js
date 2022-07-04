@@ -18,9 +18,11 @@ const userGet = async(req = request, res = response) => {
             total,
             users
         });
+        req.log.info('Obtuvo todos los Usuarios');
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -37,9 +39,11 @@ const userPost = async(req = request, res = response) => {
         await user.save();
     
         res.json(user);
+        req.log.info('Creo el Usuario: '+ username);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -57,9 +61,11 @@ const userPut = async(req = request, res = response) => {
         res.json({
             msg: 'Usuario actualizado',
         });
+        req.log.info('Actualizo el Usuario: '+ id);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -67,8 +73,10 @@ const userDelete = async(req = request, res = response) => {
     try {
         await deleteUser(req.params.id);
         res.json({msg: 'Usuario desactivado'});
+        req.log.info('Desactivo el Usuario: '+ req.params.id);
     } catch (error) {
-        res.status(400).json({msg: 'Error desactivando al usuario'});
+        res.status(500).json({msg: error.message});
+        req.log.error(error.message);
     }
 }
 

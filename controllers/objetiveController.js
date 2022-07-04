@@ -18,9 +18,11 @@ const objectiveGet = async(req = request, res = response) => {
             total,
             objectives
         });
+        req.log.info('Obtuvo todos los Objetivos');
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -29,6 +31,7 @@ const objectivePost = async(req = request, res = response) => {
     try {
         const area = await Area.findById(req.params.id);
         if (!area) {
+            req.log.warn(`El Area: ${req.params.id} no exite en la BD para asociarle el Objetivo`);
             res.status(404).json({msg: 'El area no existe en la BD'});
         }
     
@@ -49,9 +52,11 @@ const objectivePost = async(req = request, res = response) => {
         ])
         
         res.status(201).json(objective);
+        req.log.info(`Creo el Objetivo: ${objective._id} del Area: ${req.params.id}`)
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -63,9 +68,11 @@ const objectivePut = async(req = request, res = response) => {
         await Objective.findByIdAndUpdate(id, {name});
     
         res.json({ msg: 'Objetivo Estratégico actualizado' });
+        req.log.info(`Actualizo el Objetivo: ${id}`);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -74,13 +81,15 @@ const addCriterions = async(req, res = response) => {
         const { id } = req.params;
         const objective = await Objective.findById(id);
         if(!objective) {
+            req.log.warn(`El Objetivo: ${id} no existe en la BD para asociarle los Criterios`);
             return res.status(404).json({
-                msg: `El id ${id} no exite en la BD`
+                msg: `El Objetivo: con el id: ${id} no exite en la BD`
             })
         }
         
         const { criterions } = req.body;
         if(!criterions) {
+            req.log.warn(`No se recibio los criterios para asociarle al Objetivo: ${id}`);
             return res.status(400).json({
                 msg: 'No se recibió los criterios de medida para adicionar'
             })
@@ -90,9 +99,11 @@ const addCriterions = async(req, res = response) => {
         await objective.save();
     
         res.json({ msg: 'Criterios de Medidas añadidos' });
+        req.log.info(`Asocio los criterios al Objetivo: ${id}`)
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -100,8 +111,10 @@ const objectiveDelete = async(req = request, res = response) => {
     try {
         await deleteObjective(req.params.id, req.params.idArea);
         res.json({msg: 'Objetivo eliminado'});
+        req.log.info(`Elimino el Objetivo: ${req.params.id} del Area: ${req.params.idArea}`);
     } catch (error) {
         res.status(500).json({msg: error.message});
+        req.log.error(error.message);
     }
 }
 

@@ -17,9 +17,11 @@ const evaluationGet = async(req = request, res = response) => {
             total,
             evaluation
         });
+        req.log.info('Obtuvo todas las Evaluaciones');
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -34,10 +36,12 @@ const evaluationPost = async(req = request, res = response) => {
             User.findByIdAndUpdate(req.params.id, {evaluation})
         ])
     
-        res.json(evaluation);
+        res.status(201).json(evaluation);
+        req.log.info(`Creo la evaluacion: ${name} del usuario: ${req.params.id}`);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -51,9 +55,11 @@ const evaluationPut = async(req = request, res = response) => {
         res.json({
             msg: 'Evaluación actualizada',
         });
+        req.log.info(`Actualizo la Evaluacion: ${id}`);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -62,6 +68,7 @@ const evaluationDelete = async(req = request, res = response) => {
     try {
         const user = await User.findById(req.params.id);
         if(!user){
+            req.log.warn(`No existe el Usuario: ${req.params.id} para eliminar su evaluacion`);
             return res.status(404).json({
                 msg: 'No existe el Usuario en la base de datos'
             })
@@ -77,9 +84,11 @@ const evaluationDelete = async(req = request, res = response) => {
         }
         
         res.json({ msg: 'Evaluación eliminada'});
+        req.log.info(`Elimino la Evaluacion del Usuario: ${req.params.id}`);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 

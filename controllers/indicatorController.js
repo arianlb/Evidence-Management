@@ -21,9 +21,11 @@ const indicatorGet = async(req = request, res = response) => {
             total,
             indicator
         });
+        req.log.info('Obtuvo todos los Indicadores');
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -31,9 +33,11 @@ const indicatorByCategory = async(req = request, res = response) => {
     try {
         const indicators = await indicatorsByCategory(req.body.categories);
         res.json(indicators);
+        req.log.info('Obtuvo todos los Indicadores Modelos');
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -42,9 +46,11 @@ const indicatorsByUser = async(req = request, res = response) => {
         const indicators = await indicatorsByCategory(req.body.categories, req.params.id);
         const has = indicators.length > 0;
         res.json({ has, indicators });
+        req.log.info('Obtuvo todos los Indicadores del Usuario: ' + req.params.id);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -52,12 +58,15 @@ const indicatorById = async(req = request, res = response) => {
     try {
         const indicator = await Indicator.findById(req.params.id).populate(['criterion', 'evidences']);
         if(!indicator) {
+            req.log.warn(`El Indicador: ${req.params.id} no existe en la BD`);
             return res.status(404).json({msg: 'Indicator no existe en la BD'});
         }
         res.json(indicator);
+        req.log.info(`Obtuvo el Indicador: ${req.params.id}`)
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -66,6 +75,7 @@ const indicatorPost = async(req = request, res = response) => {
     try {
         const user = await User.findById(req.params.id).populate('indicators');
         if(!user){
+            req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);
             return res.status(404).json({
                 msg: 'No existe el Usuario en la base de datos'
             });
@@ -81,6 +91,8 @@ const indicatorPost = async(req = request, res = response) => {
                     indicatorsModels[i].category === user.indicators[j].category) {
     
                         if(user.indicators[j].criterion) {
+                            req.log.warn(`El usuario ya tiene el indicador ${user.indicators[j].name} 
+                                            de la categoria ${user.indicators[j].category}`);
                             return res.status(400).json({
                                 msg: `El usuario ya tiene el indicador ${user.indicators[j].name} 
                                     de la categoria ${user.indicators[j].category}`
@@ -113,9 +125,11 @@ const indicatorPost = async(req = request, res = response) => {
         await user.save();
     
         res.json(indicators);
+        req.log.info(`Asocio indicadores al Usuario: ${req.params.id}`)
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -124,6 +138,7 @@ const indicatorPostByCriterion = async(req = request, res = response) => {
     try {
         const criterion = await Criterion.findById(req.params.id);
         if(!criterion){
+            req.log.warn(`El Criterio: ${req.params.id} no existe en la BD para asociarle el Indicador Modelo`);
             return res.status(404).json({
                 msg: 'No existe el Criterio de medida en la base de datos'
             })
@@ -133,10 +148,12 @@ const indicatorPostByCriterion = async(req = request, res = response) => {
         const indicator = new Indicator({ name, category, criterion });
         await indicator.save();
     
-        res.json(indicator);
+        res.status(201).json(indicator);
+        req.log.info(`Creo el Indicador Modelo: ${name}`)
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -150,9 +167,11 @@ const indicatorPut = async(req = request, res = response) => {
         res.json({
             msg: 'Indicador actualizado',
         });
+        req.log.info(`Actualizo el Indicador: ${id}`)
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -160,8 +179,10 @@ const indicatorDelete = async(req = request, res = response) => {
     try {
         await deleteIndicator(req.params.id, req.params.idUser);
         res.json({msg: 'Indicador eliminado'});
+        req.log.info(`Elimino el Indicador: ${req.params.id} del Usuario: ${req.params.idUser}`);
     } catch (error) {
         res.status(500).json({msg: error.message});
+        req.log.error(error.message);
     }
 }
 
@@ -169,9 +190,11 @@ const indicatorModelDelete = async(req = request, res = response) => {
     try {
         const indicator = await Indicator.findByIdAndDelete(req.params.id);
         res.json(indicator);
+        req.log.info(`Elimino el Indicador Modelo: ${req.params.id}`);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 

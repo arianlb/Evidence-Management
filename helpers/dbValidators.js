@@ -30,7 +30,7 @@ const existsRole = async(role = '') => {
 const userExistsById = async( id ) => {
     const exists = await User.findById(id);
     if(!exists){
-        throw new Error(`El id ${id} no exite en la BD`);
+        throw new Error(`El Usuario con el id: ${id} no exite en la BD`);
     }
 }
 
@@ -44,35 +44,35 @@ const areaNameExists = async(name = '') => {
 const areaExistsById = async( id ) => {
     const exists = await Area.findById(id);
     if(!exists){
-        throw new Error(`El id ${id} no exite en la BD`);
+        throw new Error(`El Area con el id: ${id} no exite en la BD`);
     }
 }
 
 const criterionExistsById = async( id ) => {
     const exists = await Criterion.findById(id);
     if(!exists){
-        throw new Error(`El id ${id} no exite en la BD`);
+        throw new Error(`El Criterio con el id: ${id} no exite en la BD`);
     }
 }
 
 const evidenceExistsById = async( id ) => {
     const exists = await Evidence.findById(id);
     if(!exists){
-        throw new Error(`El id ${id} no exite en la BD`);
+        throw new Error(`La Evidencia con el id: ${id} no exite en la BD`);
     }
 }
 
 const indicatorExistsById = async( id ) => {
     const exists = await Indicator.findById(id);
     if(!exists){
-        throw new Error(`El id ${id} no exite en la BD`);
+        throw new Error(`El Indicador con el id: ${id} no exite en la BD`);
     }
 }
 
 const objectiveExistsById = async( id ) => {
     const exists = await Objective.findById(id);
     if(!exists){
-        throw new Error(`El id ${id} no exite en la BD`);
+        throw new Error(`El Objetivo con el id: ${id} no exite en la BD`);
     }
 }
 

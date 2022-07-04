@@ -22,9 +22,11 @@ const evidenceGet = async(req = request, res = response) => {
             total,
             evidence
         });
+        req.log.info('Obtuvo todas las Evidencias');
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -33,20 +35,24 @@ const evidenceGetFile = async(req = request, res = response) => {
     try{
         const evidence = await Evidence.findById(req.params.id);
         if(!evidence){
+            req.log.warn(`La Evidencia: ${req.params.id} no exite en la BD para devolver su archivo`);
             return res.status(404).json({msg: 'La evidencia no existe en la BD'});
         }
 
         if(evidence.file){
             const pathFile = path.join( __dirname, '../uploads/evidences/', evidence.file);
             if(fs.existsSync(pathFile)){
+                req.log.info(`Obtuvo el archivo de la Evidencia: ${req.params.id}`);
                 return res.sendFile(pathFile);
             }
         }
         
         res.status(404).json({msg: 'La evidencia no tiene archivo'});
+        req.log.warn(`La Evidencia: ${req.params.id} no tiene archivo`);
 
     } catch(error){
         res.status(500).json({msg: error.message});
+        req.log.error(error.message);
     }
 }
 
@@ -55,6 +61,7 @@ const evidencePost = async(req = request, res = response) => {
     try {
         const indicator = await Indicator.findById(req.params.id);
         if(!indicator) {
+            req.log.warn(`El Indicador: ${req.params.id} no exite en la BD para asociarle una evidencia`);
             return res.status(404).json({
                 msg: 'El Indicador no existe en la BD'
             })
@@ -77,10 +84,12 @@ const evidencePost = async(req = request, res = response) => {
             indicator.save()
         ]);
     
-        res.json(evidence);
+        res.status(201).json(evidence);
+        req.log.info(`Creo la Evidencia: ${evidence._id} del Indicador: ${indicator._id}`);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -94,9 +103,11 @@ const evidencePut = async(req = request, res = response) => {
         res.json({
             msg: 'Evidencia actualizada',
         });
+        req.log.info(`Actualizo la Evidencia: ${id}`);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -104,8 +115,10 @@ const evidenceDelete = async(req = request, res = response) => {
     try {
         await deleteEvidence(req.params.id, req.params.idIndicator);
         res.json({msg: 'Evidencia eliminada'});
+        req.log.info(`Elimino la Evidencia: ${req.params.id} del Indicador: ${req.params.idIndicator}`);
     } catch (error) {
         res.status(500).json({msg: error.message});
+        req.log.error(error.message);
     }
 }
 
@@ -114,6 +127,7 @@ const evidenceUpload = async (req = request, res = response) => {
     try{
         const evidence = await Evidence.findById(req.params.id);
         if(!evidence){
+            req.log.warn(`La Evidencia: ${req.params.id} no exite en la BD para asociarle un archivo`);
             return res.status(404).json({msg: 'La evidencia no existe en la BD'});
         }
 
@@ -128,9 +142,11 @@ const evidenceUpload = async (req = request, res = response) => {
         evidence.file = name;
         await evidence.save();
         res.json(evidence);
+        req.log.info(`Asocio un archivo a la Evidencia: ${req.params.id}`);
 
     } catch(error){
         res.status(400).json({msg: error.message});
+        req.log.error(error.message);
     }
 }
 

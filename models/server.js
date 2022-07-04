@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
+const pino = require('pino-http');
 
 const { dbConnection } = require('../database/config');
 
@@ -27,6 +28,15 @@ class Server{
             useTempFiles : true,
             tempFileDir : '/tmp/',
             limits: { fileSize: 25 * 1024 * 1024 }
+        }));
+        this.app.use(pino({
+            transport: {
+                target: 'pino-pretty',
+                options: {
+                    translateTime: "SYS:standard",
+                    ignore: "req,res,err"
+                }
+            },
         }));
     }
 

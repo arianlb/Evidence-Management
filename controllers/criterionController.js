@@ -18,9 +18,11 @@ const criterionGet = async(req = request, res = response) => {
             total,
             criterions
         });
+        req.log.info('Obtuvo todos los Criterios');
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -29,6 +31,7 @@ const criterionPost = async(req = request, res = response) => {
     try {
         const objective = await Objective.findById(req.params.id);
         if(!objective){
+            req.log.warn('El Objetivo donde crear el Criterio, no existe en la BD');
             return res.status(404).json({msg: 'El objetivo no existe en la BD'});
         }
     
@@ -42,9 +45,11 @@ const criterionPost = async(req = request, res = response) => {
         ]);
     
         res.status(201).json(criterion);
+        req.log.info(`Creo el Criterio: ${criterion._id} y lo adiciono al Objetivo: ${objective._id}`);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -58,9 +63,11 @@ const criterionPut = async(req = request, res = response) => {
         res.json({
             msg: 'Criterio de medida actualizado',
         });
+        req.log.info('Actualizo el Criterio: ' + id);
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
     }
 }
 
@@ -80,8 +87,10 @@ const criterionDelete = async(req = request, res = response) => {
     try {
         await deleteCriterion(req.params.id, req.params.idObjective);
         res.json({msg: 'Criterio de medida eliminado'});
-    } catch (msg) {
-        res.status(400).json({msg: 'Error eliminando el criterio de medida'});
+        req.log.info(`Elimino el Criterio: ${req.params.id} del Objetivo: ${req.params.idObjective}`);
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+        req.log.error(error.message);
     }
 }
 

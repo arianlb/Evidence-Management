@@ -12,6 +12,7 @@ const login = async(req = request, res = response) => {
 
         const user = await User.findOne({ username });
         if(!user){
+            req.log.warn(`El nombre de usuario: ${username} no existe`);
             return res.status(400).json({
                 msg: 'Usuario incorrecto'
             });
@@ -19,6 +20,7 @@ const login = async(req = request, res = response) => {
 
         const validPassword = bcryptjs.compareSync(password, user.password);
         if(!validPassword){
+            req.log.warn('Invalid password provided');
             return res.status(400).json({
                 msg: 'Contraseña incorrecta'
             });
@@ -27,11 +29,13 @@ const login = async(req = request, res = response) => {
         const token = await jwt( user.id, user.role, user.name, user.username );
 
         res.json(token);
+        req.log.info(`Autenticado el Usuario: ${user._id}`)
         
     } catch (error) {
         res.status(500).json({
-            msg: 'Algo salio mal'
+            msg: error.message
         });
+        req.log.error(error.message);
     }
     
     
