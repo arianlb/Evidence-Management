@@ -7,7 +7,7 @@ const upload = (file) => {
         
         const cutName = file.name.split('.');
         const newName = uuidv4() + '.' + cutName[cutName.length-1];
-        const uploadPath = path.join(__dirname, '../uploads/evidences/', newName);
+        const uploadPath = path.join(__dirname, '../../uploads/evidences/', newName);
 
         file.mv(uploadPath, (err) => {
             if (err) {

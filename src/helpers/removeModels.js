@@ -17,7 +17,7 @@ const deleteEvidence = async(id, idIndicator) => {
     ]);
 
     if(evidence.file){
-        const pathFile = path.join( __dirname, '../uploads/evidences/', evidence.file);
+        const pathFile = path.join( __dirname, '../../uploads/evidences/', evidence.file);
         if(fs.existsSync(pathFile)){
             fs.unlinkSync(pathFile);
         }

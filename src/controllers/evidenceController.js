@@ -40,7 +40,7 @@ const evidenceGetFile = async(req = request, res = response) => {
         }
 
         if(evidence.file){
-            const pathFile = path.join( __dirname, '../uploads/evidences/', evidence.file);
+            const pathFile = path.join( __dirname, '../../uploads/evidences/', evidence.file);
             if(fs.existsSync(pathFile)){
                 req.log.info(`Obtuvo el archivo de la Evidencia: ${req.params.id}`);
                 return res.sendFile(pathFile);
@@ -132,7 +132,7 @@ const evidenceUpload = async (req = request, res = response) => {
         }
 
         if(evidence.file){
-            const pathFile = path.join( __dirname, '../uploads/evidences/', evidence.file);
+            const pathFile = path.join( __dirname, '../../uploads/evidences/', evidence.file);
             if(fs.existsSync(pathFile)){
                 fs.unlinkSync(pathFile);
             }
