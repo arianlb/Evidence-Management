@@ -7,18 +7,26 @@ const User = require('../models/user');
 const userGet = async(req = request, res = response) => {
     
     try {
-        const { begin = 0, amount = 5} = req.query;
-    
-        const [ total, users ] = await Promise.all([
-            User.countDocuments(),
-            User.find({status: true}).skip(Number(begin)).limit(Number(amount))
-        ]);
-    
-        res.json({
-            total,
-            users
-        });
-        req.log.info('Obtuvo todos los Usuarios');
+        const { begin = 0, amount } = req.query;
+
+        if(amount) {
+            
+            const [ total, users ] = await Promise.all([
+                User.countDocuments(),
+                User.find({status: true}).skip(Number(begin)).limit(Number(amount))
+            ]);
+        
+            res.json({
+                total,
+                users
+            });
+            req.log.info(`Obtuvo los Usuarios desde ${begin} hasta ${amount}`);
+
+        } else {
+            const users = User.find({status: true});
+            res.json(users);
+            req.log.info('Obtuvo todos los Usuarios');
+        }
         
     } catch (error) {
         res.status(500).json({ msg: error.message });
