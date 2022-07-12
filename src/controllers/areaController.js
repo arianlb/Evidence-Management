@@ -27,12 +27,8 @@ const areaGet = async(req, res = response) => {
         });
         
         for(a of areaData){
-            if(a.objectives){
-                percent = percentage(a.objectives);
-                percent = Math.trunc(percent);
-            } else {
-                percent = 0;
-            }
+            percent = Math.trunc(percentage(a.objectives));
+
             const area = { _id: a._id, name: a.name, percentage: percent, objectives: [] };
             a.objectives.forEach( ({name}) => { area.objectives.push(name); });
             areas.push(area);

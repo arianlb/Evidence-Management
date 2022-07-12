@@ -15,6 +15,8 @@ const percentage = ( objectives ) => {
         }
     }
 
+    if(part === 0) return 0;
+
     return (part * 100) / total;
 }
 
