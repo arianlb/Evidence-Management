@@ -23,8 +23,8 @@ const userGet = async(req = request, res = response) => {
             req.log.info(`Obtuvo los Usuarios desde ${begin} hasta ${amount}`);
 
         } else {
-            const allUsers = await User.find({status: true});
-            res.json({allUsers});
+            const users = await User.find({status: true});
+            res.json({users});
             req.log.info('Obtuvo todos los Usuarios');
         }
         
