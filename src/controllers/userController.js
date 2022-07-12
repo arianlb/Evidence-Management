@@ -78,7 +78,7 @@ const userPut = async(req = request, res = response) => {
 const userDelete = async(req = request, res = response) => {
     try {
         await deleteUser(req.params.id);
-        res.json({msg: 'Usuario desactivado'});
+        res.json({id: req.params.id});
         req.log.info('Desactivo el Usuario: '+ req.params.id);
     } catch (error) {
         res.status(500).json({msg: error.message});

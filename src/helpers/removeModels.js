@@ -8,7 +8,6 @@ const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
 const Objective = require('../models/objective');
 const User = require('../models/user');
-const area = require('../models/area');
 
 const deleteEvidence = async(id, idIndicator) => {
     const [evidence, indicator] = await Promise.all([
