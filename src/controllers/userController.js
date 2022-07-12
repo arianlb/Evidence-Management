@@ -56,11 +56,9 @@ const userPut = async(req = request, res = response) => {
             rest.password = bcryptjs.hashSync(password, bcryptjs.genSaltSync());
         }
     
-        await User.findByIdAndUpdate(id, rest);
+        const user = await User.findByIdAndUpdate(id, rest);
         
-        res.json({
-            msg: 'Usuario actualizado',
-        });
+        res.json(user);
         req.log.info('Actualizo el Usuario: '+ id);
         
     } catch (error) {
