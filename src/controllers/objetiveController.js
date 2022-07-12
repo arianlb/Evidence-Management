@@ -110,7 +110,7 @@ const addCriterions = async(req, res = response) => {
 const objectiveDelete = async(req = request, res = response) => {
     try {
         await deleteObjective(req.params.id, req.params.idArea);
-        res.json({msg: 'Objetivo eliminado'});
+        res.json({id: req.params.id});
         req.log.info(`Elimino el Objetivo: ${req.params.id} del Area: ${req.params.idArea}`);
     } catch (error) {
         res.status(500).json({msg: error.message});

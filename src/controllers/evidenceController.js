@@ -114,7 +114,7 @@ const evidencePut = async(req = request, res = response) => {
 const evidenceDelete = async(req = request, res = response) => {
     try {
         await deleteEvidence(req.params.id, req.params.idIndicator);
-        res.json({msg: 'Evidencia eliminada'});
+        res.json({id: req.params.id});
         req.log.info(`Elimino la Evidencia: ${req.params.id} del Indicador: ${req.params.idIndicator}`);
     } catch (error) {
         res.status(500).json({msg: error.message});

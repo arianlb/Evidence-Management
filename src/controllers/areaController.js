@@ -159,7 +159,7 @@ const addUsers = async(req, res = response) => {
 const areaDelete = async(req, res = response) => {
     try {
         await deleteArea(req.params.id);
-        res.json({ msg: 'Area eliminada'});
+        res.json({ id: req.params.id});
         req.log.info('Elimino el Area: ' + req.params.id);
     } catch (error) {
         res.status(500).json({ msg: error.message });

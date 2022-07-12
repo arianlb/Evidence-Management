@@ -178,7 +178,7 @@ const indicatorPut = async(req = request, res = response) => {
 const indicatorDelete = async(req = request, res = response) => {
     try {
         await deleteIndicator(req.params.id, req.params.idUser);
-        res.json({msg: 'Indicador eliminado'});
+        res.json({id: req.params.id});
         req.log.info(`Elimino el Indicador: ${req.params.id} del Usuario: ${req.params.idUser}`);
     } catch (error) {
         res.status(500).json({msg: error.message});
@@ -189,7 +189,7 @@ const indicatorDelete = async(req = request, res = response) => {
 const indicatorModelDelete = async(req = request, res = response) => {
     try {
         const indicator = await Indicator.findByIdAndDelete(req.params.id);
-        res.json(indicator);
+        res.json({id: req.params.id});
         req.log.info(`Elimino el Indicador Modelo: ${req.params.id}`);
         
     } catch (error) {

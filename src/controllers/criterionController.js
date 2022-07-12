@@ -86,7 +86,7 @@ const criterionPut = async(req = request, res = response) => {
 const criterionDelete = async(req = request, res = response) => {
     try {
         await deleteCriterion(req.params.id, req.params.idObjective);
-        res.json({msg: 'Criterio de medida eliminado'});
+        res.json({id: req.params.id});
         req.log.info(`Elimino el Criterio: ${req.params.id} del Objetivo: ${req.params.idObjective}`);
     } catch (error) {
         res.status(500).json({msg: error.message});
