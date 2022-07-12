@@ -1,5 +1,6 @@
 const { response } = require('express');
 
+const { percentage } = require('../helpers/areaPercentage');
 const { indicatorByCriterion } = require('../helpers/indicatorResponse');
 const { deleteArea } = require('../helpers/removeModels');
 const Area = require('../models/area');
@@ -19,10 +20,15 @@ const Objective = require('../models/objective');
 const areaGet = async(req, res = response) => {
     try {
         const areas = [];
-        const areaData = await Area.find().populate('objectives', 'name');
+        let percent = 0;
+        const areaData = await Area.find().populate({
+            path: 'objectives',
+            populate: {path: 'criterions'}
+        });
         
-        for(let a of areaData){
-            const area = { _id: a._id, name: a.name, objectives: [] };
+        for(a of areaData){
+            percent = percentage(a.objectives);
+            const area = { _id: a._id, name: a.name, percentage: percent, objectives: [] };
             a.objectives.forEach( ({name}) => { area.objectives.push(name); });
             areas.push(area);
         }
