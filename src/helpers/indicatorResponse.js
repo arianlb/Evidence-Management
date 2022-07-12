@@ -20,7 +20,7 @@ const indicatorByCriterion = async (area) => {
 
                 }
             }
-            criterions.push({_id: criterion._id, name: criterion.name, indicator});
+            criterions.push({_id: criterion._id, name: criterion.name, status: criterion.status, indicator});
         }
 
         objectives.push({_id: objective._id, name: objective.name, criterions});
