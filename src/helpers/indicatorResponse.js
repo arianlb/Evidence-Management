@@ -14,7 +14,7 @@ const indicatorByCriterion = async (area) => {
 
                 if (indi.criterion) {
                     if (indi.criterion.equals(criterion._id)) {
-                        indicator = { _id: indi._id, name: indi.name };
+                        indicator = { _id: indi._id, name: indi.name, category: indi.category };
                         break;
                     }
 
