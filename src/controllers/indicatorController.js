@@ -111,7 +111,7 @@ const indicatorPost = async (req = request, res = response) => {
                             indicatorsModels.splice(i--, 1);
                             await user.indicators[j].save();
                             if (user.indicators[j].status) {
-                                await updateCriterion(user.indicators[j].criterion, 1);
+                                updateCriterion(user.indicators[j].criterion, 1);
                             }
                             break;
                         }
@@ -167,15 +167,31 @@ const indicatorPostByCriterion = async (req = request, res = response) => {
 
 const indicatorPut = async (req = request, res = response) => {
     try {
-        const { id } = req.params;
-        const { name } = req.body;
+        const indicator = await Indicator.findById(req.params.id);
+        if (!indicator) {
+            req.log.warn(`El Indicador con el id: ${req.params.id} no exite en la BD`);
+            return res.status(404).json({
+                msg: `El Indicador con el id ${req.params.id} no exite en la BD`
+            })
+        }
 
-        await Indicator.findByIdAndUpdate(id, { name });
+        if (indicator.model) {
+            const { name, category, criterion } = req.body;
+            await Indicator.findByIdAndUpdate(req.params.id, { name, category, criterion });
+        }
+        else {
+            const { _id, model, status, ...rest } = req.body;
+            if (status !== indicator.status) {
+                updateCriterion(indicator.criterion, status ? 1 : -1);
+            }
+            rest.status = status;
+            await Indicator.findByIdAndUpdate(req.params.id, rest);
+        }
 
         res.json({
             msg: 'Indicador actualizado',
         });
-        req.log.info(`Actualizo el Indicador: ${id}`)
+        req.log.info(`Actualizo el Indicador: ${req.params.id}`)
 
     } catch (error) {
         res.status(500).json({ msg: error.message });
