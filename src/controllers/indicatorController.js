@@ -168,6 +168,7 @@ const indicatorPostByCriterion = async (req = request, res = response) => {
 const indicatorPut = async (req = request, res = response) => {
     try {
         const indicator = await Indicator.findById(req.params.id);
+        let updatedIndicator = {};
         if (!indicator) {
             req.log.warn(`El Indicador con el id: ${req.params.id} no exite en la BD`);
             return res.status(404).json({
@@ -177,7 +178,7 @@ const indicatorPut = async (req = request, res = response) => {
 
         if (indicator.model) {
             const { name, category, criterion } = req.body;
-            await Indicator.findByIdAndUpdate(req.params.id, { name, category, criterion });
+            updatedIndicator = await Indicator.findByIdAndUpdate(req.params.id, { name, category, criterion }, { returnDocument: 'after' });
         }
         else {
             const { _id, model, status, ...rest } = req.body;
@@ -185,12 +186,10 @@ const indicatorPut = async (req = request, res = response) => {
                 updateCriterion(indicator.criterion, status ? 1 : -1);
             }
             rest.status = status;
-            await Indicator.findByIdAndUpdate(req.params.id, rest);
+            updatedIndicator = await Indicator.findByIdAndUpdate(req.params.id, rest, { returnDocument: 'after' });
         }
 
-        res.json({
-            msg: 'Indicador actualizado',
-        });
+        res.json(updatedIndicator);
         req.log.info(`Actualizo el Indicador: ${req.params.id}`)
 
     } catch (error) {
