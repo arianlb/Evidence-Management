@@ -29,10 +29,6 @@ const UserSchema = Schema({
     category: {
         type: String
     },
-    evaluation: {
-        type: Schema.Types.ObjectId,
-        ref: 'Evaluation'
-    },
     indicators: [{
         type: Schema.Types.ObjectId,
         ref: 'Indicator'
@@ -40,7 +36,10 @@ const UserSchema = Schema({
     status: {
         type: Boolean,
         default: true
-    }
+    },
+    notifications: [{
+        type: String
+    }]
 });
 
 UserSchema.methods.toJSON = function(){
