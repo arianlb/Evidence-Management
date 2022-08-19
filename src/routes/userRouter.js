@@ -5,12 +5,17 @@ const { validate } = require('../middlewares/validateFields');
 const { validateToken } = require('../middlewares/validateJWT');
 const { hasAnyRole } = require('../middlewares/validateRole');
 const { isRoleValid, usernameExists, userExistsById } = require('../helpers/dbValidators');
-const { userGet, userPost, userPut, userDelete } = require('../controllers/userController');
+const { userGet, userEvaluationGet, userPost, userPut, userDelete } = require('../controllers/userController');
 
 
 const router = Router();
 
 router.get('/', userGet);
+
+router.get('/evaluation/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
+    validate
+], userEvaluationGet);
 
 router.post('/', [
     check('name', 'El nombre obligatorio').notEmpty(),

@@ -124,6 +124,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Obtener la Evaluacion de un Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/evaluation/6238b96b7ee323cc65ac7fce",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"evaluation",
+								"6238b96b7ee323cc65ac7fce"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

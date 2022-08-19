@@ -34,6 +34,31 @@ const userGet = async(req = request, res = response) => {
     }
 }
 
+const userEvaluationGet = async (req = request, res = response) => { 
+    try {
+        const user = await User.findById(req.params.id).populate('indicators');
+        if (!user) {
+            req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);
+            return res.status(404).json({
+                msg: 'No existe el Usuario en la base de datos'
+            });
+        }
+        let indicators = [];
+        user.indicators.forEach(indicator => { 
+            if(indicator.status) {
+                indicators.push(indicator);
+            }
+        });
+
+        res.json({ user, indicators });
+        req.log.info('Obtuvo la evaluacion del Usuario: ' + req.params.id);
+        
+    } catch (error) {
+        res.status(500).json({msg: error.message});
+        req.log.error(error.message);
+    }
+}
+
 const userPost = async(req = request, res = response) => {
 
     try {
@@ -86,4 +111,4 @@ const userDelete = async(req = request, res = response) => {
     }
 }
 
-module.exports = {userGet, userPost, userPut, userDelete}
+module.exports = { userGet, userEvaluationGet, userPost, userPut, userDelete}
