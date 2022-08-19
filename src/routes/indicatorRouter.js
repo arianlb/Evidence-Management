@@ -5,14 +5,15 @@ const { validate } = require('../middlewares/validateFields');
 const { indicatorsRequest } = require('../middlewares/validateIndicators');
 const { userExistsById, indicatorExistsById } = require('../helpers/dbValidators');
 const { indicatorByCategory,
-        indicatorById,
-        indicatorsByUser,
-        indicatorGet,
-        indicatorPost,
-        indicatorPostByCriterion,
-        indicatorPut,
-        indicatorDelete,
-        indicatorModelDelete } = require('../controllers/indicatorController');
+    indicatorById,
+    indicatorsByUser,
+    indicatorGet,
+    indicatorPost,
+    indicatorPostByCriterion,
+    personalIndicatorPost,
+    indicatorPut,
+    indicatorDelete,
+    indicatorModelDelete } = require('../controllers/indicatorController');
 
 const router = Router();
 
@@ -20,12 +21,12 @@ router.get('/', indicatorGet);
 
 router.get('/category', indicatorByCategory);
 
-router.get('/:id',[
+router.get('/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     validate
 ], indicatorById);
 
-router.get('/user/:id',[
+router.get('/user/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(userExistsById),
     validate
@@ -43,6 +44,13 @@ router.post('/criterion/:id', [
     check('category', 'La categoria es obligatorio').notEmpty(),
     validate
 ], indicatorPostByCriterion);
+
+router.post('/personal/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
+    check('name', 'El nombre es obligatorio').notEmpty(),
+    check('category', 'La categoria es obligatorio').notEmpty(),
+    validate
+], personalIndicatorPost);
 
 router.put('/:id', [
     check('id', 'No es un ID valido').isMongoId(),

@@ -165,6 +165,35 @@ const indicatorPostByCriterion = async (req = request, res = response) => {
     }
 }
 
+const personalIndicatorPost = async (req = request, res = response) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);
+            return res.status(404).json({
+                msg: 'No existe el Usuario en la base de datos'
+            });
+        }
+
+        const { name, category, observation } = req.body;
+        const indicator = new Indicator({ name, category, observation, status: true });
+        user.indicators.push(indicator);
+
+        await Promise.all([
+            indicator.save(),
+            user.save()
+        ]);
+
+        res.status(201).json(indicator);
+        req.log.info(`El Usuario ${req.params.id} creo el Indicador Personal: ${name}`)
+
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
+    }
+
+}
+
 const indicatorPut = async (req = request, res = response) => {
     try {
         const indicator = await Indicator.findById(req.params.id);
@@ -228,6 +257,7 @@ module.exports = {
     indicatorGet,
     indicatorPost,
     indicatorPostByCriterion,
+    personalIndicatorPost,
     indicatorPut,
     indicatorDelete,
     indicatorModelDelete
