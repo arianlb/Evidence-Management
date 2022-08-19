@@ -157,7 +157,7 @@ const indicatorPostByCriterion = async (req = request, res = response) => {
         await indicator.save();
 
         res.status(201).json(indicator);
-        req.log.info(`Creo el Indicador Modelo: ${name}`)
+        req.log.info(`Creo el Indicador Modelo: ${indicator._id}`)
 
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -185,7 +185,7 @@ const personalIndicatorPost = async (req = request, res = response) => {
         ]);
 
         res.status(201).json(indicator);
-        req.log.info(`El Usuario ${req.params.id} creo el Indicador Personal: ${name}`)
+        req.log.info(`El Usuario ${req.params.id} creo el Indicador Personal: ${indicator._id}`)
 
     } catch (error) {
         res.status(500).json({ msg: error.message });

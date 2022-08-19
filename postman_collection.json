@@ -619,7 +619,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Otro Indicador\"\r\n}",
+							"raw": "{\r\n    \"_id\": \"62e4225267da27e29a497942\",\r\n    \"name\": \"Indicador Modelo modificado\",\r\n    \"status\": true,\r\n    \"category\": \"SUPERACIÓN\",\r\n    \"evidences\": []\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -627,14 +627,14 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/indicators/627ad158f72f80556b5dbe0f",
+							"raw": "{{url}}/api/indicators/62fd519ed6f27f12ce20efc2",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"indicators",
-								"627ad158f72f80556b5dbe0f"
+								"62fd519ed6f27f12ce20efc2"
 							]
 						}
 					},
@@ -762,6 +762,35 @@
 								"62bb6f56beaa51a5b8916062",
 								"user",
 								"62ba6511f14f56b9dd4d1c30"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Indicador Personal",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Indicador Personal\",\r\n    \"category\": \"Alguna Categoria\",\r\n    \"observation\": \"Alguna Observacion\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/indicators/personal/62a90b780aa60e9e9e585ea8",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"indicators",
+								"personal",
+								"62a90b780aa60e9e9e585ea8"
 							]
 						}
 					},
