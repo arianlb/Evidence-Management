@@ -1,8 +1,9 @@
 const { request, response} = require('express');
 const bcryptjs = require('bcryptjs');
 
-const { deleteUser } = require('../helpers/removeModels');
 const User = require('../models/user');
+const { deleteUser } = require('../helpers/removeModels');
+const { personalIndicators } = require('../helpers/indicatorResponse');
 
 const userGet = async(req = request, res = response) => {
     
@@ -43,12 +44,7 @@ const userEvaluationGet = async (req = request, res = response) => {
                 msg: 'No existe el Usuario en la base de datos'
             });
         }
-        let indicators = [];
-        user.indicators.forEach(indicator => { 
-            if(indicator.status) {
-                indicators.push(indicator);
-            }
-        });
+        const indicators = personalIndicators(req.body.categories, user.indicators);
 
         res.json({ user, indicators });
         req.log.info('Obtuvo la evaluacion del Usuario: ' + req.params.id);

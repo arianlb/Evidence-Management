@@ -68,4 +68,35 @@ const indicatorsByCategory = async (categories = ['TRABAJO DOCENTE-EDUCATIVO EN 
     return indicatorsResponse;
 }
 
-module.exports = { indicatorsByCategory, indicatorByCriterion }
+const personalIndicators = (categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO',
+    'TRABAJO POLÍTICO-IDEOLÓGICO', 'TRABAJO METODOLÓGICO', 'TRABAJO DE INVESTIGACIÓN E INNOVACIÓN',
+    'SUPERACIÓN'], userIndicators) => {
+    
+    let indicators;
+    let indicatorsResponse = [];
+
+    for (let i = 0; i < categories.length; i++) {
+        indicators = [];
+        indicatorsResponse.push({ category: categories[i], indicators });
+    }
+    indicators = [];
+    indicatorsResponse.push({ category: 'Otros', indicators });
+
+    userIndicators.forEach(indicator => {
+        if (indicator.status) {
+            for (let i = 0; i < categories.length; i++) {
+                if (indicator.category === categories[i]) {
+                    indicatorsResponse[i].indicators.push(element);
+                    break;
+                }
+                if(i === categories.length - 1){
+                    indicatorsResponse[i+1].indicators.push(element);
+                }
+            }
+        }
+    });
+
+    return indicatorsResponse;
+ }
+
+module.exports = { indicatorsByCategory, indicatorByCriterion, personalIndicators }
