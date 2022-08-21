@@ -59,6 +59,25 @@ const userEvaluationGet = async (req = request, res = response) => {
     }
 }
 
+const userNotificationsGet = async (req = request, res = response) => {
+    try {
+        const user = await User.findById(req.params.id);
+        if (!user) {
+            req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);
+            return res.status(404).json({
+                msg: 'No existe el Usuario en la base de datos'
+            });
+        }
+
+        res.json(user.notifications);
+        req.log.info('Obtuvo las notificaciones del Usuario: ' + req.params.id);
+
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
+    }
+}
+
 const userPost = async(req = request, res = response) => {
 
     try {
@@ -111,4 +130,4 @@ const userDelete = async(req = request, res = response) => {
     }
 }
 
-module.exports = { userGet, userEvaluationGet, userPost, userPut, userDelete}
+module.exports = { userGet, userEvaluationGet, userNotificationsGet, userPost, userPut, userDelete}

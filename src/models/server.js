@@ -2,18 +2,23 @@ const express = require('express');
 const cors = require('cors');
 const fileUpload = require('express-fileupload');
 const pino = require('pino-http');
+const { createServer } = require('http');
 
 const { dbConnection } = require('../database/config');
+const { socketsController } = require('../controllers/socketController');
 
 class Server {
 
     constructor() {
         this.app = express();
         this.port = process.env.PORT;
+        this.server = createServer(this.app);
+        this.io = require('socket.io')(this.server);
 
         this.connectDB();
         this.middlewares();
         this.routes();
+        this.sockets();
     }
 
     async connectDB() {
@@ -51,8 +56,13 @@ class Server {
         this.app.use('/api/users', require('../routes/userRouter'));
     }
 
+    sockets() {
+        this.io.on('connection', (socket) => socketsController(socket));
+        this.app.set('io', this.io);
+    }
+
     listen() {
-        this.app.listen(this.port, () => {
+        this.server.listen(this.port, () => {
             console.log('Servidor en puerto', this.port);
         })
     }

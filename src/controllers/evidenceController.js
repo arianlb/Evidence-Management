@@ -7,6 +7,7 @@ const { deleteEvidence } = require('../helpers/removeModels');
 const { upload } = require('../helpers/uploadFile');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
+const User = require('../models/user');
 
 const evidenceGet = async (req = request, res = response) => {
 
@@ -73,16 +74,26 @@ const evidencePost = async (req = request, res = response) => {
 
         if (!indicator.status) {
             indicator.status = true;
-            //TODO: investigar una mejor forma
+            
             if (indicator.criterion) {
                 updateCriterion(indicator.criterion, 1);
             }
         }
 
-        await Promise.all([
+        //TODO: El comentario es de las notificaciones con los sockets
+        /*const [user, , ] =*/await Promise.all([
+            //User.findById(req.authid),
             evidence.save(),
             indicator.save()
         ]);
+
+        /*const userChief = await User.find({ department: user.department, role: 'ROLE_CHIEF' });
+        if (userChief) {
+            userChief.notifications.push(`${user.name} realizó el indicador ${indicator.name}.`);
+            await userChief.save();
+            const io = req.app.get('io');
+            io.to(userChief._id).emit('notifications', userChief.notifications.length);
+        }*/
 
         res.status(201).json(evidence);
         req.log.info(`Creo la Evidencia: ${evidence._id} del Indicador: ${indicator._id}`);

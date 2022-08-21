@@ -5,7 +5,7 @@ const { validate } = require('../middlewares/validateFields');
 const { validateToken } = require('../middlewares/validateJWT');
 const { hasAnyRole } = require('../middlewares/validateRole');
 const { isRoleValid, usernameExists, userExistsById } = require('../helpers/dbValidators');
-const { userGet, userEvaluationGet, userPost, userPut, userDelete } = require('../controllers/userController');
+const { userGet, userEvaluationGet, userNotificationsGet, userPost, userPut, userDelete } = require('../controllers/userController');
 
 
 const router = Router();
@@ -16,6 +16,11 @@ router.get('/evaluation/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     validate
 ], userEvaluationGet);
+
+router.get('/notification/:id', [
+    check('id', 'No es un ID valido').isMongoId(),
+    validate
+], userNotificationsGet);
 
 router.post('/', [
     check('name', 'El nombre obligatorio').notEmpty(),

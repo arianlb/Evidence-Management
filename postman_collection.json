@@ -144,6 +144,26 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Obtener las Notificaciones de un Usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/users/notification/6238b96b7ee323cc65ac7fce",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"notification",
+								"6238b96b7ee323cc65ac7fce"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -971,114 +991,6 @@
 								"evidences",
 								"file",
 								"627fe17b1f635c11d52a49dc"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Evaluaciones",
-			"item": [
-				{
-					"name": "Crear Evaluacion",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Primera Evaluacion\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/evaluations/627ee04146022fcd79fd1c75",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"evaluations",
-								"627ee04146022fcd79fd1c75"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Obtener Evaluaciones",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/evaluations?begin=0&amount=5",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"evaluations"
-							],
-							"query": [
-								{
-									"key": "begin",
-									"value": "0"
-								},
-								{
-									"key": "amount",
-									"value": "5"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Actualizar Evaluacion",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Otra Evaluacion\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "{{url}}/api/evaluations/627ad446f72f80556b5dbe2f",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"evaluations",
-								"627ad446f72f80556b5dbe2f"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Eliminar Evaluacion",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "{{url}}/api/evaluations/627ad446f72f80556b5dbe2f",
-							"host": [
-								"{{url}}"
-							],
-							"path": [
-								"api",
-								"evaluations",
-								"627ad446f72f80556b5dbe2f"
 							]
 						}
 					},

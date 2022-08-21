@@ -121,16 +121,21 @@ const indicatorPost = async (req = request, res = response) => {
             }
         }
 
-        indicatorsModels.forEach(indicator => indicators.push({
-            name: indicator.name,
-            category: indicator.category,
-            criterion: indicator.criterion,
-            model: false
-        }));
+        indicatorsModels.forEach(indicator => {
+            indicators.push({
+                name: indicator.name,
+                category: indicator.category,
+                criterion: indicator.criterion,
+                model: false
+            });
+            user.notifications.push('Tiene un nuevo Indicador: ' + indicator.name);
+        });
 
         indicators = await Indicator.create(indicators);
         user.indicators = user.indicators.concat(indicators);
         await user.save();
+        const io = req.app.get('io');
+        io.to(user._id).emit('notifications', user.notifications.length);
 
         res.json(indicators);
         req.log.info(`Asocio indicadores al Usuario: ${req.params.id}`)
