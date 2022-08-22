@@ -70,7 +70,7 @@ const indicatorsByCategory = async (categories = ['TRABAJO DOCENTE-EDUCATIVO EN 
 
 const personalIndicators = (categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO',
     'TRABAJO POLÍTICO-IDEOLÓGICO', 'TRABAJO METODOLÓGICO', 'TRABAJO DE INVESTIGACIÓN E INNOVACIÓN',
-    'SUPERACIÓN'], userIndicators) => {
+    'SUPERACIÓN', 'EXTENSIÓN UNIVERSITARIA'], userIndicators) => {
     
     let indicators;
     let indicatorsResponse = [];
@@ -79,19 +79,19 @@ const personalIndicators = (categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO
         indicators = [];
         indicatorsResponse.push({ category: categories[i], indicators });
     }
-    indicators = [];
-    indicatorsResponse.push({ category: 'Otros', indicators });
+    /*indicators = [];
+    indicatorsResponse.push({ category: 'Otros', indicators });*/
 
     userIndicators.forEach(indicator => {
         if (indicator.status) {
             for (let i = 0; i < categories.length; i++) {
                 if (indicator.category === categories[i]) {
-                    indicatorsResponse[i].indicators.push(element);
+                    indicatorsResponse[i].indicators.push(indicator);
                     break;
                 }
-                if(i === categories.length - 1){
+                /*if(i === categories.length - 1){
                     indicatorsResponse[i+1].indicators.push(element);
-                }
+                }*/
             }
         }
     });
