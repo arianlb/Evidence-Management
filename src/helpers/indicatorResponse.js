@@ -38,6 +38,10 @@ const indicatorsByCategory = async (categories = ['TRABAJO DOCENTE-EDUCATIVO EN 
 
     if (userId) {
         const user = await User.findById(userId).populate('indicators');
+        
+        if (!categories.includes('EXTENSIÓN UNIVERSITARIA')) {
+            categories.push('EXTENSIÓN UNIVERSITARIA');
+        }
 
         for (let i = 0; i < categories.length; i++) {
             indicators = [];
