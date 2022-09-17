@@ -11,9 +11,10 @@ const validateToken = (req = request, res = response, next) => {
     }
 
     try {
-        const { role, id } = jsonwebtoken.verify(token, process.env.SECRETORPRIVATEKEY);
+        const { role, id, department } = jsonwebtoken.verify(token, process.env.SECRETORPRIVATEKEY);
         req.authrole = role;
         req.authid = id;
+        req.authdepartment = department;
         next();
         
     } catch (error) {

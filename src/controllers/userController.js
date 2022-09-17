@@ -24,9 +24,15 @@ const userGet = async(req = request, res = response) => {
             req.log.info(`Obtuvo los Usuarios desde ${begin} hasta ${amount}`);
 
         } else {
-            const users = await User.find({status: true});
-            res.json({users});
-            req.log.info('Obtuvo todos los Usuarios');
+            if (req.authrole === 'ROLE_ADMIN') {
+                const users = await User.find({ status: true });
+                res.json(users);
+                req.log.info('Obtuvo todos los Usuarios');
+            } else { 
+                const users = await User.find({status: true, department: authdepartment});
+                res.json({users});
+                req.log.info('Obtuvo todos los Usuarios del departamento: ' + authdepartment);
+            }
         }
         
     } catch (error) {

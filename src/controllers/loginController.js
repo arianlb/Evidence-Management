@@ -26,7 +26,7 @@ const login = async(req = request, res = response) => {
             });
         }
 
-        const token = await jwt( user.id, user.role, user.name, user.username );
+        const token = await jwt( user.id, user.role, user.name, user.username, user.department );
 
         res.json(token);
         req.log.info(`Autenticado el Usuario: ${user._id}`)
