@@ -80,20 +80,19 @@ const evidencePost = async (req = request, res = response) => {
             }
         }
 
-        //TODO: El comentario es de las notificaciones con los sockets
-        /*const [user, , ] =*/await Promise.all([
-            //User.findById(req.authid),
+        const [user, , ] =await Promise.all([
+            User.findById(req.authid),
             evidence.save(),
             indicator.save()
         ]);
 
-        /*const userChief = await User.find({ department: user.department, role: 'ROLE_CHIEF' });
+        const userChief = await User.find({ department: user.department, role: 'ROLE_CHIEF' });
         if (userChief) {
             userChief.notifications.push(`${user.name} realizó el indicador ${indicator.name}.`);
             await userChief.save();
             const io = req.app.get('io');
             io.to(userChief._id).emit('notifications', userChief.notifications.length);
-        }*/
+        }
 
         res.status(201).json(evidence);
         req.log.info(`Creo la Evidencia: ${evidence._id} del Indicador: ${indicator._id}`);
