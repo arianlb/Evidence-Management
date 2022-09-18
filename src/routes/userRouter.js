@@ -10,19 +10,26 @@ const { userGet, userEvaluationGet, userNotificationsGet, userPost, userPut, use
 
 const router = Router();
 
-router.get('/', userGet);
+router.get('/', [
+    validateToken,
+    hasAnyRole('ROLE_CHIEF', 'ROLE_ADMIN'),
+    validate
+], userGet);
 
 router.get('/evaluation/:id', [
+    validateToken,
     check('id', 'No es un ID valido').isMongoId(),
     validate
 ], userEvaluationGet);
 
 router.get('/notification/:id', [
+    validateToken,
     check('id', 'No es un ID valido').isMongoId(),
     validate
 ], userNotificationsGet);
 
 router.post('/', [
+    validateToken,
     check('name', 'El nombre obligatorio').notEmpty(),
     check('username', 'El username es obligatorio').notEmpty(),
     check('username').custom(usernameExists),
@@ -33,6 +40,7 @@ router.post('/', [
 ], userPost);
 
 router.put('/:id', [
+    validateToken,
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(userExistsById),
     check('role').custom(isRoleValid),
@@ -40,8 +48,7 @@ router.put('/:id', [
 ], userPut);
 
 router.delete('/:id', [
-    /*validateToken,
-    hasAnyRole('USER_ROLE', 'SUPER_ROLE'),*/
+    validateToken,
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(userExistsById),
     validate
