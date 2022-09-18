@@ -86,7 +86,7 @@ const evidencePost = async (req = request, res = response) => {
             indicator.save()
         ]);
 
-        const userChief = await User.find({ department: user.department, role: 'ROLE_CHIEF' });
+        const userChief = await User.findOne({ department: user.department, role: 'ROLE_CHIEF' });
         if (userChief) {
             userChief.notifications.push(`${user.name} realizó el indicador ${indicator.name}.`);
             await userChief.save();
