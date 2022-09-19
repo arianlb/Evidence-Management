@@ -135,7 +135,7 @@ const indicatorPost = async (req = request, res = response) => {
         user.indicators = user.indicators.concat(indicators);
         await user.save();
         const io = req.app.get('io');
-        io.to(user._id).emit('notifications', user.notifications.length);
+        io.to(user._id.toString()).emit('notifications', user.notifications.length);
 
         res.json(indicators);
         req.log.info(`Asocio indicadores al Usuario: ${req.params.id}`)

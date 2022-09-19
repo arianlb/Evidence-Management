@@ -91,7 +91,7 @@ const evidencePost = async (req = request, res = response) => {
             userChief.notifications.push(`${user.name} realizó el indicador ${indicator.name}.`);
             await userChief.save();
             const io = req.app.get('io');
-            io.to(userChief._id).emit('notifications', userChief.notifications.length);
+            io.to(userChief._id.toString()).emit('notifications', userChief.notifications.length);
         }
 
         res.status(201).json(evidence);

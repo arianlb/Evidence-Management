@@ -7,14 +7,13 @@ const socketsController = async (socket) => {
         return socket.disconnect();
     }
 
-    socket.join(user._id);
+    socket.join(user._id.toString());
     if (user.notifications.length > 0) { 
         socket.emit('notifications', user.notifications.length);
     }
 
-    socket.on('views', () => { 
-        user.notifications = [];
-        user.save();
+    socket.on('views', async () => { 
+        await User.findByIdAndUpdate(id, { $set: { notifications: [] } });
     });
 
 }
