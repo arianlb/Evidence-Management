@@ -20,7 +20,6 @@ router.get('/', [
 ], evidenceGet);
 
 router.get('/file/:id', [
-    validateToken,
     check('id', 'No es un ID valido').isMongoId(),
     validate
 ], evidenceGetFile);
