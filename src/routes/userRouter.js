@@ -48,7 +48,7 @@ router.put('/:id', [
     validate
 ], userPut);
 
-router.put('/password', [
+router.put('/change/password', [
     validateToken,
     check('oldpassword', 'La contraseña antigua es obligatorio').notEmpty(),
     check('newpassword', 'La contraseña nueva es obligatorio').notEmpty(),

@@ -114,10 +114,11 @@ const userPost = async(req = request, res = response) => {
 
     try {
         const { name, username, role, faculty, department, category } = req.body;
-        const user = new User({ name, username, password: 'facultad4', role, faculty, department, category});
-    
+        
         //Encripta la contraseña | bcryptjs.genSaltSync() -> nivel de encriptacion
-        user.password = bcryptjs.hashSync(password, bcryptjs.genSaltSync());
+        const password = bcryptjs.hashSync('facultad4', bcryptjs.genSaltSync());
+        
+        const user = new User({ name, username, password, role, faculty, department, category });
     
         //guarda en BD
         await user.save();
