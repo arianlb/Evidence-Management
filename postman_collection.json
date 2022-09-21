@@ -12,10 +12,16 @@
 					"name": "Crear Usuario",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzI3NWEyNGIwZjEyOTYyYjY0OTcxZmUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjM3ODUwMjl9.Kt0aN5vB44GHj3FMeb9vkiRNbHeBujAvJJ4qL5bUkBA",
+								"type": "default"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Pepe\",\r\n    \"username\": \"pepito\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"ROLE_ADMIN\",\r\n    \"faculty\": \"Facultad 4\",\r\n    \"department\": \"Informática\",\r\n    \"category\": \"Profesor Auxiliar\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Clave\",\r\n    \"username\": \"clave\",\r\n    \"role\": \"ROLE_USER\",\r\n    \"faculty\": \"Facultad 4\",\r\n    \"department\": \"Informática\",\r\n    \"category\": \"Profesor Auxiliar\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -172,7 +178,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzI3NWEyNGIwZjEyOTYyYjY0OTcxZmUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjM2ODg0NDl9.298WBAyTmz0mtzY02jOAfly3n99YEfkIhU84FzCyZoY",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzJiNWE1OGUzM2NkMmFiZjg5ZDRhNjYiLCJyb2xlIjoiUk9MRV9VU0VSIiwibmFtZSI6IkNsYXZlIiwidXNlcm5hbWUiOiJjbGF2ZSIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjM3ODgzMjZ9.9uUN5E3P64zC__dGyJMU1mmTEpK2c55BwbAjyMcA_70",
 								"type": "default"
 							}
 						],
@@ -186,15 +192,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/api/users/password",
-							"protocol": "http",
+							"raw": "{{url}}/api/users/change/password",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
 							"path": [
 								"api",
 								"users",
+								"change",
 								"password"
 							]
 						}
@@ -1041,7 +1046,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"lolo\",\r\n    \"password\": \"1234\"\r\n}",
+					"raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"1234\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"

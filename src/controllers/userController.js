@@ -59,9 +59,9 @@ const userGet = async (req = request, res = response) => {
                 res.json({ users });
                 req.log.info('Obtuvo todos los Usuarios');
             } else { 
-                const users = await User.find({status: true, department: authdepartment});
+                const users = await User.find({status: true, department: req.authdepartment});
                 res.json({users});
-                req.log.info('Obtuvo todos los Usuarios del departamento: ' + authdepartment);
+                req.log.info('Obtuvo todos los Usuarios del departamento: ' + req.authdepartment);
             }
         }
         
