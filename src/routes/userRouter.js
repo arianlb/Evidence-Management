@@ -5,7 +5,7 @@ const { validate } = require('../middlewares/validateFields');
 const { validateToken } = require('../middlewares/validateJWT');
 const { hasAnyRole } = require('../middlewares/validateRole');
 const { isRoleValid, usernameExists, userExistsById } = require('../helpers/dbValidators');
-const { userGet, userEvaluationGet, userNotificationsGet, userPost, userPut, userDelete } = require('../controllers/userController');
+const { changePassword, userGet, userEvaluationGet, userNotificationsGet, userPost, userPut, userDelete } = require('../controllers/userController');
 
 
 const router = Router();
@@ -46,6 +46,13 @@ router.put('/:id', [
     check('role').custom(isRoleValid),
     validate
 ], userPut);
+
+router.put('/password', [
+    validateToken,
+    check('oldpassword', 'La contraseña antigua es obligatorio').notEmpty(),
+    check('newpassword', 'La contraseña nueva es obligatorio').notEmpty(),
+    validate
+], changePassword);
 
 router.delete('/:id', [
     validateToken,

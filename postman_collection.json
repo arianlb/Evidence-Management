@@ -164,6 +164,42 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Cambiar Contraseña",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzI3NWEyNGIwZjEyOTYyYjY0OTcxZmUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjM2ODg0NDl9.298WBAyTmz0mtzY02jOAfly3n99YEfkIhU84FzCyZoY",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"oldpassword\": \"facultad4\",\r\n    \"newpassword\": \"miclave\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/users/password",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users",
+								"password"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

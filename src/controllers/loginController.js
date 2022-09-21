@@ -20,7 +20,7 @@ const login = async(req = request, res = response) => {
 
         const validPassword = bcryptjs.compareSync(password, user.password);
         if(!validPassword){
-            req.log.warn('Invalid password provided');
+            req.log.warn('La contraseña es incorrecta');
             return res.status(400).json({
                 msg: 'Contraseña incorrecta'
             });

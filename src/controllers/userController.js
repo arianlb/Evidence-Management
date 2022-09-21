@@ -5,7 +5,37 @@ const User = require('../models/user');
 const { deleteUser } = require('../helpers/removeModels');
 const { personalIndicators } = require('../helpers/indicatorResponse');
 
-const userGet = async(req = request, res = response) => {
+const changePassword = async (req = request, res = response) => {
+    try {
+        const { oldpassword, newpassword } = req.body;
+        const user = await User.findById(req.authid);
+        if (!user) {
+            req.log.warn(`El Usuario: ${req.authid} no existe en la BD para asociarle indicadores`);
+            return res.status(404).json({
+                msg: 'No existe el Usuario en la base de datos'
+            });
+        }
+
+        const validPassword = bcryptjs.compareSync(oldpassword, user.password);
+        if (!validPassword) {
+            req.log.warn('La contraseña es incorrecta');
+            return res.status(400).json({
+                msg: 'Contraseña incorrecta'
+            });
+        }
+
+        const password = bcryptjs.hashSync(newpassword, bcryptjs.genSaltSync());
+        await User.findByIdAndUpdate(req.authid, { password });
+        res.json({ msg: 'Contraseña actualizada' });
+        req.log.info('Actualizo la contraseña del Usuario: ' + req.authid);
+        
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
+    }
+}
+
+const userGet = async (req = request, res = response) => {
     
     try {
         const { begin = 0, amount } = req.query;
@@ -132,4 +162,4 @@ const userDelete = async(req = request, res = response) => {
     }
 }
 
-module.exports = { userGet, userEvaluationGet, userNotificationsGet, userPost, userPut, userDelete}
+module.exports = { changePassword, userGet, userEvaluationGet, userNotificationsGet, userPost, userPut, userDelete}
