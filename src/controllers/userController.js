@@ -113,8 +113,8 @@ const userNotificationsGet = async (req = request, res = response) => {
 const userPost = async(req = request, res = response) => {
 
     try {
-        const { name, username, password, role, faculty, department, category } = req.body;
-        const user = new User({ name, username, password, role, faculty, department, category});
+        const { name, username, role, faculty, department, category } = req.body;
+        const user = new User({ name, username, password: 'facultad4', role, faculty, department, category});
     
         //Encripta la contraseña | bcryptjs.genSaltSync() -> nivel de encriptacion
         user.password = bcryptjs.hashSync(password, bcryptjs.genSaltSync());
@@ -134,10 +134,10 @@ const userPost = async(req = request, res = response) => {
 const userPut = async(req = request, res = response) => {
     try {
         const { id } = req.params;
-        const { _id, password, ...rest } = req.body;
+        const { _id, resetpassword, ...rest } = req.body;
     
-        if(password){
-            rest.password = bcryptjs.hashSync(password, bcryptjs.genSaltSync());
+        if(resetpassword){
+            rest.password = bcryptjs.hashSync('facultad4', bcryptjs.genSaltSync());
         }
     
         const user = await User.findByIdAndUpdate(id, rest, {returnDocument: 'after'});

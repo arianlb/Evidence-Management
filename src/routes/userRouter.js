@@ -30,10 +30,10 @@ router.get('/notification/:id', [
 
 router.post('/', [
     validateToken,
+    hasAnyRole('ROLE_ADMIN'),
     check('name', 'El nombre obligatorio').notEmpty(),
     check('username', 'El username es obligatorio').notEmpty(),
     check('username').custom(usernameExists),
-    check('password', 'La contraseña es obligatoria').notEmpty(),
     check('role').custom(isRoleValid),
     check('faculty', 'La facultad es obligatoria').notEmpty(),
     validate
@@ -41,6 +41,7 @@ router.post('/', [
 
 router.put('/:id', [
     validateToken,
+    hasAnyRole('ROLE_ADMIN'),
     check('id', 'No es un ID valido').isMongoId(),
     check('id').custom(userExistsById),
     check('role').custom(isRoleValid),
