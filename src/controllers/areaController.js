@@ -21,12 +21,20 @@ const areaGet = async (req, res = response) => {
     try {
         const areas = [];
         let percent = 0;
-        const areaData = await Area.find().populate({
-            path: 'objectives',
-            populate: { path: 'criterions' }
-        });
+        let areasDB;
+        if (req.authrole === 'ROLE_ADMIN') {
+            areasDB = await Area.find().populate({
+                path: 'objectives',
+                populate: { path: 'criterions' }
+            });
+        } else {
+            areasDB = await Area.find({ name: req.authdepartment }).populate({
+                path: 'objectives',
+                populate: { path: 'criterions' }
+            });
+        }
 
-        for (a of areaData) {
+        for (a of areasDB) {
             percent = Math.trunc(percentage(a.objectives));
 
             const area = { _id: a._id, name: a.name, percentage: percent, objectives: [] };
