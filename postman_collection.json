@@ -50,7 +50,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Pepe\",\r\n    \"username\": \"lolo\",\r\n    \"password\": \"1234\",\r\n    \"role\": \"ADMIN_ROLE\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Clave2\",\r\n    \"username\": \"clave2\",\r\n    \"role\": \"ROLE_USER\",\r\n    \"faculty\": \"Facultad 4\",\r\n    \"department\": \"Informática\",\r\n    \"category\": \"Profesor Auxiliar\",\r\n    \"resetpassword\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"

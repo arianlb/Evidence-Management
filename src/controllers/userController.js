@@ -135,7 +135,7 @@ const userPost = async(req = request, res = response) => {
 const userPut = async(req = request, res = response) => {
     try {
         const { id } = req.params;
-        const { _id, resetpassword, ...rest } = req.body;
+        const { _id, password, resetpassword, ...rest } = req.body;
     
         if(resetpassword){
             rest.password = bcryptjs.hashSync('facultad4', bcryptjs.genSaltSync());
