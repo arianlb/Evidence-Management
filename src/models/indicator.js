@@ -20,6 +20,9 @@ const IndicatorSchema = Schema({
         type: Boolean,
         default: true
     },
+    department: {
+        type: String
+    },
     criterion: {
         type: Schema.Types.ObjectId,
         ref: 'Criterion'
@@ -31,7 +34,7 @@ const IndicatorSchema = Schema({
 });
 
 IndicatorSchema.methods.toJSON = function(){
-    const { __v, model, ...indicator } = this.toObject();
+    const { __v, model, department, ...indicator } = this.toObject();
     return indicator;
 }
 

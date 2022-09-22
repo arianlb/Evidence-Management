@@ -3,6 +3,7 @@ const { check } = require('express-validator');
 
 const { validate } = require('../middlewares/validateFields');
 const { validateToken } = require('../middlewares/validateJWT');
+const { hasAnyRole } = require('../middlewares/validateRole');
 const { indicatorsRequest } = require('../middlewares/validateIndicators');
 const { userExistsById, indicatorExistsById } = require('../helpers/dbValidators');
 const { indicatorByCategory,
@@ -25,6 +26,7 @@ router.get('/', [
 
 router.get('/category', [
     validateToken,
+    hasAnyRole('ROLE_CHIEF'),
     validate
 ], indicatorByCategory);
 

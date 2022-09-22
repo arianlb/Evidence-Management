@@ -1,6 +1,6 @@
 const { request, response } = require('express');
 
-const { indicatorsByCategory } = require('../helpers/indicatorResponse');
+const { indicatorArea, indicatorsByCategory } = require('../helpers/indicatorResponse');
 const { updateCriterion } = require('../helpers/modifyCriterion');
 const { deleteIndicator } = require('../helpers/removeModels');
 const Criterion = require('../models/criterion');
@@ -31,9 +31,9 @@ const indicatorGet = async (req = request, res = response) => {
 
 const indicatorByCategory = async (req = request, res = response) => {
     try {
-        const indicators = await indicatorsByCategory(req.body.categories);
+        const indicators = await indicatorsByCategory(req.body.categories, req.authdepartment);
         res.json(indicators);
-        req.log.info('Obtuvo todos los Indicadores Modelos');
+        req.log.info('Obtuvo todos los Indicadores Modelos del Area: ', req.authdepartment);
 
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -43,7 +43,7 @@ const indicatorByCategory = async (req = request, res = response) => {
 
 const indicatorsByUser = async (req = request, res = response) => {
     try {
-        const indicators = await indicatorsByCategory(req.body.categories, req.params.id);
+        const indicators = await indicatorsByCategory(req.body.categories, req.authdepartment, req.params.id);
         let has = false;
 
         for (let i = 0; i < indicators.length; i++) {
@@ -157,8 +157,9 @@ const indicatorPostByCriterion = async (req = request, res = response) => {
             })
         }
 
+        const department = await indicatorArea(req.params.id);
         const { name, category } = req.body;
-        const indicator = new Indicator({ name, category, criterion });
+        const indicator = new Indicator({ name, category, criterion, department });
         await indicator.save();
 
         res.status(201).json(indicator);

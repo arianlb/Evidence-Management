@@ -1,4 +1,6 @@
+const Area = require('../models/area');
 const Indicator = require('../models/indicator');
+const Objective = require('../models/objective');
 const User = require('../models/user');
 
 const indicatorByCriterion = async (area) => {
@@ -31,7 +33,7 @@ const indicatorByCriterion = async (area) => {
 
 const indicatorsByCategory = async (categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO',
     'TRABAJO POLÍTICO-IDEOLÓGICO', 'TRABAJO METODOLÓGICO', 'TRABAJO DE INVESTIGACIÓN E INNOVACIÓN',
-    'SUPERACIÓN'], userId) => {
+    'SUPERACIÓN'], department, userId) => {
 
     let indicators;
     let indicatorsResponse = [];
@@ -64,7 +66,7 @@ const indicatorsByCategory = async (categories = ['TRABAJO DOCENTE-EDUCATIVO EN 
     }
 
     for (let i = 0; i < categories.length; i++) {
-        indicators = await Indicator.find({ category: categories[i], model: true });
+        indicators = await Indicator.find({ category: categories[i], model: true, department });
         indicatorsResponse.push({ category: categories[i], indicators });
     }
 
@@ -101,6 +103,12 @@ const personalIndicators = (categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO
     });
 
     return indicatorsResponse;
- }
+}
+ 
+const indicatorArea = async (criterionId) => { 
+    const objective = await Objective.findOne({ criterions: criterionId });
+    const area = await Area.findOne({ objectives: objective._id });
+    return area.name;
+}
 
-module.exports = { indicatorsByCategory, indicatorByCriterion, personalIndicators }
+module.exports = { indicatorArea, indicatorsByCategory, indicatorByCriterion, personalIndicators }
