@@ -381,6 +381,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Obtener nombres de las Areas",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzI3NWEyNGIwZjEyOTYyYjY0OTcxZmUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjQwNDc5Mzd9.h3mPrtYwuAiio-ThB-d0F43tE6UwQYiC-ed3vA81Hvg",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{url}}/api/areas/names",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"areas",
+								"names"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

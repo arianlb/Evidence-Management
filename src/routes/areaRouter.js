@@ -4,7 +4,8 @@ const { check } = require('express-validator');
 const { validate } = require('../middlewares/validateFields');
 const { validateToken } = require('../middlewares/validateJWT');
 const { areaNameExists, areaExistsById } = require('../helpers/dbValidators');
-const { areaGet,
+const { areasName,
+        areaGet,
         areaPost,
         areaById,
         areaPut,
@@ -18,6 +19,11 @@ router.get('/', [
     validateToken,
     validate
 ], areaGet);
+
+router.get('/names', [
+    validateToken,
+    validate
+], areasName);
 
 router.get('/:id', [
     validateToken,

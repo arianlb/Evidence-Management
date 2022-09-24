@@ -6,16 +6,13 @@ const { deleteArea } = require('../helpers/removeModels');
 const Area = require('../models/area');
 const Objective = require('../models/objective');
 
-/*const areaGet = async(req, res = response) => {
-    const { begin = 0, amount = 5 } = req.query;
-
-    const [ total, areas ] = await Promise.all([
-        Area.countDocuments(),
-        Area.find().populate('objectives').skip(Number(begin)).limit(Number(amount))
-    ]);
-
-    res.json({ total, areas });
-}*/
+const areasName = async(req, res = response) => {
+    const areas = await Area.find({}, 'name');
+    let names = [];
+    areas.forEach(({ name }) => names.push(name));
+    res.json(names);
+    req.log.info('Obtuvo los nombres de las Areas');
+}
 
 const areaGet = async (req, res = response) => {
     try {
@@ -185,4 +182,4 @@ const areaDelete = async (req, res = response) => {
     }
 }
 
-module.exports = { areaGet, areaPost, areaPut, areaDelete, addObjectives, addUsers, areaById }
+module.exports = { areasName, areaGet, areaPost, areaPut, areaDelete, addObjectives, addUsers, areaById }
