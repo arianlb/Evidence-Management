@@ -43,7 +43,7 @@ class Server {
                 target: 'pino-pretty',
                 options: {
                     translateTime: "SYS:standard",
-                    ignore: "req,res,err"
+                    ignore: "req.id,req.query,req.params,req.headers,req.remoteAddress,req.remotePort,res,err"
                 }
             },
         }));
