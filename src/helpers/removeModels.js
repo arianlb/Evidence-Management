@@ -44,7 +44,7 @@ const deleteEvidence = async(id, idIndicator) => {
     ]);
 }
 
-const deleteIndicator = async(id, idUser) => {
+const deleteIndicator = async(id, idUser, io) => {
     const [indicator, user] = await Promise.all([
         Indicator.findById(id),
         User.findById(idUser)
@@ -53,6 +53,7 @@ const deleteIndicator = async(id, idUser) => {
     for(let i = 0; i < user.indicators.length; i++) {
         if(user.indicators[i].equals(indicator._id)) {
             user.indicators.splice(i, 1);
+            user.notifications.push('Se elimino el Indicador: ' + indicator.name);
             break;
         }
     }
@@ -70,6 +71,8 @@ const deleteIndicator = async(id, idUser) => {
         Indicator.findByIdAndDelete(indicator._id),
         user.save()
     ]);
+    
+    io.to(user._id.toString()).emit('notifications', user.notifications.length);
 }
 
 const deleteCriterion = async(id, idObjective) => {

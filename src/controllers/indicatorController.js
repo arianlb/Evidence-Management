@@ -235,7 +235,7 @@ const indicatorPut = async (req = request, res = response) => {
 
 const indicatorDelete = async (req = request, res = response) => {
     try {
-        await deleteIndicator(req.params.id, req.params.idUser);
+        await deleteIndicator(req.params.id, req.params.idUser, req.app.get('io'));
         res.json({ id: req.params.id });
         req.log.info(`Elimino el Indicador: ${req.params.id} del Usuario: ${req.params.idUser}`);
     } catch (error) {
