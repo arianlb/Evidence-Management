@@ -6,12 +6,18 @@ const { deleteArea } = require('../helpers/removeModels');
 const Area = require('../models/area');
 const Objective = require('../models/objective');
 
-const areasName = async(req, res = response) => {
-    const areas = await Area.find({}, 'name');
-    let names = [];
-    areas.forEach(({ name }) => names.push(name));
-    res.json(names);
-    req.log.info('Obtuvo los nombres de las Areas');
+const areasName = async (req, res = response) => {
+    try {
+        const areas = await Area.find({}, 'name');
+        let names = [];
+        areas.forEach(({ name }) => names.push(name));
+        res.json(names);
+        req.log.info('Obtuvo los nombres de las Areas');
+        
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
+    }
 }
 
 const areaGet = async (req, res = response) => {
