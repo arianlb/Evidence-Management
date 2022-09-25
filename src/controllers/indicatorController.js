@@ -185,10 +185,18 @@ const personalIndicatorPost = async (req = request, res = response) => {
         const indicator = new Indicator({ name, category, observation, status: true });
         user.indicators.push(indicator);
 
-        await Promise.all([
+        const [userChief, , ] = await Promise.all([
+            User.findOne({ department: user.department, role: 'ROLE_CHIEF' }),
             indicator.save(),
             user.save()
         ]);
+
+        if (userChief) {
+            userChief.notifications.push(`${user.name} realizó el Indicador Personal ${indicator.name}.`);
+            await userChief.save();
+            const io = req.app.get('io');
+            io.to(userChief._id.toString()).emit('notifications', userChief.notifications.length);
+        }
 
         res.status(201).json(indicator);
         req.log.info(`El Usuario ${req.params.id} creo el Indicador Personal: ${indicator._id}`)
