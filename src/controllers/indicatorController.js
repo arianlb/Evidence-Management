@@ -225,10 +225,10 @@ const indicatorPut = async (req = request, res = response) => {
         }
         else {
             const { _id, model, status, ...rest } = req.body;
-            if (status !== indicator.status) {
+            if (status !== undefined && status !== indicator.status) {
                 updateCriterion(indicator.criterion, status ? 1 : -1);
+                rest.status = status;
             }
-            rest.status = status;
             updatedIndicator = await Indicator.findByIdAndUpdate(req.params.id, rest, { returnDocument: 'after' });
         }
 
