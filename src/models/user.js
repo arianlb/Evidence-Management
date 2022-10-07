@@ -26,6 +26,9 @@ const UserSchema = Schema({
     department: {
         type: String
     },
+    solapin: {
+        type: String
+    },
     category: {
         type: String
     },

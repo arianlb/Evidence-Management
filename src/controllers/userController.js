@@ -113,12 +113,12 @@ const userNotificationsGet = async (req = request, res = response) => {
 const userPost = async(req = request, res = response) => {
 
     try {
-        const { name, username, role, faculty, department, category } = req.body;
+        const { name, username, role, faculty, department, solapin, category } = req.body;
         
         //Encripta la contraseña | bcryptjs.genSaltSync() -> nivel de encriptacion
         const password = bcryptjs.hashSync('facultad4', bcryptjs.genSaltSync());
         
-        const user = new User({ name, username, password, role, faculty, department, category });
+        const user = new User({ name, username, password, role, faculty, department, solapin, category });
     
         //guarda en BD
         await user.save();
