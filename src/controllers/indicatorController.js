@@ -43,9 +43,17 @@ const indicatorByCategory = async (req = request, res = response) => {
 
 const indicatorsByUser = async (req = request, res = response) => {
     try {
-        const indicators = await indicatorsByCategory(req.body.categories, req.authdepartment, req.params.id);
+
+        const user = await User.findById(req.params.id).populate('indicators');
+        if (!user) { 
+            req.log.warn(`El Usuario: ${req.params.id} no existe en la BD`);
+            return res.status(404).json({
+                msg: 'No existe el Usuario en la base de datos'
+            });
+        }
+
+        const indicators = await indicatorsByCategory(req.body.categories, req.authdepartment, user);
         let has = false;
-        const name = req.query.name;
 
         for (let i = 0; i < indicators.length; i++) {
             if (indicators[i].indicators.length > 0) {
@@ -54,7 +62,7 @@ const indicatorsByUser = async (req = request, res = response) => {
             }
         }
 
-        res.json({ has, indicators, name });
+        res.json({ has, indicators, name: user.name });
         req.log.info('Obtuvo todos los Indicadores del Usuario: ' + req.params.id);
 
     } catch (error) {

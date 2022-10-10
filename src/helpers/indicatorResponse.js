@@ -1,7 +1,6 @@
 const Area = require('../models/area');
 const Indicator = require('../models/indicator');
 const Objective = require('../models/objective');
-const User = require('../models/user');
 
 const indicatorByCriterion = async (area) => {
     const indicators = await Indicator.find({ model: true });
@@ -33,13 +32,12 @@ const indicatorByCriterion = async (area) => {
 
 const indicatorsByCategory = async (categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO',
     'TRABAJO POLÍTICO-IDEOLÓGICO', 'TRABAJO METODOLÓGICO', 'TRABAJO DE INVESTIGACIÓN E INNOVACIÓN',
-    'SUPERACIÓN'], department, userId) => {
+    'SUPERACIÓN'], department, user) => {
 
     let indicators;
     let indicatorsResponse = [];
 
-    if (userId) {
-        const user = await User.findById(userId).populate('indicators');
+    if (user) {
         
         if (!categories.includes('EXTENSIÓN UNIVERSITARIA')) {
             categories.push('EXTENSIÓN UNIVERSITARIA');

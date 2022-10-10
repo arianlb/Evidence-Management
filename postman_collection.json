@@ -851,7 +851,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/indicators/user/6326a818d51ac46dcedf836f?name=Pepe Antonio",
+							"raw": "{{url}}/api/indicators/user/6326a818d51ac46dcedf836f",
 							"host": [
 								"{{url}}"
 							],
@@ -860,12 +860,6 @@
 								"indicators",
 								"user",
 								"6326a818d51ac46dcedf836f"
-							],
-							"query": [
-								{
-									"key": "name",
-									"value": "Pepe Antonio"
-								}
 							]
 						}
 					},

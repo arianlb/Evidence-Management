@@ -39,7 +39,6 @@ router.get('/:id', [
 router.get('/user/:id', [
     validateToken,
     check('id', 'No es un ID valido').isMongoId(),
-    check('id').custom(userExistsById),
     validate
 ], indicatorsByUser);
 
