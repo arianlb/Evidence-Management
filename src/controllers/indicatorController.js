@@ -45,6 +45,7 @@ const indicatorsByUser = async (req = request, res = response) => {
     try {
         const indicators = await indicatorsByCategory(req.body.categories, req.authdepartment, req.params.id);
         let has = false;
+        const name = req.query.name;
 
         for (let i = 0; i < indicators.length; i++) {
             if (indicators[i].indicators.length > 0) {
@@ -53,7 +54,7 @@ const indicatorsByUser = async (req = request, res = response) => {
             }
         }
 
-        res.json({ has, indicators });
+        res.json({ has, indicators, name });
         req.log.info('Obtuvo todos los Indicadores del Usuario: ' + req.params.id);
 
     } catch (error) {
