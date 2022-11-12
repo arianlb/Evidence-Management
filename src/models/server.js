@@ -58,6 +58,7 @@ class Server {
         this.app.use('/api/objectives', require('../routes/objetiveRouter'));
         this.app.use('/api/roles', require('../routes/roleRouter'));
         this.app.use('/api/users', require('../routes/userRouter'));
+        this.app.use('/api/years', require('../routes/yearRouter'));
     }
 
     sockets() {
