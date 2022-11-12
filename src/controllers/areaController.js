@@ -46,7 +46,7 @@ const areaGet = async (req, res = response) => {
         }
 
         res.json(areas);
-        req.log.info('Obtuvo todas las Areas');
+        req.log.info('Obtuvo todas las Areas del año: ' + req.query.year);
 
     } catch (error) {
         res.status(500).json({ msg: error.message });

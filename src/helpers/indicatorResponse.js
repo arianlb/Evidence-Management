@@ -32,7 +32,7 @@ const indicatorByCriterion = async (area) => {
 
 const indicatorsByCategory = async (categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO',
     'TRABAJO POLÍTICO-IDEOLÓGICO', 'TRABAJO METODOLÓGICO', 'TRABAJO DE INVESTIGACIÓN E INNOVACIÓN',
-    'SUPERACIÓN'], department, user) => {
+    'SUPERACIÓN'], year, user) => {
 
     let indicators;
     let indicatorsResponse = [];
@@ -64,7 +64,7 @@ const indicatorsByCategory = async (categories = ['TRABAJO DOCENTE-EDUCATIVO EN 
     }
 
     for (let i = 0; i < categories.length; i++) {
-        indicators = await Indicator.find({ category: categories[i], model: true, department });
+        indicators = await Indicator.find({ category: categories[i], model: true, year });
         indicatorsResponse.push({ category: categories[i], indicators });
     }
 

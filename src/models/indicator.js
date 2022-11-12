@@ -23,6 +23,10 @@ const IndicatorSchema = Schema({
     department: {
         type: String
     },
+    year: {
+        type: Number,
+        required: true
+    },
     criterion: {
         type: Schema.Types.ObjectId,
         ref: 'Criterion'
