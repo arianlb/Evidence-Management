@@ -8,7 +8,7 @@ const Objective = require('../models/objective');
 
 const areasName = async (req, res = response) => {
     try {
-        const areas = await Area.find({}, 'name');
+        const areas = await Area.find({ year: req.query.year }, 'name');
         let names = [];
         areas.forEach(({ name }) => names.push(name));
         res.json(names);
@@ -26,12 +26,12 @@ const areaGet = async (req, res = response) => {
         let percent = 0;
         let areasDB;
         if (req.authrole === 'ROLE_ADMIN') {
-            areasDB = await Area.find().populate({
+            areasDB = await Area.find({ year: req.query.year }).populate({
                 path: 'objectives',
                 populate: { path: 'criterions' }
             });
         } else {
-            areasDB = await Area.find({ name: req.authdepartment }).populate({
+            areasDB = await Area.find({ year: req.query.year, name: req.authdepartment }).populate({
                 path: 'objectives',
                 populate: { path: 'criterions' }
             });
@@ -83,7 +83,7 @@ const areaPost = async (req, res = response) => {
             objectives = await Objective.create(objectives);
         }
 
-        const area = new Area({ name, objectives });
+        const area = new Area({ name, year: req.query.year, objectives });
 
         await area.save();
         const responseArea = { _id: area._id, name: area.name, objectives: targetNames };

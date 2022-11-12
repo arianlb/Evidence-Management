@@ -6,6 +6,7 @@ const AreaSchema = Schema({
         required: [true, 'El nombre es obligatorio'],
         unique: true
     },
+    year: { type: Number, required: true },
     objectives: [{
         type: Schema.Types.ObjectId,
         ref: 'Objective'
