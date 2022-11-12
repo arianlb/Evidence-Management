@@ -6,7 +6,6 @@ const { deleteIndicator } = require('../helpers/removeModels');
 const Criterion = require('../models/criterion');
 const Indicator = require('../models/indicator');
 const User = require('../models/user');
-const year = require('../models/year');
 
 const indicatorGet = async (req = request, res = response) => {
 
@@ -45,7 +44,10 @@ const indicatorByCategory = async (req = request, res = response) => {
 const indicatorsByUser = async (req = request, res = response) => {
     try {
 
-        const user = await User.findById(req.params.id).populate('indicators', { year: req.query.year }); //TODO: no se funciona
+        const user = await User.findById(req.params.id).populate({
+            path: 'indicators',
+            match: { year: req.query.year }
+        });
         if (!user) { 
             req.log.warn(`El Usuario: ${req.params.id} no existe en la BD`);
             return res.status(404).json({
@@ -91,7 +93,10 @@ const indicatorById = async (req = request, res = response) => {
 const indicatorPost = async (req = request, res = response) => {
 
     try {
-        const user = await User.findById(req.params.id).populate('indicators', { year: req.query.year }); //TODO: no se funciona
+        const user = await User.findById(req.params.id).populate({
+            path: 'indicators',
+            match: { year: req.query.year }
+        });
         if (!user) {
             req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);
             return res.status(404).json({
