@@ -1,6 +1,6 @@
 const { response } = require('express');
 
-const { percentage } = require('../helpers/areaPercentage');
+const { percentage } = require('../helpers/areaTools');
 const { indicatorByCriterion } = require('../helpers/indicatorResponse');
 const { deleteArea } = require('../helpers/removeModels');
 const Area = require('../models/area');
@@ -13,7 +13,7 @@ const areasName = async (req, res = response) => {
         areas.forEach(({ name }) => names.push(name));
         res.json(names);
         req.log.info('Obtuvo los nombres de las Areas');
-        
+
     } catch (error) {
         res.status(500).json({ msg: error.message });
         req.log.error(error.message);

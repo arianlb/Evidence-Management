@@ -1,8 +1,9 @@
 const { request, response } = require('express');
 
+const { createAllNew } = require('../helpers/areaTools');
 const Year = require('../models/year');
 
-const getLastOne = async (req, res = response) => { 
+const getLastOne = async (req, res = response) => {
     try {
         const year = await Year.findOne();
         const lastYear = year.years[year.years.length - 1];
@@ -14,10 +15,28 @@ const getLastOne = async (req, res = response) => {
     }
 }
 
+const newYearPost = async (req, res = response) => {
+    try {
+        const year = await Year.findOne();
+        const lastYear = year.years[year.years.length - 1];
+        year.years.push(req.body.year);
+        const [, areas] = await Promise.all([
+            year.save(),
+            createAllNew(lastYear, req.body.year)
+        ]);
+        console.log(areas);
+        res.json(areas);
+        req.log.info('Agrego un Año');
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
+    }
+}
+
 const yearsGet = async (req, res = response) => {
     try {
         const year = await Year.findOne();
-        res.json(year);
+        res.json(year.years);
         req.log.info('Obtuvo todos los Años');
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -25,7 +44,7 @@ const yearsGet = async (req, res = response) => {
     }
 }
 
-const yearPut = async (req, res = response) => { 
+const yearPut = async (req, res = response) => {
     try {
         const { year } = req.body;
         const yearDB = await Year.findOne();
@@ -59,7 +78,7 @@ const yearPost = async (req, res = response) => {
     }
 }
 
-const yearDelete = async (req, res = response) => { 
+const yearDelete = async (req, res = response) => {
     try {
         const year = await Year.findOneAndDelete();
         res.json(year);
@@ -70,10 +89,11 @@ const yearDelete = async (req, res = response) => {
     }
 }
 
-const removeOne = async (req, res = response) => { 
+const removeOne = async (req, res = response) => {
     try {
         const year = await Year.findOne();
-        const yearDB = year.years.filter(y => y !== req.query.year);
+        const yearDB = year.years.filter(y => y != req.query.year);
+        console.log(yearDB);
         year.years = yearDB;
         await year.save();
         res.json(year);
@@ -84,4 +104,4 @@ const removeOne = async (req, res = response) => {
     }
 }
 
-module.exports = { getLastOne, yearsGet, yearPost, yearPut, yearDelete, removeOne };
+module.exports = { getLastOne, newYearPost, yearsGet, yearPost, yearPut, yearDelete, removeOne };

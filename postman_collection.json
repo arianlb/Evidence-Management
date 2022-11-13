@@ -215,10 +215,16 @@
 					"name": "Crear Area",
 					"request": {
 						"method": "POST",
-						"header": [],
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjgyOTExODF9.nlx5k0CcIrrkwYiD8edRollJ-bgJBhHb8fu_Fi3Y0yQ",
+								"type": "default"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Test10\",\r\n    \"objectives\": [\"algo\", \"ahi\"]\r\n}",
+							"raw": "{\r\n    \"name\": \"Area test\",\r\n    \"objectives\": [\"algo\", \"ahi\"]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -226,13 +232,19 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/areas",
+							"raw": "{{url}}/api/areas?year=2022",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"areas"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2022"
+								}
 							]
 						}
 					},
@@ -241,16 +253,37 @@
 				{
 					"name": "Obtener Areas",
 					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjgyOTExODF9.nlx5k0CcIrrkwYiD8edRollJ-bgJBhHb8fu_Fi3Y0yQ",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/areas",
+							"raw": "{{url}}/api/areas?year=2022",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"areas"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2022"
+								}
 							]
 						}
 					},
@@ -672,11 +705,26 @@
 				{
 					"name": "Crear Indicador a un Usuario",
 					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjgyOTExODF9.nlx5k0CcIrrkwYiD8edRollJ-bgJBhHb8fu_Fi3Y0yQ",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"indicators\": [\r\n        {\r\n            \"_id\": \"62a803df7ac0a54e052bbaa9\"\r\n        },\r\n        {\r\n            \"_id\": \"62a804167ac0a54e052bbab5\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"indicators\": [\r\n        {\r\n            \"_id\": \"63701d3efe6aa933d2d2a0b6\"\r\n        }\r\n    ]\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -684,14 +732,20 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/indicators/62a90b780aa60e9e9e585ea8",
+							"raw": "{{url}}/api/indicators/63701cf53ab0dddb9cf6db91?year=2022",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"indicators",
-								"62a90b780aa60e9e9e585ea8"
+								"63701cf53ab0dddb9cf6db91"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2022"
+								}
 							]
 						}
 					},
@@ -797,7 +851,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}/api/indicators/category",
+							"raw": "{{url}}/api/indicators/category?year=2022",
 							"host": [
 								"{{url}}"
 							],
@@ -805,6 +859,12 @@
 								"api",
 								"indicators",
 								"category"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2022"
+								}
 							]
 						}
 					},
@@ -813,11 +873,26 @@
 				{
 					"name": "Crear Indicador con Criterio",
 					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjgyOTExODF9.nlx5k0CcIrrkwYiD8edRollJ-bgJBhHb8fu_Fi3Y0yQ",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
 						"method": "POST",
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Indicador con Criterio\",\r\n    \"category\": \"TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Indicador otro 2022\",\r\n    \"category\": \"TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO\"\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -825,7 +900,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/indicators/criterion/627e9b545796c8a3847353c5",
+							"raw": "{{url}}/api/indicators/criterion/63701b3f677e2cf3e34a4115?year=2022",
 							"host": [
 								"{{url}}"
 							],
@@ -833,7 +908,13 @@
 								"api",
 								"indicators",
 								"criterion",
-								"627e9b545796c8a3847353c5"
+								"63701b3f677e2cf3e34a4115"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2022"
+								}
 							]
 						}
 					},
@@ -842,16 +923,32 @@
 				{
 					"name": "Obtener indicadores por Usuario",
 					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2NjgyOTExODF9.nlx5k0CcIrrkwYiD8edRollJ-bgJBhHb8fu_Fi3Y0yQ",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
 						"method": "GET",
 						"header": [
 							{
 								"key": "Authorization",
 								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzI2YTg0MWQ1MWFjNDZkY2VkZjgzNzMiLCJyb2xlIjoiUk9MRV9DSElFRiIsIm5hbWUiOiJKb3NlIiwidXNlcm5hbWUiOiJwZXBlIiwiZGVwYXJ0bWVudCI6IkluZm9ybcOhdGljYSIsImlhdCI6MTY2NTQxOTk3Nn0.K1WpjdoW-3ZpIz9UBvS2r5tkcBo5RsPNOKXj38xKJ1E",
-								"type": "default"
+								"type": "default",
+								"disabled": true
 							}
 						],
 						"url": {
-							"raw": "{{url}}/api/indicators/user/6326a818d51ac46dcedf836f",
+							"raw": "{{url}}/api/indicators/user/63701cf53ab0dddb9cf6db91?year=2023",
 							"host": [
 								"{{url}}"
 							],
@@ -859,7 +956,13 @@
 								"api",
 								"indicators",
 								"user",
-								"6326a818d51ac46dcedf836f"
+								"63701cf53ab0dddb9cf6db91"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2023"
+								}
 							]
 						}
 					},
@@ -1070,6 +1173,173 @@
 								"evidences",
 								"file",
 								"627fe17b1f635c11d52a49dc"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Anno",
+			"item": [
+				{
+					"name": "Crear una lista de años",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"years\": [2022, 2024, 2025]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/years",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"years"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear un año con todo nuevo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2024\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/years/new",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"years",
+								"new"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener el ultimo año",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/years/last",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"years",
+								"last"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener todos los años",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/years",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"years"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Agregar un año a la lista",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2025\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/years",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"years"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Elimina un año",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/years/remove?year=2025",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"years",
+								"remove"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2025"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Elimina la lista de años",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/years",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"years"
 							]
 						}
 					},

@@ -35,7 +35,7 @@ router.get('/:id', [
 router.post('/', [
     validateToken,
     check('name', 'El nombre es obligatorio').notEmpty(),
-    check('name').custom(areaNameExists),
+    //check('name').custom(areaNameExists),
     validate
 ], areaPost);
 

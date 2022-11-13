@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 const { validate } = require('../middlewares/validateFields');
 const { validateToken } = require('../middlewares/validateJWT');
 const { getLastOne,
+        newYearPost,
         yearsGet,
         yearPut,
         yearPost,
@@ -19,6 +20,8 @@ router.get('/', [], yearsGet);
 router.put('/', [], yearPut);
 
 router.post('/', [], yearPost);
+
+router.post('/new', [], newYearPost);
 
 router.delete('/', [], yearDelete);
 

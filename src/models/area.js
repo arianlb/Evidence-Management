@@ -3,8 +3,7 @@ const { Schema, model } = require('mongoose');
 const AreaSchema = Schema({
     name: {
         type: String,
-        required: [true, 'El nombre es obligatorio'],
-        unique: true
+        required: [true, 'El nombre es obligatorio']
     },
     year: { type: Number, required: true },
     objectives: [{
