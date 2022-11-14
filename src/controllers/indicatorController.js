@@ -33,7 +33,7 @@ const indicatorByCategory = async (req = request, res = response) => {
     try {
         const indicators = await indicatorsByCategory(req.body.categories, req.query.year );
         res.json(indicators);
-        req.log.info('Obtuvo todos los Indicadores Modelos del año: ', req.query.year);
+        req.log.info('Obtuvo todos los Indicadores Modelos del anio: ', req.query.year);
 
     } catch (error) {
         res.status(500).json({ msg: error.message });
@@ -95,7 +95,7 @@ const indicatorPost = async (req = request, res = response) => {
     try {
         const user = await User.findById(req.params.id).populate({
             path: 'indicators',
-            match: { year: req.query.year }
+            match: { year: req.body.year }
         });
         if (!user) {
             req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);
@@ -142,7 +142,7 @@ const indicatorPost = async (req = request, res = response) => {
                 category: indicator.category,
                 criterion: indicator.criterion,
                 model: false,
-                year: req.query.year
+                year: req.body.year
             });
             user.notifications.push('Tiene un nuevo Indicador: ' + indicator.name);
         });
@@ -174,8 +174,8 @@ const indicatorPostByCriterion = async (req = request, res = response) => {
         }
 
         const department = await indicatorArea(req.params.id);
-        const { name, category } = req.body;
-        const indicator = new Indicator({ name, category, criterion, department, year: req.query.year });
+        const { name, category, year } = req.body;
+        const indicator = new Indicator({ name, category, criterion, department, year });
         await indicator.save();
 
         res.status(201).json(indicator);
@@ -197,8 +197,8 @@ const personalIndicatorPost = async (req = request, res = response) => {
             });
         }
 
-        const { name, category, observation } = req.body;
-        const indicator = new Indicator({ name, category, observation, status: true, model: false, year: req.query.year });
+        const { name, category, observation, year } = req.body;
+        const indicator = new Indicator({ name, category, observation, status: true, model: false, year });
         user.indicators.push(indicator);
 
         const [userChief, , ] = await Promise.all([
@@ -236,8 +236,8 @@ const indicatorPut = async (req = request, res = response) => {
         }
 
         if (indicator.model) {
-            const { name, category, criterion } = req.body;
-            updatedIndicator = await Indicator.findByIdAndUpdate(req.params.id, { name, category, criterion }, { returnDocument: 'after' });
+            const { name, category, criterion, year } = req.body;
+            updatedIndicator = await Indicator.findByIdAndUpdate(req.params.id, { name, category, criterion, year }, { returnDocument: 'after' });
         }
         else {
             const { _id, model, status, ...rest } = req.body;

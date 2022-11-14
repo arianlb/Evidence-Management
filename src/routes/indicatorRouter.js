@@ -45,6 +45,7 @@ router.get('/user/:id', [
 router.post('/:id', [
     validateToken,
     check('id', 'No es un ID valido').isMongoId(),
+    check('year', 'El año es obligatorio').notEmpty(),
     indicatorsRequest,
     validate
 ], indicatorPost);
@@ -54,6 +55,7 @@ router.post('/criterion/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     check('name', 'El nombre es obligatorio').notEmpty(),
     check('category', 'La categoria es obligatorio').notEmpty(),
+    check('year', 'El año es obligatorio').notEmpty(),
     validate
 ], indicatorPostByCriterion);
 
@@ -62,6 +64,7 @@ router.post('/personal/:id', [
     check('id', 'No es un ID valido').isMongoId(),
     check('name', 'El nombre es obligatorio').notEmpty(),
     check('category', 'La categoria es obligatorio').notEmpty(),
+    check('year', 'El año es obligatorio').notEmpty(),
     validate
 ], personalIndicatorPost);
 
