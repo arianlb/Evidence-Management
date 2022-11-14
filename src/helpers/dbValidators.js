@@ -1,5 +1,6 @@
 const Area = require('../models/area');
 const Criterion = require('../models/criterion');
+const Evaluation = require('../models/evaluation');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
 const Objective = require('../models/objective');
@@ -55,6 +56,13 @@ const criterionExistsById = async( id ) => {
     }
 }
 
+const evaluationExistsById = async (id) => {
+    const exists = await Evaluation.findById(id);
+    if (!exists) {
+        throw new Error(`La Evaluacion con el id: ${id} no exite en la BD`);
+    }
+}
+
 const evidenceExistsById = async( id ) => {
     const exists = await Evidence.findById(id);
     if(!exists){
@@ -80,6 +88,7 @@ module.exports = {
     areaExistsById,
     areaNameExists,
     criterionExistsById,
+    evaluationExistsById,
     evidenceExistsById,
     existsRole,
     indicatorExistsById,

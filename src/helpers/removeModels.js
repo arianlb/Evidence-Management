@@ -4,12 +4,32 @@ const fs = require('fs');
 const { updateCriterion } = require('./modifyCriterion');
 const Area = require('../models/area');
 const Criterion = require('../models/criterion');
+const Evaluation = require('../models/evaluation');
 const Evidence = require('../models/evidence');
 const Indicator = require('../models/indicator');
 const Objective = require('../models/objective');
 const User = require('../models/user');
 
-const deleteEvidence = async(id, idIndicator) => {
+const deleteEvaluation = async (id, idUser) => {
+    const [evaluation, user] = await Promise.all([
+        Evaluation.findById(id),
+        User.findById(idUser)
+    ]);
+
+    for (let i = 0; i < user.evaluations.length; i++) {
+        if (user.evaluations[i].equals(evaluation._id)) {
+            user.evaluations.splice(i, 1);
+            break;
+        }
+    }
+
+    await Promise.all([
+        Evaluation.findByIdAndDelete(evaluation._id),
+        user.save()
+    ]);
+ }
+
+const deleteEvidence = async (id, idIndicator) => {
     const [evidence, indicator] = await Promise.all([
         Evidence.findById(id),
         Indicator.findById(idIndicator)
@@ -160,4 +180,4 @@ const deleteUser = async(id) => {
     }
 }
 
-module.exports = { deleteArea, deleteCriterion, deleteEvidence, deleteIndicator, deleteObjective, deleteUser }
+module.exports = { deleteArea, deleteCriterion, deleteEvaluation, deleteEvidence, deleteIndicator, deleteObjective, deleteUser }

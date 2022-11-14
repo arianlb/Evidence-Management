@@ -36,6 +36,10 @@ const UserSchema = Schema({
         type: Schema.Types.ObjectId,
         ref: 'Indicator'
     }],
+    evaluations: [{
+        type: Schema.Types.ObjectId,
+        ref: 'Evaluation'
+    }],
     status: {
         type: Boolean,
         default: true
