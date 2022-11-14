@@ -13,19 +13,42 @@ const { getLastOne,
 
 const router = Router();
 
-router.get('/last', [], getLastOne);
+router.get('/last', [
+    validateToken,
+    validate
+], getLastOne);
 
-router.get('/', [], yearsGet);
+router.get('/', [
+    validateToken,
+    validate
+], yearsGet);
 
-router.put('/', [], yearPut);
+router.put('/', [
+    validateToken,
+    check('year', 'El año es obligatorio').notEmpty(),
+    validate
+], yearPut);
 
-router.post('/', [], yearPost);
+router.post('/', [
+    validateToken,
+    validate
+], yearPost);
 
-router.post('/new', [], newYearPost);
+router.post('/new', [
+    validateToken,
+    check('year', 'El año es obligatorio').notEmpty(),
+    validate
+], newYearPost);
 
-router.delete('/', [], yearDelete);
+router.delete('/', [
+    validateToken,
+    validate
+], yearDelete);
 
-router.delete('/remove', [], removeOne);
+router.delete('/remove', [
+    validateToken,
+    validate
+], removeOne);
 
 
 
