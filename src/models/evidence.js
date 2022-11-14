@@ -7,7 +7,8 @@ const EvidenceSchema = Schema({
     },
     file: {
         type: String
-    }
+    },
+    date: { type: Date, default: Date.now }
 });
 
 module.exports = model('Evidence', EvidenceSchema);

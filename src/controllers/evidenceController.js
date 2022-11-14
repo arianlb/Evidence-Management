@@ -68,8 +68,8 @@ const evidencePost = async (req = request, res = response) => {
             })
         }
 
-        const { description } = req.body;
-        const evidence = new Evidence({ description });
+        const { description, date } = req.body;
+        const evidence = new Evidence({ description, date });
         indicator.evidences.push(evidence);
 
         if (!indicator.status) {
@@ -106,9 +106,9 @@ const evidencePost = async (req = request, res = response) => {
 const evidencePut = async (req = request, res = response) => {
     try {
         const { id } = req.params;
-        const { description } = req.body;
+        const { description, date } = req.body;
 
-        const updatedEvidence = await Evidence.findByIdAndUpdate(id, { description }, { returnDocument: 'after' });
+        const updatedEvidence = await Evidence.findByIdAndUpdate(id, { description, date }, { returnDocument: 'after' });
 
         res.json(updatedEvidence);
         req.log.info(`Actualizo la Evidencia: ${id}`);
