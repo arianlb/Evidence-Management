@@ -35,6 +35,7 @@ router.get('/:id', [
 router.post('/', [
     validateToken,
     check('name', 'El nombre es obligatorio').notEmpty(),
+    check('year', 'El año es obligatorio').notEmpty(),
     //check('name').custom(areaNameExists),
     validate
 ], areaPost);

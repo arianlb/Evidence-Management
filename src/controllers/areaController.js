@@ -73,7 +73,7 @@ const areaById = async (req, res = response) => {
 
 const areaPost = async (req, res = response) => {
     try {
-        const { name } = req.body;
+        const { name, year } = req.body;
 
         //TODO: optimize!!
         let objectives = [];
@@ -83,7 +83,7 @@ const areaPost = async (req, res = response) => {
             objectives = await Objective.create(objectives);
         }
 
-        const area = new Area({ name, year: req.query.year, objectives });
+        const area = new Area({ name, year, objectives });
 
         await area.save();
         const responseArea = { _id: area._id, name: area.name, objectives: targetNames };
