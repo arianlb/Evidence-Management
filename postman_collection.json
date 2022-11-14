@@ -224,7 +224,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Area test\",\r\n    \"objectives\": [\"algo\", \"ahi\"]\r\n}",
+							"raw": "{\r\n    \"name\": \"Area test\",\r\n    \"objectives\": [\"algo\", \"ahi\"],\r\n    \"year\": 2022\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -232,19 +232,13 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/areas?year=2022",
+							"raw": "{{url}}/api/areas",
 							"host": [
 								"{{url}}"
 							],
 							"path": [
 								"api",
 								"areas"
-							],
-							"query": [
-								{
-									"key": "year",
-									"value": "2022"
-								}
 							]
 						}
 					},
@@ -724,7 +718,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"indicators\": [\r\n        {\r\n            \"_id\": \"63701d3efe6aa933d2d2a0b6\"\r\n        }\r\n    ]\r\n}",
+							"raw": "{\r\n    \"indicators\": [\r\n        {\r\n            \"_id\": \"63701d3efe6aa933d2d2a0b6\"\r\n        }\r\n    ],\r\n    \"year\": 2022\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -732,7 +726,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/indicators/63701cf53ab0dddb9cf6db91?year=2022",
+							"raw": "{{url}}/api/indicators/63701cf53ab0dddb9cf6db91",
 							"host": [
 								"{{url}}"
 							],
@@ -740,12 +734,6 @@
 								"api",
 								"indicators",
 								"63701cf53ab0dddb9cf6db91"
-							],
-							"query": [
-								{
-									"key": "year",
-									"value": "2022"
-								}
 							]
 						}
 					},
@@ -892,7 +880,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Indicador otro 2022\",\r\n    \"category\": \"TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Indicador otro 2022\",\r\n    \"category\": \"TRABAJO DOCENTE-EDUCATIVO EN PREGRADO Y POSGRADO\",\r\n    \"year\": 2022\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -900,7 +888,7 @@
 							}
 						},
 						"url": {
-							"raw": "{{url}}/api/indicators/criterion/63701b3f677e2cf3e34a4115?year=2022",
+							"raw": "{{url}}/api/indicators/criterion/63701b3f677e2cf3e34a4115",
 							"host": [
 								"{{url}}"
 							],
@@ -909,12 +897,6 @@
 								"indicators",
 								"criterion",
 								"63701b3f677e2cf3e34a4115"
-							],
-							"query": [
-								{
-									"key": "year",
-									"value": "2022"
-								}
 							]
 						}
 					},
@@ -996,7 +978,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"name\": \"Indicador Personal\",\r\n    \"category\": \"Alguna Categoria\",\r\n    \"observation\": \"Alguna Observacion\"\r\n}",
+							"raw": "{\r\n    \"name\": \"Indicador Personal\",\r\n    \"category\": \"Alguna Categoria\",\r\n    \"observation\": \"Alguna Observacion\",\r\n    \"year\": 2022\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1340,6 +1322,173 @@
 							"path": [
 								"api",
 								"years"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Evaluacion",
+			"item": [
+				{
+					"name": "Crear una evaluacion",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2Njg0MDUzMDd9.ZQkTGYuS7zMNUYoRdY2-8oeJ2ZW9l5F8Oy-6a1Yn9tQ",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"year\": 2022,\r\n    \"categories\": {\r\n        \"SUPERACIÓN\": \"Excelente\",\r\n        \"TRABAJO METODOLÓGICO\": \"Regular\"\r\n    },\r\n    \"total\": \"Mal\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/evaluations/6371d81ab7dc37308fc30f8d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"6371d81ab7dc37308fc30f8d"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener la evaluacion de un usuario",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2Njg0MDUzMDd9.ZQkTGYuS7zMNUYoRdY2-8oeJ2ZW9l5F8Oy-6a1Yn9tQ",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/evaluations/6371d81ab7dc37308fc30f8d?year=2022",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"6371d81ab7dc37308fc30f8d"
+							],
+							"query": [
+								{
+									"key": "year",
+									"value": "2022"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar una Evaluacion",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2Njg0MDUzMDd9.ZQkTGYuS7zMNUYoRdY2-8oeJ2ZW9l5F8Oy-6a1Yn9tQ",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"categories\": {\r\n        \"SUPERACIÓN\": \"Excelente\",\r\n        \"TRABAJO METODOLÓGICO\": \"Bien\"\r\n    },\r\n    \"total\": \"Regular\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/api/evaluations/6371d9adb7dc37308fc30f92",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"6371d9adb7dc37308fc30f92"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar una Evaluacion",
+					"request": {
+						"auth": {
+							"type": "apikey",
+							"apikey": [
+								{
+									"key": "value",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOiI2MzcwMTk5ZjNhYjBkZGRiOWNmNmRiODUiLCJyb2xlIjoiUk9MRV9BRE1JTiIsIm5hbWUiOiJBZG1pbmlzdHJhZG9yIiwidXNlcm5hbWUiOiJhZG1pbiIsImRlcGFydG1lbnQiOiJJbmZvcm3DoXRpY2EiLCJpYXQiOjE2Njg0MDUzMDd9.ZQkTGYuS7zMNUYoRdY2-8oeJ2ZW9l5F8Oy-6a1Yn9tQ",
+									"type": "string"
+								},
+								{
+									"key": "key",
+									"value": "Authorization",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/api/evaluations/6371d9adb7dc37308fc30f92/user/6371d81ab7dc37308fc30f8d",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"api",
+								"evaluations",
+								"6371d9adb7dc37308fc30f92",
+								"user",
+								"6371d81ab7dc37308fc30f8d"
 							]
 						}
 					},

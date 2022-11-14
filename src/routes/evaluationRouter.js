@@ -11,14 +11,18 @@ const { evaluationGet, evaluationPost, evaluationPut, evaluationDelete } = requi
 
 const router = Router();
 
-router.get('/', [
+router.get('/:id', [
     validateToken,
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(userExistsById),
     //hasAnyRole('ADMIN_ROLE', 'USER_ROLE'),
     validate
 ], evaluationGet);
 
-router.post('/', [
+router.post('/:id', [
     validateToken,
+    check('id', 'No es un ID valido').isMongoId(),
+    check('id').custom(userExistsById),
     //hasAnyRole('ADMIN_ROLE', 'USER_ROLE'),
     check('year', 'El año es obligatorio').notEmpty(),
     validate
