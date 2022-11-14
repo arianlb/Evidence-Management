@@ -40,3 +40,5 @@ router.delete('/:id/user/:idUser', [
     check('idUser').custom(userExistsById),
     validate
 ], evaluationDelete);
+
+module.exports = router;
