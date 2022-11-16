@@ -81,6 +81,7 @@ const userEvaluationGet = async (req = request, res = response) => {
             path: 'evaluations',
             match: { year }
         });
+        console.log(user);
         
         if (!user) {
             req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);
@@ -90,7 +91,7 @@ const userEvaluationGet = async (req = request, res = response) => {
         }
         const indicators = personalIndicators(req.body.categories, user.indicators, user.evaluations);
 
-        if (user.evaluations) {
+        if (user.evaluations.length > 0) {
             res.json({ user, indicators, value: user.evaluations[0].total });
         } else {
             res.json({ user, indicators });
