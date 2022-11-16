@@ -90,7 +90,11 @@ const userEvaluationGet = async (req = request, res = response) => {
         }
         const indicators = personalIndicators(req.body.categories, user.indicators, user.evaluations);
 
-        res.json({ user, indicators, value: user.evaluations[0].total });
+        if (user.evaluations) {
+            res.json({ user, indicators, value: user.evaluations[0].total });
+        } else {
+            res.json({ user, indicators });
+        }
         req.log.info('Obtuvo la evaluacion del Usuario: ' + req.params.id);
         
     } catch (error) {

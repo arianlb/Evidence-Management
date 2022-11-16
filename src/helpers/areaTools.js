@@ -37,7 +37,7 @@ const createAllNew = async (lastYear, newYear) => {
             const newObjective = new Objective({ name: objective.name, criterions: [] });
             for (criterion of objective.criterions) {
                 const indicator = await Indicator.findOne({ model: true, criterion: criterion._id, year: lastYear });
-                const newCriterion = new Criterion({ name: criterion.name, status: criterion.status, todo: criterion.todo, concluded: criterion.concluded });
+                const newCriterion = new Criterion({ name: criterion.name, status: 'No Cumplido', todo: criterion.todo, concluded: 0 });
                 
                 if (indicator) { 
                     const newIndicator = new Indicator({

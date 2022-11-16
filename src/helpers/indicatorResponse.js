@@ -81,7 +81,11 @@ const personalIndicators = (categories = ['TRABAJO DOCENTE-EDUCATIVO EN PREGRADO
 
     for (let i = 0; i < categories.length; i++) {
         indicators = [];
-        indicatorsResponse.push({ category: categories[i], indicators, value: userEvaluation[0].categories.get(categories[i]) });
+        if (userEvaluation) {
+            indicatorsResponse.push({ category: categories[i], indicators, value: userEvaluation[0].categories.get(categories[i]) });
+        } else {
+            indicatorsResponse.push({ category: categories[i], indicators });
+        }
     }
     /*indicators = [];
     indicatorsResponse.push({ category: 'Otros', indicators });*/
