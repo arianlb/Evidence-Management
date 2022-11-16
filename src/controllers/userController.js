@@ -73,16 +73,26 @@ const userGet = async (req = request, res = response) => {
 
 const userEvaluationGet = async (req = request, res = response) => { 
     try {
-        const user = await User.findById(req.params.id).populate('indicators');
-        if (!user) {
+        const [userI, userE] = await Promise.all([
+            User.findById(req.params.id).populate({
+                path: 'indicators',
+                match: { year: req.query.year }
+            }),
+            User.findById(req.params.id).populate({
+                path: 'evaluations',
+                match: { year: req.query.year }
+            })
+        ]);
+        
+        if (!userI) {
             req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);
             return res.status(404).json({
                 msg: 'No existe el Usuario en la base de datos'
             });
         }
-        const indicators = personalIndicators(req.body.categories, user.indicators);
+        const indicators = personalIndicators(req.body.categories, userI.indicators, userE.evaluations);
 
-        res.json({ user, indicators });
+        res.json({ userI, indicators, value: userE.evaluations[0].total });
         req.log.info('Obtuvo la evaluacion del Usuario: ' + req.params.id);
         
     } catch (error) {
