@@ -54,7 +54,8 @@ const userGet = async (req = request, res = response) => {
             req.log.info(`Obtuvo los Usuarios desde ${begin} hasta ${amount}`);
 
         } else {
-            if (req.authrole === 'ROLE_ADMIN') {
+            //TODO: revisar lo de los roles
+            if (req.authrole === 'ROLE_ADMIN' || req.authrole === 'ROLE_CHIEF') {
                 const users = await User.find({ status: true });
                 res.json({ users });
                 req.log.info('Obtuvo todos los Usuarios');

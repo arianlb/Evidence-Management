@@ -25,7 +25,7 @@ const areaGet = async (req, res = response) => {
         const areas = [];
         let percent = 0;
         let areasDB;
-        if (req.authrole === 'ROLE_ADMIN') {
+        if (req.authrole === 'ROLE_ADMIN' || req.authrole === 'ROLE_CHIEFA') {
             areasDB = await Area.find({ year: req.query.year }).populate({
                 path: 'objectives',
                 populate: { path: 'criterions' }

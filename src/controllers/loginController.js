@@ -14,10 +14,12 @@ const login = async(req = request, res = response) => {
         try {
             /*const resp = await axios.get(`http://localhost:8081/soap/login/${username}/clave/${password}`);
             const user = await User.findOne({ username });*/
-            const [resp, user] = await Promise.all([
+            const [resp, userInfo, user] = await Promise.all([
                 axios.get(`http://localhost:8081/soap/login/${username}/clave/${password}`),
+                axios.get(`http://localhost:8081/soap/datos/aavazquez`),
                 User.findOne({ username })
             ]);
+            //console.log(userInfo.data.area.value.nombreArea.value);
 
             if (!resp.data.autenticado) {
                 req.log.warn('Usuario o Contraseña incorrecto');

@@ -18,6 +18,10 @@ const getLastOne = async (req, res = response) => {
 const newYearPost = async (req, res = response) => {
     try {
         const year = await Year.findOne();
+        if (year.years.contains(req.body.year)) { 
+            req.log.warn('Ya existe el año');
+            return res.status(400).json({ msg: 'Ya existe el año' });
+        }
         const lastYear = year.years[year.years.length - 1];
         year.years.push(req.body.year);
         const [, areas] = await Promise.all([
@@ -91,6 +95,7 @@ const yearDelete = async (req, res = response) => {
 
 const removeOne = async (req, res = response) => {
     try {
+        //TODO: se quedan las areas con el anio eliminado
         const year = await Year.findOne();
         const yearDB = year.years.filter(y => y != req.query.year);
         console.log(yearDB);
@@ -104,4 +109,48 @@ const removeOne = async (req, res = response) => {
     }
 }
 
-module.exports = { getLastOne, newYearPost, yearsGet, yearPost, yearPut, yearDelete, removeOne };
+const yearDepartamentGet = async (req, res = response) => { 
+    try {
+        const yearDB = await Year.findOne();
+        res.json(yearDB.departments);
+        req.log.info('Obtuvo los Departamentos');
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
+    }
+}
+
+const yearDepartamentPut = async (req, res = response) => { 
+    try {
+        const { department } = req.body;
+        const yearDB = await Year.findOne();
+        if (yearDB.departments.contains(department)) { 
+            req.log.warn('Ya existe el departamento');
+            return res.status(400).json({ msg: 'Ya existe el departamento' });
+        }
+        yearDB.departments.push(department);
+        await yearDB.save();
+        res.json(department);
+        req.log.info('Actualizo un Departamento');
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
+    }
+}
+
+const yearDepartamentDelete = async (req, res = response) => { 
+    try {
+        const { department } = req.body;
+        const yearDB = await Year.findOne();
+        const departments = yearDB.departments.filter(d => d != department);
+        yearDB.departments = departments;
+        await yearDB.save();
+        res.json(department);
+        req.log.info('Elimino el Departamento ', department);
+    } catch (error) {
+        res.status(500).json({ msg: error.message });
+        req.log.error(error.message);
+    }
+}
+
+module.exports = { getLastOne, newYearPost, yearsGet, yearPost, yearPut, yearDelete, removeOne, yearDepartamentGet, yearDepartamentPut, yearDepartamentDelete };

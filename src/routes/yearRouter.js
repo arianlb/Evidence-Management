@@ -9,7 +9,10 @@ const { getLastOne,
         yearPut,
         yearPost,
         yearDelete,
-        removeOne } = require('../controllers/yearController');
+        removeOne,
+        yearDepartamentGet,
+        yearDepartamentPut,
+        yearDepartamentDelete } = require('../controllers/yearController');
 
 const router = Router();
 
@@ -49,6 +52,23 @@ router.delete('/remove', [
     validateToken,
     validate
 ], removeOne);
+
+router.get('/departaments', [
+    validateToken,
+    validate
+], yearDepartamentGet);
+
+router.put('/departaments', [
+    validateToken,
+    check('departament', 'El departamento es obligatorio').notEmpty(),
+    validate
+], yearDepartamentPut);
+
+router.delete('/departaments', [
+    validateToken,
+    check('departament', 'El departamento es obligatorio').notEmpty(),
+    validate
+], yearDepartamentDelete);
 
 
 
