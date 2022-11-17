@@ -14,11 +14,16 @@ const login = async(req = request, res = response) => {
         try {
             /*const resp = await axios.get(`http://localhost:8081/soap/login/${username}/clave/${password}`);
             const user = await User.findOne({ username });*/
-            const [resp, userInfo, user] = await Promise.all([
+            const [resp, user] = await Promise.all([
                 axios.get(`http://localhost:8081/soap/login/${username}/clave/${password}`),
-                axios.get(`http://localhost:8081/soap/datos/aavazquez`),
                 User.findOne({ username })
             ]);
+
+            axios.get(`http://localhost:8081/soap/datos/${username}`).then(resp => {
+                console.log(resp.data.area.value.nombreArea.value);
+            }).catch(err => { 
+                console.log('no se pudo obtener el area');
+            });
             //console.log(userInfo.data.area.value.nombreArea.value);
 
             if (!resp.data.autenticado) {
