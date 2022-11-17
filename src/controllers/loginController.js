@@ -7,7 +7,7 @@ const { jwt } = require('../helpers/generateJWT');
 
 const login = async(req = request, res = response) => {
 
-    const { usern, pass } = req.body;
+    const { username, password } = req.body;
     
     try {
 
@@ -15,8 +15,8 @@ const login = async(req = request, res = response) => {
             /*const resp = await axios.get(`http://localhost:8081/soap/login/${username}/clave/${password}`);
             const user = await User.findOne({ username });*/
             const [resp, user] = await Promise.all([
-                axios.get(`http://localhost:8081/soap/login/${usern}/clave/${pass}`),
-                User.findOne({ username: usern })
+                axios.get(`http://localhost:8081/soap/login/${username}/clave/${password}`),
+                User.findOne({ username })
             ]);
 
             if (!resp.data.autenticado) {
@@ -28,7 +28,7 @@ const login = async(req = request, res = response) => {
 
             if (user) {
                 user.name = resp.data.nombres + ' ' + resp.data.apellidos;
-                const newPassword = bcryptjs.hashSync(pass, bcryptjs.genSaltSync());
+                const newPassword = bcryptjs.hashSync(password, bcryptjs.genSaltSync());
                 user.password = newPassword;
                 user.faculty = resp.data.area.nombreArea;
                 user.solapin = resp.data.credencial;
@@ -39,7 +39,7 @@ const login = async(req = request, res = response) => {
                 res.json(token);
                 req.log.info(`Autenticado el Usuario: ${user._id}`);
             } else {
-                const newPassword = bcryptjs.hashSync(pass, bcryptjs.genSaltSync());
+                const newPassword = bcryptjs.hashSync(password, bcryptjs.genSaltSync());
                 const userNew = new User({
                     name: resp.data.nombres + ' ' + resp.data.apellidos,
                     username: resp.data.usuario,
