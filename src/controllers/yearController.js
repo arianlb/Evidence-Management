@@ -18,10 +18,12 @@ const getLastOne = async (req, res = response) => {
 const newYearPost = async (req, res = response) => {
     try {
         const year = await Year.findOne();
-        if (year.years.contains(req.body.year)) { 
-            req.log.warn('Ya existe el año');
-            return res.status(400).json({ msg: 'Ya existe el año' });
+        for(let i = 0; i < year.years.length; i++) {
+            if(year.years[i] === req.body.year) {
+                return res.status(400).json({ msg: 'El año ya existe' });
+            }
         }
+        
         const lastYear = year.years[year.years.length - 1];
         year.years.push(req.body.year);
         const [, areas] = await Promise.all([
