@@ -14,15 +14,14 @@ const login = async(req = request, res = response) => {
         try {
             /*const resp = await axios.get(`http://localhost:8081/soap/login/${username}/clave/${password}`);
             const user = await User.findOne({ username });*/
+            let department = '';
             const [resp, user] = await Promise.all([
                 axios.get(`http://localhost:8081/soap/login/${username}/clave/${password}`),
                 User.findOne({ username })
             ]);
 
             axios.get(`http://localhost:8081/soap/datos/${username}`).then(resp => {
-                console.log(resp.data.area.value.nombreArea.value);
-            }).catch(err => { 
-                console.log('no se pudo obtener el area');
+                department = resp.data.area.value.nombreArea.value;
             });
             //console.log(userInfo.data.area.value.nombreArea.value);
 
@@ -40,6 +39,7 @@ const login = async(req = request, res = response) => {
                 user.faculty = resp.data.area.nombreArea;
                 user.solapin = resp.data.credencial;
                 user.category = resp.data.cargo.nombreCargo;
+                if(department !== '') { user.department = department; }
                 await user.save();
                 const token = await jwt(user.id, user.role, user.name, user.username, user.department);
 
@@ -54,7 +54,8 @@ const login = async(req = request, res = response) => {
                     role: 'ROLE_USER',
                     faculty: resp.data.area.nombreArea,
                     solapin: resp.data.credencial,
-                    category: resp.data.cargo.nombreCargo
+                    category: resp.data.cargo.nombreCargo,
+                    department: department
                 });
                 await userNew.save();
                 const token = await jwt(userNew.id, userNew.role, userNew.name, userNew.username);

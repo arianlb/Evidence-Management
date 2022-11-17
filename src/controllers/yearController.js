@@ -124,9 +124,11 @@ const yearDepartamentPut = async (req, res = response) => {
     try {
         const { department } = req.body;
         const yearDB = await Year.findOne();
-        if (yearDB.departments.contains(department)) { 
-            req.log.warn('Ya existe el departamento');
-            return res.status(400).json({ msg: 'Ya existe el departamento' });
+        for (depart of yearDB.departments) {
+            if (depart === department) { 
+                req.log.warn('Ya existe el departamento');
+                return res.status(400).json({ msg: 'Ya existe el departamento' });
+            }
         }
         yearDB.departments.push(department);
         await yearDB.save();
