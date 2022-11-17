@@ -144,7 +144,7 @@ const yearDepartamentPut = async (req, res = response) => {
 
 const yearDepartamentDelete = async (req, res = response) => { 
     try {
-        const { department } = req.body;
+        const department = req.params.department;
         const yearDB = await Year.findOne();
         const departments = yearDB.departments.filter(d => d != department);
         yearDB.departments = departments;

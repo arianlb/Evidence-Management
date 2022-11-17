@@ -64,9 +64,9 @@ router.put('/departments', [
     validate
 ], yearDepartamentPut);
 
-router.delete('/departments', [
+router.delete('/departments/:department', [
     validateToken,
-    check('department', 'El departamento es obligatorio').notEmpty(),
+    //check('department', 'El departamento es obligatorio').notEmpty(),
     validate
 ], yearDepartamentDelete);
 
