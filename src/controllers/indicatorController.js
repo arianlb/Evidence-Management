@@ -202,7 +202,7 @@ const personalIndicatorPost = async (req = request, res = response) => {
         user.indicators.push(indicator);
 
         const [userChief, , ] = await Promise.all([
-            User.findOne({ department: user.department, role: 'ROLE_CHIEF' }),
+            User.findOne({ department: user.department, role: 'ROLE_CHIEFD' }),
             indicator.save(),
             user.save()
         ]);
