@@ -1,6 +1,8 @@
 const { request, response } = require('express');
 
 const { createAllNew } = require('../helpers/areaTools');
+const { deleteArea } = require('../helpers/removeModels');
+const Area = require('../models/area');
 const Year = require('../models/year');
 
 const getLastOne = async (req, res = response) => {
@@ -97,12 +99,19 @@ const yearDelete = async (req, res = response) => {
 
 const removeOne = async (req, res = response) => {
     try {
-        //TODO: se quedan las areas con el anio eliminado
+        
         const year = await Year.findOne();
         const yearDB = year.years.filter(y => y != req.query.year);
-        console.log(yearDB);
         year.years = yearDB;
-        await year.save();
+        const [, areas] = await Promise.all([
+            year.save(),
+            Area.find({ year: req.query.year })
+        ]);
+        if (areas) {
+            for (area of areas) {
+                await deleteArea(area._id);
+            }
+        }
         res.json(year);
         req.log.info('Elimino un Año');
     } catch (error) {
