@@ -25,24 +25,26 @@ const areaGet = async (req, res = response) => {
         const areas = [];
         let percent = 0;
         let areasDB;
-        if (req.authrole === 'ROLE_ADMIN' || req.authrole === 'ROLE_CHIEFA') {
+        if (req.authrole === 'ROLE_ADMIN') {
             areasDB = await Area.find({ year: req.query.year }).populate({
                 path: 'objectives',
                 populate: { path: 'criterions' }
             });
-        } else {
-            areasDB = await Area.find({ year: req.query.year, name: req.authdepartment }).populate({
+        } else if (req.authrole === 'ROLE_CHIEFA') {
+            areasDB = await Area.find({ year: req.query.year, users: req.authid }).populate({
                 path: 'objectives',
                 populate: { path: 'criterions' }
             });
         }
 
-        for (a of areasDB) {
-            percent = Math.trunc(percentage(a.objectives));
-
-            const area = { _id: a._id, name: a.name, percentage: percent, objectives: [] };
-            a.objectives.forEach(({ name }) => { area.objectives.push(name); });
-            areas.push(area);
+        if (areasDB) {
+            for (a of areasDB) {
+                percent = Math.trunc(percentage(a.objectives));
+    
+                const area = { _id: a._id, name: a.name, percentage: percent, objectives: [] };
+                a.objectives.forEach(({ name }) => { area.objectives.push(name); });
+                areas.push(area);
+            }
         }
 
         res.json(areas);
