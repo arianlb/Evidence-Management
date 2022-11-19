@@ -166,15 +166,17 @@ const deleteArea = async(id) => {
 const deleteUser = async(id) => {
     const [ user, areas ] = await Promise.all([
         User.findByIdAndUpdate(id, {status: false}),
-        Area.find()
+        Area.find({users: id})
     ]);
 
-    for(area of areas) {
-        for(let i = 0; i < area.users.length; i++) {
-            if(area.users[i].equals(user._id)) {
-                area.users.splice(i, 1);
-                await area.save();
-                break;
+    if (areas) {
+        for (area of areas) {
+            for(let i = 0; i < area.users.length; i++) {
+                if(area.users[i].equals(user._id)) {
+                    area.users.splice(i, 1);
+                    await area.save();
+                    break;
+                }
             }
         }
     }
