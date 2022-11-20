@@ -12,7 +12,7 @@ const router = Router();
 
 router.get('/', [
     validateToken,
-    hasAnyRole('ROLE_CHIEF', 'ROLE_ADMIN'),
+    hasAnyRole('ROLE_CHIEFA', 'ROLE_ADMIN', 'ROLE_CHIEFD'),
     validate
 ], userGet);
 
