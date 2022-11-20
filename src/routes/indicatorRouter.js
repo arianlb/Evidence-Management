@@ -26,7 +26,7 @@ router.get('/', [
 
 router.get('/category', [
     validateToken,
-    hasAnyRole('ROLE_CHIEF'),
+    hasAnyRole('ROLE_CHIEFD'),
     validate
 ], indicatorByCategory);
 
