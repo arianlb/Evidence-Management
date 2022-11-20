@@ -8,9 +8,9 @@ const Objective = require('../models/objective');
 
 const areasName = async (req, res = response) => {
     try {
-        const areas = await Area.find({ year: req.query.year }, 'name');
+        const areas = await Area.find({ year: req.query.year });
         let names = [];
-        areas.forEach(({ name }) => names.push(name));
+        areas.forEach(({ _id, name }) => names.push({ id:_id, name }));
         res.json(names);
         req.log.info('Obtuvo los nombres de las Areas');
 
