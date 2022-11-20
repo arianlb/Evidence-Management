@@ -1,6 +1,7 @@
 const { request, response} = require('express');
 const bcryptjs = require('bcryptjs');
 
+const Area = require('../models/area');
 const User = require('../models/user');
 const { deleteUser } = require('../helpers/removeModels');
 const { personalIndicators } = require('../helpers/indicatorResponse');
@@ -133,7 +134,7 @@ const userNotificationsGet = async (req = request, res = response) => {
 const userPost = async(req = request, res = response) => {
 
     try {
-        const { name, username, role, faculty, department, solapin, category } = req.body;
+        const { name, username, role, faculty, department, solapin, category, areaId } = req.body;
         
         //Encripta la contraseña | bcryptjs.genSaltSync() -> nivel de encriptacion
         const password = bcryptjs.hashSync('facultad4', bcryptjs.genSaltSync());
@@ -142,6 +143,12 @@ const userPost = async(req = request, res = response) => {
     
         //guarda en BD
         await user.save();
+
+        if (areaId) {
+            const area = await Area.findById(areaId);
+            area.users.push(user._id);
+            await area.save();
+        }
     
         res.json(user);
         req.log.info('Creo el Usuario: '+ username);
@@ -155,13 +162,19 @@ const userPost = async(req = request, res = response) => {
 const userPut = async(req = request, res = response) => {
     try {
         const { id } = req.params;
-        const { _id, password, resetpassword, ...rest } = req.body;
+        const { _id, password, resetpassword, areaId, ...rest } = req.body;
     
         if(resetpassword){
             rest.password = bcryptjs.hashSync('facultad4', bcryptjs.genSaltSync());
         }
+
+        if (areaId) {
+            const area = await Area.findById(areaId);
+            area.users.push(id);
+            await area.save();
+        }
     
-        const user = await User.findByIdAndUpdate(id, rest, {returnDocument: 'after'});
+        const user = await User.findByIdAndUpdate(id, rest, { returnDocument: 'after' });
         
         res.json(user);
         req.log.info('Actualizo el Usuario: '+ id);
