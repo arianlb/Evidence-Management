@@ -43,7 +43,6 @@ const evaluationPost = async (req = request, res = response) => {
 
         for (evaluationU of user.evaluations) {
             if (evaluationU.year === year) {
-                console.log('Ya existe una evaluacion para el anio: ' + year);
                 const evaluationResponse = await Evaluation.findByIdAndUpdate(evaluationU._id, {categories, total}, { returnDocument: 'after' });
                 req.log.info(`Se actualizo la Evaluacion: ${evaluationU._id} para el Usuario: ${req.params.id}`);
                 return res.json(evaluationResponse);

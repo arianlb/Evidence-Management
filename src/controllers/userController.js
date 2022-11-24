@@ -89,7 +89,6 @@ const userEvaluationGet = async (req = request, res = response) => {
             path: 'evaluations',
             match: { year }
         });
-        console.log(user);
         
         if (!user) {
             req.log.warn(`El Usuario: ${req.params.id} no existe en la BD para asociarle indicadores`);

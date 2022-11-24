@@ -21,7 +21,7 @@ const newYearPost = async (req, res = response) => {
     try {
         const year = await Year.findOne();
         for(let i = 0; i < year.years.length; i++) {
-            if(year.years[i] === req.body.year) {
+            if(year.years[i] === Number(req.body.year)) {
                 return res.status(400).json({ msg: 'El año ya existe' });
             }
         }
@@ -32,7 +32,6 @@ const newYearPost = async (req, res = response) => {
             year.save(),
             createAllNew(lastYear, req.body.year)
         ]);
-        console.log(areas);
         res.json(areas);
         req.log.info('Agrego un Año');
     } catch (error) {
