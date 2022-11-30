@@ -77,6 +77,12 @@ const areaPost = async (req, res = response) => {
     try {
         const { name, year } = req.body;
 
+        const areaDB = await Area.findOne({ name, year });
+        if (areaDB) {
+            req.log.warn('El Area ya existe en la BD');
+            return res.status(400).json({ msg: `El Area ${name} ya existe en el año ${year}` });
+        }
+
         //TODO: optimize!!
         let objectives = [];
         const targetNames = req.body.objectives;
