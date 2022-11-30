@@ -35,8 +35,9 @@ const userExistsById = async( id ) => {
     }
 }
 
-const areaNameExists = async(name = '', year) => {
-    const exists = await Area.findOne({name, year});
+const areaNameExists = async (name = '', year) => {
+    const yearN = Number(year);
+    const exists = await Area.findOne({name, year: yearN});
     if(exists){
         throw new Error(`El nombre del area ${name} ya existe en la BD`);
     }
