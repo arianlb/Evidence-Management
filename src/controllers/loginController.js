@@ -49,6 +49,8 @@ const login = async(req = request, res = response) => {
                 req.log.warn('No se pudo obtener el departamento del usuario en el servicio UCI');
             });
 
+            if (!resp.data.nombres && user) { throw new Error('El usuario no esta en la DB de la UCI'); }
+
             if (!resp.data.autenticado) {
                 req.log.warn('Usuario o Contraseña incorrecto');
                 return res.status(400).json({

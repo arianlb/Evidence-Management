@@ -36,7 +36,7 @@ router.post('/', [
     validateToken,
     check('name', 'El nombre es obligatorio').notEmpty(),
     check('year', 'El año es obligatorio').notEmpty(),
-    //check('name').custom(areaNameExists),
+    check(['name', 'year']).custom(areaNameExists),
     validate
 ], areaPost);
 
