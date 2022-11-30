@@ -35,9 +35,7 @@ const userExistsById = async( id ) => {
     }
 }
 
-const areaNameExists = async (args) => {
-    const name = args.name;
-    const year = args.year;
+const areaNameExists = async (name, year) => {
     console.log(name, year);
     const exists = await Area.findOne({name, year});
     if(exists){
